@@ -1,12 +1,14 @@
 import React from "react";
 import { LuBedDouble, LuCalendarCheck } from "react-icons/lu";
 import SquaredSmall from '../components/SquaredSmall';
-import RectCard from '../components/RectCard';
+import {RectCard} from '../components/RectCard/RectCard';
 import styled from "styled-components";
 import { BsBoxArrowInRight, BsBoxArrowInLeft } from "react-icons/bs";
+import RoomList from '../components/RoomList';
 
 const DashboardWrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     width: 100%;
     height: 100%;
@@ -18,26 +20,11 @@ const DashboardWrapper = styled.div`
 function Dashboard() {
     return (
         <DashboardWrapper>
-            <RectCard number="8,461" description="New Booking">
-                <SquaredSmall bgColor="#FFEDEC">
-                    <LuBedDouble color="#E23428" size="2rem" />
-                </SquaredSmall>
-            </RectCard>
-            <RectCard number="963" description="Scheluded Room">
-                <SquaredSmall bgColor="#E23428">
-                    <LuCalendarCheck color="#FFFFFF" size="2rem" />
-                </SquaredSmall>
-            </RectCard>
-            <RectCard number="753" description="Check In">
-                <SquaredSmall bgColor="#FFEDEC">
-                    <BsBoxArrowInRight color="#E23428" size="2rem" />
-                </SquaredSmall>
-            </RectCard>
-            <RectCard number="516" description="Check Out">
-                <SquaredSmall bgColor="#FFEDEC">
-                    <BsBoxArrowInLeft color="#E23428" size="2rem" />
-                </SquaredSmall>
-            </RectCard>
+            <RectCard number="8,461" description="New Booking" icon={<LuBedDouble size="2rem"/>} />
+            <RectCard number="963" description="Scheluded Room" icon={<LuCalendarCheck size="2rem"/>} />
+            <RectCard number="753" description="Check In" icon={<BsBoxArrowInRight size="2rem"/>} />
+            <RectCard number="516" description="Check Out" icon={<BsBoxArrowInLeft size="2rem"/>} />
+            <RoomList />
         </DashboardWrapper>
     );
 }

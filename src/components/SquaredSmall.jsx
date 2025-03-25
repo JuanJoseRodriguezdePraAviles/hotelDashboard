@@ -1,20 +1,19 @@
 import styled from "styled-components";
 
 const IconWrapper = styled.div`
-display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
+    width: auto;
     height: 3rem;
     border-radius: 0.5rem;
-    background-color: ${(props) => props.bg || "#C5C5C5" };
+    background-color:#C5C5C5;
     padding:0.5rem;
-    
 `;
 
-function SquaredSmall({bgColor, children}) {
+function SquaredSmall({icon}) {
     return (
-        <IconWrapper bg={bgColor}>{children}</IconWrapper>
+        <IconWrapper>{icon}</IconWrapper>
     );
 }
 

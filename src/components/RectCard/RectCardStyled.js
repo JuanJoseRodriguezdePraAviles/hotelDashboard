@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const CardWrapper = styled.div`
-    width: 340px;
+export const CardWrapper = styled.div`
+    width: 19.5%;
     display: flex;
     flex-direction: row;
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
@@ -10,8 +10,26 @@ const CardWrapper = styled.div`
     border-radius: 12px;
     margin: 1rem;
     padding: 1rem;
+
+    &:hover {
+        box-shadow: 0 6px 12px #d5d5d5;
+        
+        svg {
+            color: #FFEDEC;
+            background-color: #E23428;
+        }
+
+    }
+    svg {
+        color: #E23428;
+        background-color: #FFEDEC;
+        font-size: 3rem;
+        padding: 1rem;
+        border-radius: 1rem;
+        width: 2rem;
+    }
 `;
-const DataWrapper = styled.div`
+export const DataWrapper = styled.div`
     width: 70%;
     height: auto;
     display: flex;
@@ -19,7 +37,7 @@ const DataWrapper = styled.div`
     text-align: left;
     padding-left: 1rem;
 `;
-const Number = styled.p`
+export const Number = styled.p`
     width: 3.5rem;
     height: 2.5rem;
     margin: 0;
@@ -30,7 +48,7 @@ const Number = styled.p`
     color: #393939;
     opacity: 1;
 `;
-const NumberUnit = styled.p`
+export const NumberUnit = styled.p`
     width: 10rem;
     height: 1.1rem;
     margin: 0;
@@ -40,22 +58,3 @@ const NumberUnit = styled.p`
     letter-spacing: 0px;
     color: #787878;
 `;
-
-function RectCard({ number, description, children }) {
-    return (
-        <>
-            <CardWrapper>
-                {children}
-                <DataWrapper>
-                    <Number>{number}</Number>
-                    <NumberUnit>{description}</NumberUnit>
-                </DataWrapper>
-
-            </CardWrapper>
-
-        </>
-
-    );
-}
-
-export default RectCard;

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,12 +10,3 @@ const IconWrapper = styled.div`
     background-color:#C5C5C5;
     padding:0.5rem;
 `;
-
-function SquaredSmall({icon}) {
-    return (
-        <IconWrapper>{icon}</IconWrapper>
-    );
-}
-
-export default SquaredSmall;
-

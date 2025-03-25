@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CardWrapper = styled.div`
-    width: 19.5%;
+    width: 20%;
     display: flex;
     flex-direction: row;
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;

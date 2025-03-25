@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DayWrapper = styled.div`
+export const DayWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,11 +12,3 @@ const DayWrapper = styled.div`
     margin-left:auto;
     
 `;
-
-function SquaredCalendar({bgColor, children}) {
-    return (
-        <DayWrapper bg={bgColor}>{children}</DayWrapper>
-    );
-}
-
-export default SquaredCalendar;

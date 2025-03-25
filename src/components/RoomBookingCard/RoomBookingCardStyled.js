@@ -1,9 +1,6 @@
-import RoomPhoto from './RoomPhoto';
-import CircleSmall from './CircleSmall/CircleSmall';
 import styled from "styled-components";
-import SquaredCalendar from '../components/SquaredCalendar';
 
-const CardWrapper = styled.div`
+export const CardWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -16,7 +13,7 @@ const CardWrapper = styled.div`
     padding: 1rem;
 `;
 
-const DataWrapper = styled.div`
+export const DataWrapper = styled.div`
     width: 25rem;
     height: auto;
     display: flex;
@@ -25,7 +22,7 @@ const DataWrapper = styled.div`
     padding-left: 1rem;
 `;
 
-const GuestWrapper = styled.div`
+export const GuestWrapper = styled.div`
     width: 100%;
     height: auto;
     display: flex;
@@ -34,7 +31,7 @@ const GuestWrapper = styled.div`
     padding-top: 1rem;
 `;
 
-const Title = styled.p`
+export const Title = styled.p`
     width: 100%;
     height: 2.5rem;
     margin: 0;
@@ -46,7 +43,7 @@ const Title = styled.p`
     opacity: 1;
 `;
 
-const Guest = styled.p`
+export const Guest = styled.p`
     width: auto;
     height: 2.5rem;
     margin: 0;
@@ -59,7 +56,7 @@ const Guest = styled.p`
     margin-right: 0.5rem;
 `;
 
-const TimeCount = styled.p`
+export const TimeCount = styled.p`
     width: auto;
     height: 2.5rem;
     margin: 0;
@@ -71,7 +68,7 @@ const TimeCount = styled.p`
     opacity: 1;
 `;
 
-const Days = styled.p`
+export const Days = styled.p`
     width: auto;
     font-size: 1.5rem;
     color: var(--unnamed-color-ffffff);
@@ -83,30 +80,3 @@ const Days = styled.p`
     white-space: nowrap;
     padding: 1rem;
 `;
-
-
-
-function RoomBookingCard({ title, roomNumber, guest, time, daysColor, days }) {
-    return (
-        <>
-            <CardWrapper>
-                <RoomPhoto></RoomPhoto>
-                <DataWrapper>
-                    <Title>{title} {roomNumber}</Title>
-                    <GuestWrapper>
-                        <CircleSmall></CircleSmall>
-                        <Guest>{guest}</Guest>
-                        <TimeCount>{time}min ago</TimeCount>
-                    </GuestWrapper>
-                </DataWrapper>
-                <SquaredCalendar bgColor={daysColor}>
-                    <Days>
-                        {days}
-                    </Days>
-                </SquaredCalendar>
-            </CardWrapper>
-        </>
-    );
-}
-
-export default RoomBookingCard;

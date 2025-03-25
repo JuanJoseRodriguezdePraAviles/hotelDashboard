@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const Photo = styled.div`
+export const Photo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,14 +10,3 @@ const Photo = styled.div`
     background-color: #C5C5C5;
     padding:0.5rem;
 `;
-
-function RoomPhoto() {
-    return (
-        <>
-            <Photo></Photo>
-        </>
-        
-    );
-}
-
-export default RoomPhoto;

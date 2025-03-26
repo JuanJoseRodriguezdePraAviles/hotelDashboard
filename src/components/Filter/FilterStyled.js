@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
-export const CustomerData = styled.div`
-    width: 30%;
+export const FilterContainer = styled.div`
+    width: 4rem;
     display: flex;
-    flex-direction: column;
-    align-items: left;
+    flex-direction: row;
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 1px solid #EBEBEB;
-    border-radius: 20px;
     opacity: 1;
+    padding: 1rem;
+    color: ${(props) => props.color};
+    border-bottom: 2px solid ${(props)=> props.color};
 `;
-
-export default CustomerData;

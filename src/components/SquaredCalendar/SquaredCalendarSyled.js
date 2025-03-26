@@ -7,7 +7,7 @@ export const DayWrapper = styled.div`
     width: auto;
     height: 3rem;
     border-radius: 12px;
-    background-color: ${(props) => props.bg || "#C5C5C5" };
+    background-color: ${(props) => props.$bg || "#C5C5C5" };
     padding:0.5rem;
     margin-left:auto;
     

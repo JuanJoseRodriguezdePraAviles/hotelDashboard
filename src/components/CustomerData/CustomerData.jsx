@@ -1,13 +1,24 @@
-import SquaredSmall from "../SquaredSmall/SquaredSmall";
 import { UserAvatarSquared } from "../UserAvatarSquared/UserAvatarSquared";
-import CustomerData from "./CustomerData";
+import { Email } from "./CustomerDataStyled";
+import { PhoneNumber } from "./CustomerDataStyled";
+import { Username } from "./CustomerDataStyled";
+import { DataWrapper } from "./CustomerDataStyled";
+import { CustomerDataContainer, Identifier } from "./CustomerDataStyled";
 
-export const CustomerData = () => {
+export const CustomerData = ({client, email, phone, identifier}) => {
     return (
-        <CustomerData>
-            <p>PRUEBA CUSTOMER DATA</p>
-            <UserAvatarSquared />
-        </CustomerData>
+        <>
+            <CustomerDataContainer>
+                <UserAvatarSquared />
+                <DataWrapper>
+                    <Username>{client}</Username>
+                    <Email>{email}</Email>
+                    <PhoneNumber>{phone}</PhoneNumber>
+                    <Identifier>{identifier}</Identifier>
+                </DataWrapper>
+            </CustomerDataContainer>
+        </>
+
     );
 }
 

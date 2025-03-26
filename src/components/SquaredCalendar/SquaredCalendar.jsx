@@ -2,7 +2,7 @@ import { DayWrapper } from "./SquaredCalendarSyled";
 
 export const SquaredCalendar = ({bgColor, children}) => {
     return (
-        <DayWrapper bg={bgColor}>{children}</DayWrapper>
+        <DayWrapper $bg={bgColor}>{children}</DayWrapper>
     );
 }
 

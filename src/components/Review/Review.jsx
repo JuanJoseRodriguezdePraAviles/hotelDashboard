@@ -1,14 +1,16 @@
-import CustomerData from "../CustomerData/CustomerData";
-import { ReviewContainer, Description } from "./ReviewStyled";
 
-export const Review = () => {
+import CustomerData from "../CustomerData/CustomerData";
+import { ReviewContainer, Description, Subject } from "./ReviewStyled";
+
+export const Review = ({ subject, description, client, email, phone}) => {
     return (
         <>
             <ReviewContainer>
+                <Subject>{subject}</Subject>
                 <Description>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam
+                    {description}
                 </Description>
-                <CustomerData />
+                <CustomerData client={client} email={email} phone={phone} id="" />
             </ReviewContainer>
         </>
 

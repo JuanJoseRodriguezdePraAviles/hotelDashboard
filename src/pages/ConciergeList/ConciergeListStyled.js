@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const DashboardWrapper = styled.div`
+export const ConciergeListWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;

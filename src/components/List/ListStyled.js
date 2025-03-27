@@ -73,6 +73,12 @@ export const FieldText = styled.p`
     padding: 1rem;
 `;
 
+export const Stars = styled.div`
+    background: '#FFFFFF';
+    border-radius: 12px;
+    opacity: 1;
+`;
+
 export const RoomState = styled.div`
     background: ${(props) => props.color || "#393939" };
     border-radius: 12px;

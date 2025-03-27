@@ -3,9 +3,10 @@ import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
 import { NotesBtn } from "../NotesBtn/NotesBtn";
-import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState } from "./ListStyled";
+import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars } from "./ListStyled";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
+import { IoIosStar } from "react-icons/io";
 
 export const List = ({ type }) => {
     return (
@@ -641,6 +642,196 @@ export const List = ({ type }) => {
                                 <FieldTextContainer color="#E23428">
                                     <FieldText color="#FFFFFF">Booked</FieldText>
                                 </FieldTextContainer>
+                            </FieldValue>
+                            <FieldValue>
+                                <HiDotsVertical color="#6E6E6E" />
+                            </FieldValue>
+                        </tr>
+                    </tbody>
+
+                </Table>
+            }
+            {type === 'review' &&
+                <Table>
+                    <Header>
+                        <tr>
+                            <th>
+                                <Checkbox />
+                            </th>
+                            <th>
+                                <FieldName>Order ID</FieldName>
+                            </th>
+                            <th>
+                                <FieldName>Date</FieldName>
+                            </th>
+                            <th>
+                                <FieldName>Customer</FieldName>
+                            </th>
+                            <th>
+                                <FieldName>Comment</FieldName>
+                            </th>
+                            <th>
+                                <FieldName>Action</FieldName>
+                            </th>
+                        </tr>
+                    </Header>
+                    <tbody>
+                        <tr>
+                            <FieldValue>
+                                <Checkbox />
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>#000123456</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>Nov 21th 2020 09:21 AM</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>James Sitepu</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <Stars>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                </Stars>
+                                <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#5AD07A">Publish</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#E23428">Archive</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <HiDotsVertical color="#6E6E6E" />
+                            </FieldValue>
+                        </tr>
+                        <tr>
+                            <FieldValue>
+                                <Checkbox />
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>#000123456</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>Nov 21th 2020 09:21 AM</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>James Sitepu</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <Stars>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                </Stars>
+                                <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#5AD07A">Publish</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#E23428">Archive</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <HiDotsVertical color="#6E6E6E" />
+                            </FieldValue>
+                        </tr>
+                        <tr>
+                            <FieldValue>
+                                <Checkbox />
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>#000123456</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>Nov 21th 2020 09:21 AM</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>James Sitepu</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <Stars>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                </Stars>
+                                <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#5AD07A">Publish</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#E23428">Archive</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <HiDotsVertical color="#6E6E6E" />
+                            </FieldValue>
+                        </tr>
+                        <tr>
+                            <FieldValue>
+                                <Checkbox />
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>#000123456</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>Nov 21th 2020 09:21 AM</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>James Sitepu</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <Stars>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                </Stars>
+                                <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#5AD07A">Publish</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#E23428">Archive</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <HiDotsVertical color="#6E6E6E" />
+                            </FieldValue>
+                        </tr>
+                        <tr>
+                            <FieldValue>
+                                <Checkbox />
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>#000123456</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>Nov 21th 2020 09:21 AM</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText>James Sitepu</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <Stars>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846"/>
+                                </Stars>
+                                <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#5AD07A">Publish</FieldText>
+                            </FieldValue>
+                            <FieldValue>
+                                <FieldText color="#E23428">Archive</FieldText>
                             </FieldValue>
                             <FieldValue>
                                 <HiDotsVertical color="#6E6E6E" />

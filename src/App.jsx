@@ -6,11 +6,13 @@ import { GuestList } from './pages/GuestList/GuesList';
 import { Bookings } from './pages/Bookings/Bookings';
 import { ConciergeList } from './pages/ConciergeList/ConciergeList';
 import { RoomList } from './pages/RoomList/RoomList';
+import { ReviewsList } from './pages/ReviewsList/ReviewsList';
+import { GuestDetails } from './pages/GuestDetails/GuestDetails';
 
 function App() {
   return (
     <>
-      <RoomList />
+      <GuestDetails />
     </>
   )
 }

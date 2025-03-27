@@ -4,7 +4,6 @@ import { Reviews, ReviewsContainer, Title } from "./LatestReviewStyled";
 export const LatestReview = () => {
     return (
         <>
-            
             <Reviews>
                 <Title>
                     Latest Review by Customers

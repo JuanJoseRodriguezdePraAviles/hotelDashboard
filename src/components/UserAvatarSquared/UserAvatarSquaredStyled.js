@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const AvatarWrapper = styled.div`
-    width: 4rem;
-    height: 4rem;
+    width: ${(props) => props.size === 'large'? '6rem' : (props.size === 'wide'? '9.5rem':'4rem')};
+    height: ${(props) => props.size === 'large'? '6rem' : '4rem'};
     background: var(--unnamed-color-c5c5c5) 0% 0% no-repeat padding-box;
     background: #C5C5C5 0% 0% no-repeat padding-box;
     border-radius: 8px;

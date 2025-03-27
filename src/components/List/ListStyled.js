@@ -56,6 +56,13 @@ export const FieldValue = styled.td`
     opacity: 1;
 `;
 
+export const FieldTextContainer = styled.div`
+    background: ${(props)=> props.color || '#5AD07A'};
+    border-radius: 12px;
+    opacity: 1;
+`;
+
+
 export const FieldText = styled.p`
     color: var(--unnamed-color-393939);
     text-align: left;

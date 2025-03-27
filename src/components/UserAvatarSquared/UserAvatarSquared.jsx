@@ -1,10 +1,10 @@
 import React from "react";
 import { AvatarWrapper } from "./UserAvatarSquaredStyled";
 
-export const UserAvatarSquared = () => {
+export const UserAvatarSquared = ({size}) => {
     return (
         <>
-            <AvatarWrapper></AvatarWrapper>
+            <AvatarWrapper size={size}></AvatarWrapper>
         </>
     )
 }

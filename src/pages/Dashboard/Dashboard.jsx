@@ -13,7 +13,6 @@ export const Dashboard = () => {
             <RectCard number="963" description="Scheluded Room" icon={<LuCalendarCheck size="2rem" />} />
             <RectCard number="753" description="Check In" icon={<BsBoxArrowInRight size="2rem" />} />
             <RectCard number="516" description="Check Out" icon={<BsBoxArrowInLeft size="2rem" />} />
-            <RoomList />
             <LatestReview />
         </DashboardWrapper>
     );

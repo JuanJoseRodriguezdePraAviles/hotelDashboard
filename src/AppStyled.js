@@ -6,8 +6,8 @@ export const LayoutWrapper = styled.div`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 100vh;
     overflow-y: auto;
+    background: #FFFFFF;;
 `;
 
 export const Content = styled.div`

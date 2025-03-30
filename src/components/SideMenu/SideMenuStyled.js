@@ -7,7 +7,8 @@ export const SideMenuWrapper = styled.div`
     opacity: 1;
     margin: 0;
     padding: 0 2.5rem;
-    height: 100vh;
+    //height: 100vh;
+    height: auto;
     position: relative;
 `;
 
@@ -49,4 +50,5 @@ export const PageBtn = styled.div`
     display: flex;
     padding: 2rem 0;
     color: #799283;
+    align-items: center;
 `;

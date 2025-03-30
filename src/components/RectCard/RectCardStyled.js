@@ -10,6 +10,7 @@ export const CardWrapper = styled.div`
     border-radius: 12px;
     margin: 1rem;
     padding: 1rem;
+    height: 4.5rem;
 
     &:hover {
         box-shadow: 0 6px 12px #d5d5d5;
@@ -31,7 +32,7 @@ export const CardWrapper = styled.div`
 `;
 export const DataWrapper = styled.div`
     width: 70%;
-    height: auto;
+    height: 5rem;
     display: flex;
     flex-direction: column;
     text-align: left;

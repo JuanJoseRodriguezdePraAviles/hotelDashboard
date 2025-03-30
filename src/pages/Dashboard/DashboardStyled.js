@@ -4,7 +4,8 @@ export const DashboardWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    height: 100wv;
+    height: 86.2vh;
+    padding-bottom: auto;
     background: var(--unnamed-color-f8f8f8) 0% 0% no-repeat padding-box;
     background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;

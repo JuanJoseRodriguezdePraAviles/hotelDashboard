@@ -10,6 +10,7 @@ export const Login = () => {
 
     const handleLogin = () => {
         if (username === 'admin' && password === 'admin') {
+            localStorage.login = true;
             login();
         } else {
             setError('Wrong user or password');

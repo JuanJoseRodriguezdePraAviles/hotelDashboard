@@ -4,8 +4,18 @@ import { AiOutlineBell } from "react-icons/ai";
 import { MdOutlineMessage } from "react-icons/md";
 import { UserAvatarSquared } from "../UserAvatarSquared/UserAvatarSquared";
 import { HeaderIconContainer, HeaderWrapper, LanguageSelector, PageTitle, SearchInput } from "./HeaderStyled";
+import { IoMdLogOut } from "react-icons/io";
+import { useAuth } from "../../context/AuthContext";
 
 export const Header = ({ title }) => {
+
+    const { logout } = useAuth();
+
+    const handleLogout = () => {
+        localStorage.login = false;
+        logout();
+    }
+
     return (
         <>
             <HeaderWrapper>
@@ -28,7 +38,9 @@ export const Header = ({ title }) => {
                 </HeaderIconContainer>
                 <UserAvatarSquared />
                 <LanguageSelector />
-                
+                <HeaderIconContainer>
+                    <IoMdLogOut onClick={handleLogout} color="#135846" size="2rem"/>
+                </HeaderIconContainer>
             </HeaderWrapper>
         </>
     );

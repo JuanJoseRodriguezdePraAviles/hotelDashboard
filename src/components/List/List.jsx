@@ -1,14 +1,12 @@
-
 import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
-import { NotesBtn } from "../NotesBtn/NotesBtn";
 import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars } from "./ListStyled";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
 
-export const List = ({ type }) => {
+export const List = ({ type, list }) => {
     return (
         <>
             {type === "guest" &&
@@ -42,254 +40,39 @@ export const List = ({ type }) => {
                         </tr>
                     </Header>
                     <tbody>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#FFEDEC">
-                                    <FieldText color="#E23428">Refund</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#E8FFEE">
-                                    <FieldText color="#5AD07A">Booked</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#E2E2E2">
-                                    <FieldText color="#6D6D6D">Pending</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#575757">
-                                    <FieldText color="#BEBEBE">Cancelled</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#FFEDEC">
-                                    <FieldText color="#E23428">Refund</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#E8FFEE">
-                                    <FieldText color="#5AD07A">Booked</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#E2E2E2">
-                                    <FieldText color="#6D6D6D">Pending</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <CustomerData client="Cahyadi Purnomo" email="cahmo@gmail.com" phone="666444555" identifier="#000123456"></CustomerData>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Oct 30th 2020 09:21 AM</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 2th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Nov 4th, 2020</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <NotesBtn value="View Notes" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Deluxe A - 02</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomState color="#575757">
-                                    <FieldText color="#BEBEBE">Cancelled</FieldText>
-                                </RoomState>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
+                        {list.map((booking) => {
+                            return (<tr>
+                                <FieldValue>
+                                    <Checkbox />
+                                </FieldValue>
+                                <FieldValue>
+                                    <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{booking.order_date}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{booking.check_in_date}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{booking.check_out_date}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{booking.special_request}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{booking.room_type}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <RoomState color="#FFEDEC">
+                                        <FieldText color="#E23428">{booking.room_status}</FieldText>
+                                    </RoomState>
+                                </FieldValue>
+                                <FieldValue>
+                                    <HiDotsVertical color="#6E6E6E" />
+                                </FieldValue>
+                            </tr>);
+                        })}
                     </tbody>
 
                 </Table>
@@ -691,9 +474,9 @@ export const List = ({ type }) => {
                             </FieldValue>
                             <FieldValue>
                                 <Stars>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
                                 </Stars>
                                 <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
                             </FieldValue>
@@ -722,11 +505,11 @@ export const List = ({ type }) => {
                             </FieldValue>
                             <FieldValue>
                                 <Stars>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
                                 </Stars>
                                 <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
                             </FieldValue>
@@ -755,9 +538,9 @@ export const List = ({ type }) => {
                             </FieldValue>
                             <FieldValue>
                                 <Stars>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
                                 </Stars>
                                 <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</FieldText>
                             </FieldValue>
@@ -786,11 +569,11 @@ export const List = ({ type }) => {
                             </FieldValue>
                             <FieldValue>
                                 <Stars>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
                                 </Stars>
                                 <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</FieldText>
                             </FieldValue>
@@ -819,11 +602,11 @@ export const List = ({ type }) => {
                             </FieldValue>
                             <FieldValue>
                                 <Stars>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
-                                    <IoIosStar color="#135846"/>
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
+                                    <IoIosStar color="#135846" />
                                 </Stars>
                                 <FieldText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut</FieldText>
                             </FieldValue>

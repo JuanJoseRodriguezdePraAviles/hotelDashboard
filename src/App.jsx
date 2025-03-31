@@ -7,7 +7,7 @@ import { Bookings } from './pages/Bookings/Bookings';
 import { ConciergeList } from './pages/ConciergeList/ConciergeList';
 import { RoomList } from './pages/RoomList/RoomList';
 import { ReviewsList } from './pages/ReviewsList/ReviewsList';
-import { createHashRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import { Layout } from './context/Layout/Layout.jsx';
 

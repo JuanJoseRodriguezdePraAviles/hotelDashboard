@@ -71,6 +71,8 @@ export const FieldText = styled.p`
     color: ${(props) => props.color || "#393939" };
     opacity: 1;
     padding: 1rem;
+    height: 1rem;
+    overflow-y: hidden;
 `;
 
 export const Stars = styled.div`

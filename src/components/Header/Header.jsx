@@ -6,6 +6,7 @@ import { UserAvatarSquared } from "../UserAvatarSquared/UserAvatarSquared";
 import { HeaderIconContainer, HeaderWrapper, LanguageSelector, PageTitle, SearchInput } from "./HeaderStyled";
 import { IoMdLogOut } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 export const Header = ({ title }) => {
 
@@ -16,13 +17,19 @@ export const Header = ({ title }) => {
         logout();
     }
 
+    let location = useLocation().pathname.substring(1);
+    location = location.charAt(0).toUpperCase() + location.slice(1);
+    if(location===''){
+        location="Dashboard";
+    }
+
     return (
         <>
             <HeaderWrapper>
                 <HeaderIconContainer>
                     <HiOutlineBars3BottomLeft color="#000000" size="2rem" />
                 </HeaderIconContainer>
-                <PageTitle>{title}</PageTitle>
+                <PageTitle>{location}</PageTitle>
                 <SearchInput />
                 <HeaderIconContainer>
                     <FaRegHeart color="#135846" size="2rem" />

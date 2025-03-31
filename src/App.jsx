@@ -7,23 +7,11 @@ import { Bookings } from './pages/Bookings/Bookings';
 import { ConciergeList } from './pages/ConciergeList/ConciergeList';
 import { RoomList } from './pages/RoomList/RoomList';
 import { ReviewsList } from './pages/ReviewsList/ReviewsList';
-import { GuestDetails } from './pages/GuestDetails/GuestDetails';
-import { Header } from './components/Header/Header';
 import { createHashRouter, Outlet, RouterProvider } from 'react-router-dom';
-import { SideMenu } from './components/SideMenu/SideMenu';
-import { Content, LayoutWrapper } from './AppStyled';
+import { AuthProvider, useAuth } from './context/AuthContext.jsx';
+import { Layout } from './context/Layout/Layout.jsx';
 
-const Layout = () => {
-  return (
-    <LayoutWrapper>
-      <SideMenu />
-      <Content>
-        <Header title="Dashboard"/>
-        <Outlet></Outlet>
-      </Content>
-    </LayoutWrapper>
-  );
-}
+
 
 const router = createHashRouter([
   {
@@ -40,7 +28,7 @@ const router = createHashRouter([
       },
       {
         path: 'conciergeList',
-        element: <GuestDetails />
+        element: <ConciergeList />
       },
       {
         path: 'guestList',
@@ -60,9 +48,10 @@ const router = createHashRouter([
 
 function App() {
   return (
-    <>
-      {<RouterProvider router={router} />}
-    </>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+
   )
 }
 

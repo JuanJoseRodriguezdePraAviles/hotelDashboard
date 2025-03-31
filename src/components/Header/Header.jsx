@@ -28,6 +28,7 @@ export const Header = ({ title }) => {
                 </HeaderIconContainer>
                 <UserAvatarSquared />
                 <LanguageSelector />
+                
             </HeaderWrapper>
         </>
     );

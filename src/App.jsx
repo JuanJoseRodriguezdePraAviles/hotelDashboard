@@ -10,6 +10,7 @@ import { ReviewsList } from './pages/ReviewsList/ReviewsList';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import { Layout } from './context/Layout/Layout.jsx';
+import { Profile } from './pages/Profile/Profile.jsx';
 
 
 
@@ -41,6 +42,10 @@ const router = createHashRouter([
       {
         path: 'roomList',
         element: <RoomList />
+      },
+      {
+        path: 'profile',
+        element: <Profile />
       }
     ],
   }

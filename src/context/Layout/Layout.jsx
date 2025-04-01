@@ -10,9 +10,8 @@ export const Layout = () => {
     const { auth, setAuth } = useAuth();
 
     useEffect(() => {
-      if(localStorage.login) {
-        setAuth(localStorage.login);
-      }
+      const isLogin = localStorage.getItem("login")==='true';
+      setAuth(isLogin);
     }, [setAuth]);
 
     return (

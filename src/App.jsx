@@ -11,6 +11,7 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext.jsx';
 import { Layout } from './context/Layout/Layout.jsx';
 import { Profile } from './pages/Profile/Profile.jsx';
+import { NewBooking } from './pages/Bookings/NewBooking.jsx';
 
 
 
@@ -26,6 +27,10 @@ const router = createHashRouter([
       {
         path: 'bookings',
         element: <Bookings />
+      },
+      {
+        path: 'newBooking',
+        element: <NewBooking />
       },
       {
         path: 'conciergeList',

@@ -1,10 +1,12 @@
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { Filters } from "../../components/List/ListStyled";
-import { BookingsWrapper } from "./BookingsStyled";
+import { BookingsWrapper, NewBookingBtn } from "./BookingsStyled";
 import { fetchBookings } from '../../redux/slices/BookingSlice';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 export const Bookings = () => {
     const dispatch = useDispatch();
@@ -20,7 +22,7 @@ export const Bookings = () => {
     }, [dispatch, status]);
 
     if(status === 'loading'){
-
+        return <button>Loading Bookings...</button>
     }
 
     if(status === 'failed') {
@@ -36,6 +38,9 @@ export const Bookings = () => {
                 <Filter name="Cancelled" color="#6E6E6E"></Filter>
                 <Filter name="Refund" color="#6E6E6E"></Filter>
             </Filters>
+            <Link to="/NewBooking">
+                <NewBookingBtn>New Booking</NewBookingBtn>
+            </Link>
             <List type="guest" list={bookings}/>
         </BookingsWrapper>
     );

@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export const fetchBookings = createAsyncThunk(
     'bookings/fetchBookings',
     async () => {
+        await delay(200);
         const response = await fetch("../../public/Bookings.json");
         const data = await response.json();
+        console.log(data);
         return data;
     }
 );
@@ -16,7 +20,11 @@ const bookingsSlice = createSlice({
         status: 'idle',
         error: null
     },
-    reducers: {},
+    reducers: {
+        addBooking: (state, action) => {
+            state.bookings.push(action.payload)
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchBookings.pending, (state) => {
@@ -33,5 +41,6 @@ const bookingsSlice = createSlice({
     }
 });
 
+export const { addBooking } = bookingsSlice.actions;
 export const { actions, reducer } = bookingsSlice;
 export default reducer;

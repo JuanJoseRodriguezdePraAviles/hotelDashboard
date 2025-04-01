@@ -1,0 +1,106 @@
+import { useState } from "react"
+import { DateInput, FieldText, Label, NewBookingTitle, NewBookingWrapper, SubmitBtn, ValidationError } from "./NewBookingStyled";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addBooking } from "../../redux/slices/BookingSlice";
+
+export const NewBooking = () => {
+    const dispatch = useDispatch();
+    const [formData, setFormData] = useState({
+        client_id: '',
+        client_name: '',
+        client_email: '',
+        client_phone: '',
+        check_in_date: '',
+        check_out_date: '',
+        special_request: '',
+        room_id: '',
+        room_type: '',
+        status: 'booked'
+    });
+
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const newErrors = {};
+
+        Object.keys(formData).forEach((key) => {
+            if (!formData[key]) {
+                newErrors[key] = `Field ${key} cannot be empty`;
+            }
+        });
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        dispatch(addBooking(formData));
+
+        navigate("/bookings");
+    }
+
+    return (
+        <NewBookingWrapper>
+            <NewBookingTitle>New booking</NewBookingTitle>
+            <Label>Client ID</Label>
+            <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
+            <ValidationError>
+                {errors.client_id && <p>{errors.client_id}</p>}
+            </ValidationError>
+            <Label>Client Name</Label>
+            <FieldText name="client_name" value={formData.client_name} onChange={handleChange} />
+            <ValidationError>
+                {errors.client_name && <p>{errors.client_name}</p>}
+            </ValidationError>
+
+            <Label>Client Email</Label>
+            <FieldText name="clientEmail" value={formData.clientEmail} onChange={handleChange} />
+            <ValidationError>
+                {errors.clientEmail && <p>{errors.clientEmail}</p>}
+            </ValidationError>
+            <Label>Client Phone</Label>
+            <FieldText name="client_phone" value={formData.client_phone} onChange={handleChange} />
+            <ValidationError>
+                {errors.client_name && <p>{errors.client_name}</p>}
+            </ValidationError>
+            <Label>Check In Date</Label>
+            <DateInput type="date" name="check-in-date" value={formData.check_in_date} onChange={handleChange} />
+            <ValidationError>
+                {errors.check_in_date && <p>{errors.check_in_date}</p>}
+            </ValidationError>
+            <Label>Check Out Date</Label>
+            <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} />
+            <ValidationError>
+                {errors.check_out_date && <p>{errors.check_out_date}</p>}
+            </ValidationError>
+            <Label>Special Request</Label>
+            <FieldText name="special_request" value={formData.special_request} onChange={handleChange} />
+            <ValidationError>
+                {errors.special_request && <p>{errors.special_request}</p>}
+            </ValidationError>
+            <Label>Room ID</Label>
+            <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+            <ValidationError>
+                {errors.room_id && <p>{errors.room_id}</p>}
+            </ValidationError>
+            <Label>Room Type</Label>
+            <FieldText name="room_type" value={formData.room_type} onChange={handleChange} />
+            <ValidationError>
+                {errors.room_type && <p>{errors.room_type}</p>}
+            </ValidationError>
+            <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
+        </NewBookingWrapper>
+    )
+}

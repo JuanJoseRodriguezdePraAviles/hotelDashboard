@@ -10,3 +10,10 @@ export const BookingsWrapper = styled.div`
     background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;
 `;
+
+export const NewBookingBtn = styled.button`
+    background: #135846;
+    width: auto;
+    height: auto;
+    opacity: 1;
+`;

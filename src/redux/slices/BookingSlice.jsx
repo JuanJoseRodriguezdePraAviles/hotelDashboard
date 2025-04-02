@@ -22,6 +22,18 @@ const bookingsSlice = createSlice({
     reducers: {
         addBooking: (state, action) => {
             state.bookings.push(action.payload)
+        },
+        editBooking: (state, action) => {
+            const { id, updateBooking } = action.payload;
+            const index = state.bookings.findIndex((booking) => booking.booking_id === Number(id));
+            
+            if (index !== -1) {
+                state.bookings[index] = { ...state.bookings[index], ...updateBooking };
+            }
+        },
+        deleteBooking: (state, action) => {
+            const { id } = action.payload;
+            state.bookings = state.bookings.filter((booking) => booking.booking_id !== Number(id));
         }
     },
     extraReducers: (builder) => {
@@ -40,6 +52,6 @@ const bookingsSlice = createSlice({
     }
 });
 
-export const { addBooking } = bookingsSlice.actions;
+export const { addBooking, editBooking, deleteBooking } = bookingsSlice.actions;
 export const { actions, reducer } = bookingsSlice;
 export default reducer;

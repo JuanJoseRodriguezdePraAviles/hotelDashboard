@@ -11,9 +11,10 @@ export const BookingsWrapper = styled.div`
     opacity: 1;
 `;
 
-export const NewBookingBtn = styled.button`
+export const BookingBtn = styled.button`
     background: #135846;
     width: auto;
     height: auto;
     opacity: 1;
 `;
+

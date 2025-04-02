@@ -29,18 +29,18 @@ export const Header = styled.thead`
     opacity: 1;
 `;
 
-export const Checkbox = styled.div`
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    border: 2px solid var(--unnamed-color-707070);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border: 2px solid #707070;
-    border-radius: 6px;
-    opacity: 1;
-    height: 1rem;
+export const Checkbox = styled.input.attrs({ type: 'checkbox' })`
+    appearance: none;
     width: 1rem;
+    height: 1rem;
+    border: 2px solid #135846;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+
+    &:checked {
+        background-color: #135846;
+    }
 `;
 
 export const Check = styled.div`

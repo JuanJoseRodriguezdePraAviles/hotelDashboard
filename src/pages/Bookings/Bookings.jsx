@@ -1,12 +1,12 @@
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { Filters } from "../../components/List/ListStyled";
-import { BookingsWrapper, NewBookingBtn } from "./BookingsStyled";
+import { BookingBtn, BookingsWrapper } from "./BookingsStyled";
 import { fetchBookings } from '../../redux/slices/BookingSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { deleteBooking } from "../../redux/slices/BookingSlice";
 
 export const Bookings = () => {
     const dispatch = useDispatch();
@@ -15,20 +15,38 @@ export const Bookings = () => {
     const status = useSelector((state) => state.bookings.status);
     const error = useSelector((state) => state.bookings.error);
 
-    const [state, setState] = useState(status);
+    const [selectedBookings, setSelectedBookings] = useState([]);
 
-    
+
     useEffect(() => {
-        setState(status);
         if (status === 'idle') {
             dispatch(fetchBookings());
         }
     }, [dispatch, status]);
-    
+
+    const handleCheckboxChange = (bookingId, isChecked) => {
+        setSelectedBookings((prevSelected) => {
+            if (isChecked) {
+                return [...prevSelected, bookingId];
+            } else {
+                return prevSelected.filter((id) => id !== bookingId);
+            }
+        });
+    }
+
+    const handleDelete = (bookingId) => {
+        setSelectedBookings((prevSelected) => prevSelected.filter((id) => id !== bookingId));
+        dispatch(deleteBooking({ id: bookingId }));
+        
+        
+    }
+
+    const isSingleSelection = selectedBookings.length === 1;
+
     return (
         <BookingsWrapper>
-            {state==='loading' && <button>Loading Bookings...</button>}
-            {state==='failed' && <button>Failed to load bookings</button>}
+            {status === 'loading' && <button>Loading Bookings...</button>}
+            {status === 'failed' && <button>Failed to load bookings</button>}
             <Filters>
                 <Filter name="All Guest" color="#135846"></Filter>
                 <Filter name="Pending" color="#6E6E6E"></Filter>
@@ -36,10 +54,24 @@ export const Bookings = () => {
                 <Filter name="Cancelled" color="#6E6E6E"></Filter>
                 <Filter name="Refund" color="#6E6E6E"></Filter>
             </Filters>
+
             <Link to="/NewBooking">
-                <NewBookingBtn>New Booking</NewBookingBtn>
+                <BookingBtn>New Booking</BookingBtn>
             </Link>
-            <List type="guest" list={bookings}/>
+            {isSingleSelection ?
+                <>
+                    <Link to={`/EditBooking/${selectedBookings[0]}`}>
+                        <BookingBtn>Edit Booking</BookingBtn>
+                    </Link>
+                    <BookingBtn onClick={() => handleDelete(selectedBookings[0])}>Delete Booking</BookingBtn>
+                </>
+                :
+                <>
+                    <BookingBtn disabled>Edit Booking</BookingBtn>
+                    <BookingBtn disabled>Delete Booking</BookingBtn>
+                </>
+            }
+            <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selectedBookings={selectedBookings}/>
         </BookingsWrapper>
     );
 }

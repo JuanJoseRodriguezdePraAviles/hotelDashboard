@@ -6,7 +6,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
 
-export const List = ({ type, list }) => {
+export const List = ({ type, list, onCheckboxChange, selectedBookings }) => {
     return (
         <>
             {type === "guest" &&
@@ -14,9 +14,7 @@ export const List = ({ type, list }) => {
                     <Header>
                         <tr>
                             <th>
-                                <Checkbox>
-                                    <Check />
-                                </Checkbox>
+                                <Checkbox/>
                             </th>
                             <th>
                                 <FieldName>Guest</FieldName>
@@ -45,7 +43,7 @@ export const List = ({ type, list }) => {
                         {list.map((booking) => {
                             return (<tr>
                                 <FieldValue>
-                                    <Checkbox />
+                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selectedBookings.includes(booking.booking_id)}/>
                                 </FieldValue>
                                 <FieldValue>
                                     <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>

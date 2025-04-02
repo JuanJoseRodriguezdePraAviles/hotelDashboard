@@ -8,7 +8,6 @@ export const fetchBookings = createAsyncThunk(
         await delay(200);
         const response = await fetch("../../public/Bookings.json");
         const data = await response.json();
-        console.log(data);
         return data;
     }
 );

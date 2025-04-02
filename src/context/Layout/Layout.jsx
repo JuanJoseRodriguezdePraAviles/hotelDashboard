@@ -7,12 +7,16 @@ import { Header } from "../../components/Header/Header";
 import { useEffect } from "react";
 
 export const Layout = () => {
-    const { auth, setAuth } = useAuth();
+    const { auth, login, logout } = useAuth();
 
     useEffect(() => {
       const isLogin = localStorage.getItem("login")==='true';
-      setAuth(isLogin);
-    }, [setAuth]);
+      if(isLogin && !auth) {
+        login();
+      } else if (!isLogin && auth) {
+        logout();
+      }
+    }, [auth, login, logout]);
 
     return (
       auth ?

@@ -1,7 +1,7 @@
 import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
-import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars } from "./ListStyled";
+import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars, Check } from "./ListStyled";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
@@ -14,7 +14,9 @@ export const List = ({ type, list }) => {
                     <Header>
                         <tr>
                             <th>
-                                <Checkbox />
+                                <Checkbox>
+                                    <Check />
+                                </Checkbox>
                             </th>
                             <th>
                                 <FieldName>Guest</FieldName>
@@ -65,7 +67,7 @@ export const List = ({ type, list }) => {
                                 </FieldValue>
                                 <FieldValue>
                                     <RoomState color="#FFEDEC">
-                                        <FieldText color="#E23428">{booking.room_status}</FieldText>
+                                        <FieldText color="#E23428">{booking.status}</FieldText>
                                     </RoomState>
                                 </FieldValue>
                                 <FieldValue>

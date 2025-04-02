@@ -30,6 +30,9 @@ export const Header = styled.thead`
 `;
 
 export const Checkbox = styled.div`
+    display:flex;
+    justify-content: center;
+    align-items: center;
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
     border: 2px solid var(--unnamed-color-707070);
     background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -38,6 +41,16 @@ export const Checkbox = styled.div`
     opacity: 1;
     height: 1rem;
     width: 1rem;
+`;
+
+export const Check = styled.div`
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 2px solid var(--unnamed-color-707070);
+    background:rgb(1, 43, 0) 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border-radius: 30%;
+    height: 0.8rem;
+    width: 0.8rem;
 `;
 
 export const FieldName = styled.p`
@@ -57,7 +70,7 @@ export const FieldValue = styled.td`
 `;
 
 export const FieldTextContainer = styled.div`
-    background: ${(props)=> props.color || '#5AD07A'};
+    background: ${(props) => props.color || '#5AD07A'};
     border-radius: 12px;
     opacity: 1;
 `;
@@ -68,7 +81,7 @@ export const FieldText = styled.p`
     text-align: left;
     font: normal normal 600 16px/25px Poppins;
     letter-spacing: 0px;
-    color: ${(props) => props.color || "#393939" };
+    color: ${(props) => props.color || "#393939"};
     opacity: 1;
     padding: 1rem;
     height: 1rem;
@@ -82,7 +95,7 @@ export const Stars = styled.div`
 `;
 
 export const RoomState = styled.div`
-    background: ${(props) => props.color || "#393939" };
+    background: ${(props) => props.color || "#393939"};
     border-radius: 12px;
     opacity: 1;
 `;

@@ -13,6 +13,11 @@ import { Layout } from './context/Layout/Layout.jsx';
 import { Profile } from './pages/Profile/Profile.jsx';
 import { NewBooking } from './pages/Bookings/NewBooking.jsx';
 import { EditBooking } from './pages/Bookings/EditBooking.jsx';
+import { GuestDetails } from './pages/GuestDetails/GuestDetails.jsx';
+import { NewGuest } from './pages/GuestList/NewGuest.jsx';
+import { EditGuest } from './pages/GuestList/EditGuest.jsx';
+import { NewRoom } from './pages/RoomList/NewRoom.jsx';
+import { EditRoom } from './pages/RoomList/EditRoom.jsx';
 
 
 
@@ -38,6 +43,10 @@ const router = createHashRouter([
         element: <EditBooking />
       },
       {
+        path: 'guestDetails/:bookingId',
+        element: <GuestDetails />
+      },
+      {
         path: 'conciergeList',
         element: <ConciergeList />
       },
@@ -46,12 +55,28 @@ const router = createHashRouter([
         element: <GuestList />
       },
       {
+        path: 'newGuest',
+        element: <NewGuest />
+      },
+      {
+        path: 'editGuest/:guestId',
+        element: <EditGuest />
+      },
+      {
         path: 'reviewsList',
         element: <ReviewsList />
       },
       {
         path: 'roomList',
         element: <RoomList />
+      },
+      {
+        path: 'newRoom',
+        element: <NewRoom />
+      },
+      {
+        path: 'editRoom/:roomId',
+        element: <EditRoom />
       },
       {
         path: 'profile',

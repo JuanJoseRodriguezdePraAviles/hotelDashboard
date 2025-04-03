@@ -11,5 +11,11 @@ export const GuestListWrapper = styled.div`
     opacity: 1;
 `;
 
-
+export const GuestBtn = styled.button`
+    background: #135846;
+    width: auto;
+    height: auto;
+    opacity: 1;
+    margin: 0.5rem;
+`;
 

@@ -5,7 +5,7 @@ export const GuestDetailsWrapper = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: auto;
     background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;
 `;
@@ -31,7 +31,7 @@ export const DetailsHeader = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
@@ -56,14 +56,14 @@ export const NameContactContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     width: 70%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
 export const GuestName = styled.p`
     color: #212121;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
     font-size: 2.5rem;
     margin: 0;
@@ -75,7 +75,7 @@ export const GuestName = styled.p`
 export const GuestId = styled.p`
     color: #212121;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
     text-align: left;
 `;
@@ -85,7 +85,7 @@ export const ContactContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
@@ -96,12 +96,13 @@ export const PhoneBtn = styled.div`
     box-shadow: 0px 16px 30px #00000014;
     padding: 0.5rem 1rem;
     margin: 0 0.5rem 0 0;
+    height: auto;
 `;
 
 export const MessageBtn = styled.div`
     background-color: #135846;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
     border-radius: 12px;
     padding: 0.5rem;
@@ -110,7 +111,7 @@ export const MessageBtn = styled.div`
 export const CheckDatesContainer = styled.div`
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: auto;
     width:100%;
     opacity: 1;
     border-bottom: 2px solid rgb(233, 233, 233);
@@ -120,7 +121,7 @@ export const RoomPriceContainer = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
@@ -130,28 +131,28 @@ export const DataContainer = styled.div`
     flex-direction: row;
     text-align: left;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
 export const LabelField = styled.p`
     color: #799283;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
 export const ValueField = styled.p`
     color: #212121;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
 export const RoomDescription = styled.p`
     color: #363636;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
     text-align: left;
 `;
@@ -161,13 +162,13 @@ export const FacilitiesContainer = styled.div`
     flex-direction: column;
     text-align: left;
     width: 80%;
-    height: 100%;
+    height: auto;
 `;
 
 export const FacilitiesTitle = styled.p`
     color: #799283;
     width: 80%;
-    height: 100%;
+    height: auto;
     opacity: 1;
 `;
 
@@ -175,7 +176,7 @@ export const FacilitiesTags = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 80%;
+    width: 100%;
     height: 100%;
     opacity: 1;
 `;
@@ -184,7 +185,7 @@ export const FacilityTag = styled.p`
     color: #135846;
     background: #E8F2EF;
     width: auto;
-    height: 100%;
+    height: auto;
     border-radius: 12px;
     padding: 1rem 1.5rem;
     margin: 0.5rem 0.5rem;

@@ -64,14 +64,18 @@ export const Bookings = () => {
                         <BookingBtn>Edit Booking</BookingBtn>
                     </Link>
                     <BookingBtn onClick={() => handleDelete(selectedBookings[0])}>Delete Booking</BookingBtn>
+                    <Link to={`/GuestDetails/${selectedBookings[0]}`}>
+                        <BookingBtn>Booking Details</BookingBtn>
+                    </Link>
                 </>
                 :
                 <>
                     <BookingBtn disabled>Edit Booking</BookingBtn>
                     <BookingBtn disabled>Delete Booking</BookingBtn>
+                    <BookingBtn disabled>Booking Details</BookingBtn>
                 </>
             }
-            <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selectedBookings={selectedBookings}/>
+            <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selected={selectedBookings}/>
         </BookingsWrapper>
     );
 }

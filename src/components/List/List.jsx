@@ -6,7 +6,7 @@ import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
 
-export const List = ({ type, list, onCheckboxChange, selectedBookings }) => {
+export const List = ({ type, list, onCheckboxChange, selected }) => {
     return (
         <>
             {type === "guest" &&
@@ -43,7 +43,7 @@ export const List = ({ type, list, onCheckboxChange, selectedBookings }) => {
                         {list.map((booking) => {
                             return (<tr>
                                 <FieldValue>
-                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selectedBookings.includes(booking.booking_id)}/>
+                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selected.includes(booking.booking_id)}/>
                                 </FieldValue>
                                 <FieldValue>
                                     <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>
@@ -290,146 +290,37 @@ export const List = ({ type, list, onCheckboxChange, selectedBookings }) => {
                         </tr>
                     </Header>
                     <tbody>
+                    {list.map((room) => {
+                        return(
                         <tr>
                             <FieldValue>
-                                <Checkbox />
+                                <Checkbox onChange={(e) => onCheckboxChange(room.room_id, e.target.checked)} checked={selected.includes(room.room_id)}/>
                             </FieldValue>
                             <FieldValue>
-                                <RoomData name="Deluxe A-91234" identifier="#000123456" />
+                                <RoomData name={room.room_name} identifier={room.room_id} />
                             </FieldValue>
                             <FieldValue>
-                                <FieldText>Double Bed</FieldText>
+                                <FieldText>{room.room_type}</FieldText>
                             </FieldValue>
                             <FieldValue>
-                                <FieldText>Floor A-1</FieldText>
+                                <FieldText>{room.room_floor}</FieldText>
                             </FieldValue>
                             <FieldValue>
-                                <FieldText>AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FieldText>
+                                <FieldText>{room.room_amenities}</FieldText>
                             </FieldValue>
                             <FieldValue>
-                                <FieldText>145$ /night</FieldText>
+                                <FieldText>{room.price}$ /night</FieldText>
                             </FieldValue>
                             <FieldValue>
-                                <FieldTextContainer color="#5AD07A">
-                                    <FieldText color="#FFFFFF">Available</FieldText>
+                                <FieldTextContainer color={room.status==='Available'?"#5AD07A":"#E23428"}>
+                                    <FieldText color="#FFFFFF">{room.status}</FieldText>
                                 </FieldTextContainer>
                             </FieldValue>
                             <FieldValue>
                                 <HiDotsVertical color="#6E6E6E" />
                             </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomData name="Deluxe A-91234" identifier="#000123456" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Double Bed</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Floor A-1</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>145$ /night</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldTextContainer color="#E23428">
-                                    <FieldText color="#FFFFFF">Booked</FieldText>
-                                </FieldTextContainer>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomData name="Deluxe A-91234" identifier="#000123456" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Double Bed</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Floor A-1</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>145$ /night</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldTextContainer color="#5AD07A">
-                                    <FieldText color="#FFFFFF">Available</FieldText>
-                                </FieldTextContainer>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomData name="Deluxe A-91234" identifier="#000123456" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Double Bed</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Floor A-1</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>145$ /night</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldTextContainer color="#5AD07A">
-                                    <FieldText color="#FFFFFF">Available</FieldText>
-                                </FieldTextContainer>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomData name="Deluxe A-91234" identifier="#000123456" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Double Bed</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Floor A-1</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>145$ /night</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldTextContainer color="#E23428">
-                                    <FieldText color="#FFFFFF">Booked</FieldText>
-                                </FieldTextContainer>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
+                        </tr>);
+                    })}
                     </tbody>
 
                 </Table>
@@ -625,6 +516,5 @@ export const List = ({ type, list, onCheckboxChange, selectedBookings }) => {
                 </Table>
             }
         </>
-
     );
 }

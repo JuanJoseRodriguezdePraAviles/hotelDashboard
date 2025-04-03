@@ -16,5 +16,6 @@ export const BookingBtn = styled.button`
     width: auto;
     height: auto;
     opacity: 1;
+    margin: 0.5rem;
 `;
 

@@ -14,7 +14,7 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                     <Header>
                         <tr>
                             <th>
-                                <Checkbox/>
+                                <Checkbox />
                             </th>
                             <th>
                                 <FieldName>Guest</FieldName>
@@ -43,7 +43,7 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                         {list.map((booking) => {
                             return (<tr>
                                 <FieldValue>
-                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selected.includes(booking.booking_id)}/>
+                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selected.includes(booking.booking_id)} />
                                 </FieldValue>
                                 <FieldValue>
                                     <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>
@@ -102,32 +102,35 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                         </tr>
                     </Header>
                     <tbody>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="Cahyadi Purnomo" identifier="#000123456" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>cahmo@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Answering guest inquiries, directing phone calls, coordinating travel plans, and more.</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Monday, Friday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#5AD07A">ACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
+                        {list.map((employee) => {
+                            <tr>
+                                <FieldValue>
+                                    <Checkbox />
+                                </FieldValue>
+                                <FieldValue>
+                                    <EmployeeData name={employee.name} identifier={employee.id} startDate={employee.registration_date} />
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{employee.name}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{employee.job_functions}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText>{employee.schelude}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText><MdOutlineLocalPhone />{employee.phone}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <FieldText color="#5AD07A">{employee.status}</FieldText>
+                                </FieldValue>
+                                <FieldValue>
+                                    <HiDotsVertical color="#6E6E6E" />
+                                </FieldValue>
+                            </tr>
+                        })}
+
                         <tr>
                             <FieldValue>
                                 <Checkbox />
@@ -290,37 +293,37 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                         </tr>
                     </Header>
                     <tbody>
-                    {list.map((room) => {
-                        return(
-                        <tr>
-                            <FieldValue>
-                                <Checkbox onChange={(e) => onCheckboxChange(room.room_id, e.target.checked)} checked={selected.includes(room.room_id)}/>
-                            </FieldValue>
-                            <FieldValue>
-                                <RoomData name={room.room_name} identifier={room.room_id} />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>{room.room_type}</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>{room.room_floor}</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>{room.room_amenities}</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>{room.price}$ /night</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldTextContainer color={room.status==='Available'?"#5AD07A":"#E23428"}>
-                                    <FieldText color="#FFFFFF">{room.status}</FieldText>
-                                </FieldTextContainer>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>);
-                    })}
+                        {list.map((room) => {
+                            return (
+                                <tr>
+                                    <FieldValue>
+                                        <Checkbox onChange={(e) => onCheckboxChange(room.room_id, e.target.checked)} checked={selected.includes(room.room_id)} />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <RoomData name={room.room_name} identifier={room.room_id} />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{room.room_type}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{room.room_floor}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{room.room_amenities}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{room.price}$ /night</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldTextContainer color={room.status === 'Available' ? "#5AD07A" : "#E23428"}>
+                                            <FieldText color="#FFFFFF">{room.status}</FieldText>
+                                        </FieldTextContainer>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <HiDotsVertical color="#6E6E6E" />
+                                    </FieldValue>
+                                </tr>);
+                        })}
                     </tbody>
 
                 </Table>

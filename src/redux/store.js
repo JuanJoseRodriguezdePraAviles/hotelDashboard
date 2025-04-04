@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import bookingsReducer from './slices/BookingSlice';
 import guestsReducer from './slices/GuestSlice';
 import roomsReducer from './slices/RoomSlice';
+import employeesReducer from './slices/EmployeeSlice';
 import authReducer from './slices/AuthSlice';
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
         auth: authReducer,
         bookings: bookingsReducer,
         guests: guestsReducer,
-        rooms: roomsReducer
+        rooms: roomsReducer,
+        employees: employeesReducer
     }
 });

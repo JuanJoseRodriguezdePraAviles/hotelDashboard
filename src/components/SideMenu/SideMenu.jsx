@@ -30,7 +30,7 @@ export const SideMenu = () => {
                     <Link to="/guestList">
                         <PageBtn><FaRegUser />Guest</PageBtn>
                     </Link>
-                    <Link to="/reviewsList">
+                    <Link to="/conciergeList">
                         <PageBtn><HiOutlinePuzzle />Concierge</PageBtn>
                     </Link>
                 </NavBtns>

@@ -1,9 +1,9 @@
-import { SideMenu } from "../../components/SideMenu/SideMenu";
-import { Content, LayoutWrapper } from './LayoutStyled';
+import { SideMenu } from "../../components/SideMenu/SideMenu.jsx";
+import { Content, LayoutWrapper } from './LayoutStyled.js';
 import { Outlet } from 'react-router-dom';
 import { Login } from "../../pages/Login/Login.jsx";
 import { useAuth } from "../AuthContext.jsx";
-import { Header } from "../../components/Header/Header";
+import { Header } from "../../components/Header/Header.jsx";
 import { useEffect } from "react";
 
 export const Layout = () => {

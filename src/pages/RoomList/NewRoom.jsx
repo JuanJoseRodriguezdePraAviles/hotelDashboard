@@ -9,6 +9,7 @@ export const NewRoom = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         room_id: '',
+        room_name: '',
         room_type: '',
         room_floor: '',
         status: '',
@@ -36,7 +37,11 @@ export const NewRoom = () => {
         const newErrors = {};
 
         Object.keys(formData).forEach((key) => {
-            if (!formData[key]) {
+            if (formData[key] === '' ||
+                formData[key] === null ||
+                formData[key] === undefined ||
+                (Array.isArray(formData[key] && formData[key].length === 0))
+            ) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
         });
@@ -48,7 +53,7 @@ export const NewRoom = () => {
 
         dispatch(addRoom(formData));
 
-        navigate("/rooms");
+        navigate("/roomList");
     }
 
     return (
@@ -56,9 +61,16 @@ export const NewRoom = () => {
             <NewRoomTitle>New room</NewRoomTitle>
             <Label>Room ID</Label>
             <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
-            {errors.client_id &&
+            {errors.room_id &&
                 <ValidationError>
                     {errors.room_id}
+                </ValidationError>
+            }
+            <Label>Room Name</Label>
+            <FieldText name="room_name" value={formData.room_name} onChange={handleChange} />
+            {errors.room_name &&
+                <ValidationError>
+                    {errors.room_name}
                 </ValidationError>
             }
             <Label>Room Type</Label>
@@ -87,6 +99,13 @@ export const NewRoom = () => {
             {errors.description &&
                 <ValidationError>
                     {errors.description}
+                </ValidationError>
+            }
+            <Label>Photos (comma-sepparated URLs):</Label>
+            <FieldText name="photos" value={formData.photos.join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim()) })} />
+            {errors.photos &&
+                <ValidationError>
+                    {errors.photos}
                 </ValidationError>
             }
             <Label>Price: </Label>

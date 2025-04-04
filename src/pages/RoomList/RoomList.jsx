@@ -5,7 +5,7 @@ import { Filters } from "../../components/List/ListStyled";
 import { RoomBtn, RoomListWrapper } from "./RoomListStyled";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchRooms } from "../../redux/slices/RoomSlice";
+import { deleteRoom, fetchRooms } from "../../redux/slices/RoomSlice";
 
 export const RoomList = () => {
     const dispatch = useDispatch();
@@ -57,15 +57,11 @@ export const RoomList = () => {
                         <RoomBtn>Edit Room</RoomBtn>
                     </Link>
                     <RoomBtn onClick={() => handleDelete(selectedRooms[0])}>Delete Room</RoomBtn>
-                    <Link to={`/GuestDetails/${selectedRooms[0]}`}>
-                        <RoomBtn>Room Details</RoomBtn>
-                    </Link>
                 </>
                 :
                 <>
                     <RoomBtn disabled>Edit Room</RoomBtn>
                     <RoomBtn disabled>Delete Room</RoomBtn>
-                    <RoomBtn disabled>Room Details</RoomBtn>
                 </>
             }
             <List type="room" list={rooms} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>

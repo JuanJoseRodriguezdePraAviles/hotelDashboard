@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { DateInput, FieldText, Label, EditRoomTitle, EditRoomWrapper, SubmitBtn, ValidationError } from "./EditRoomStyled";
+import { FieldText, Label, EditRoomTitle, EditRoomWrapper, SubmitBtn, ValidationError } from "./EditRoomStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { editRoom } from "../../redux/slices/RoomSlice";
@@ -13,16 +13,17 @@ export const EditRoom = () => {
     const room = useSelector((state) => state.rooms.rooms.find((room) => room.room_id === Number(roomId)));
 
     const [formData, setFormData] = useState({
-        client_id: '',
-        client_name: '',
-        client_email: '',
-        client_phone: '',
-        check_in_date: '',
-        check_out_date: '',
-        special_request: '',
         room_id: '',
+        room_name: '',
         room_type: '',
-        status: 'booked'
+        room_floor: '',
+        status: '',
+        description: '',
+        photos: [],
+        offer: false,
+        price: 0,
+        discount: 0,
+        cancellation_policy: ''
     });
 
     const [errors, setErrors] = useState({});
@@ -30,7 +31,7 @@ export const EditRoom = () => {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
-        const month = String(date.getMonth()+1).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}`;
     }
@@ -38,19 +39,20 @@ export const EditRoom = () => {
     useEffect(() => {
         if (room) {
             setFormData({
-                client_id: room.client_id,
-                client_name: room.client_name,
-                client_email: room.client_email,
-                client_phone: room.client_phone,
-                check_in_date: formatDate(room.check_in_date),
-                check_out_date: formatDate(room.check_out_date),
-                special_request: room.special_request,
                 room_id: room.room_id,
+                room_name: room.room_name,
                 room_type: room.room_type,
-                status: room.status
+                room_floor: room.room_floor,
+                status: room.status,
+                description: room.description,
+                photos: Array.isArray(room.photos) ? room.photos : [],
+                offer: room.offer,
+                price: room.price,
+                discount: room.discount,
+                cancellation_policy: room.cancellation_policy
             });
         }
-    }, [room])
+    }, [room]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -65,7 +67,11 @@ export const EditRoom = () => {
         const newErrors = {};
 
         Object.keys(formData).forEach((key) => {
-            if (!formData[key]) {
+            if (formData[key] === '' ||
+                formData[key] === null ||
+                formData[key] === undefined ||
+                (Array.isArray(formData[key]) && formData[key].length === 0)
+            ) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
         });
@@ -74,78 +80,85 @@ export const EditRoom = () => {
             setErrors(newErrors);
             return;
         }
-        dispatch(editBooking({ id: roomId, updateRoom: formData }));
+        dispatch(editRoom({ id: roomId, updateRoom: formData }));
 
         navigate("/roomList");
     }
 
     return (
         <EditRoomWrapper>
-            <EditRoomTitle>Edit room</EditRoomTitle>
-            <Label>Client ID</Label>
-            <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
-            {errors.client_id &&
-                <ValidationError>
-                    {errors.client_id}
-                </ValidationError>
-            }
-            <Label>Client Name</Label>
-            <FieldText name="client_name" value={formData.client_name} onChange={handleChange} />
-            {errors.client_name &&
-                <ValidationError>
-                    {errors.client_name}
-                </ValidationError>
-            }
-            <Label>Client Email</Label>
-            <FieldText name="client_email" value={formData.client_email} onChange={handleChange} />
-            {errors.client_email &&
-                <ValidationError>
-                    {errors.client_email}
-                </ValidationError>
-            }
-            <Label>Client Phone</Label>
-            <FieldText name="client_phone" value={formData.client_phone} onChange={handleChange} />
-            {errors.client_name &&
-                <ValidationError>
-                    {errors.client_name}
-                </ValidationError>
-            }
-            <Label>Check In Date</Label>
-            <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} />
-            {errors.check_in_date &&
-                <ValidationError>
-                    {errors.check_in_date}
-                </ValidationError>
-            }
-            <Label>Check Out Date</Label>
-            <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} />
-            {errors.check_out_date &&
-                <ValidationError>
-                    {errors.check_out_date}
-                </ValidationError>
-            }
-            <Label>Special Request</Label>
-            <FieldText name="special_request" value={formData.special_request} onChange={handleChange} />
-            {errors.special_request &&
-                <ValidationError>
-                    {errors.special_request}
-                </ValidationError>
-            }
-            <Label>Room ID</Label>
-            <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
-            {errors.room_id &&
-                <ValidationError>
-                    {errors.room_id}
-                </ValidationError>
-            }
-            <Label>Room Type</Label>
-            <FieldText name="room_type" value={formData.room_type} onChange={handleChange} />
-            {errors.room_type &&
-                <ValidationError>
-                    {errors.room_type}
-                </ValidationError>
-            }
-            <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
-        </EditRoomWrapper>
+                    <EditRoomTitle>Edit room</EditRoomTitle>
+                    <Label>Room ID</Label>
+                    <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+                    {errors.room_id &&
+                        <ValidationError>
+                            {errors.room_id}
+                        </ValidationError>
+                    }
+                    <Label>Room Name</Label>
+                    <FieldText name="room_name" value={formData.room_name} onChange={handleChange} />
+                    {errors.room_name &&
+                        <ValidationError>
+                            {errors.room_name}
+                        </ValidationError>
+                    }
+                    <Label>Room Type</Label>
+                    <FieldText name="room_type" value={formData.room_type} onChange={handleChange} />
+                    {errors.room_type &&
+                        <ValidationError>
+                            {errors.room_type}
+                        </ValidationError>
+                    }
+                    <Label>Room Floor</Label>
+                    <FieldText name="room_floor" value={formData.room_floor} onChange={handleChange} />
+                    {errors.room_floor &&
+                        <ValidationError>
+                            {errors.room_floor}
+                        </ValidationError>
+                    }
+                    <Label>Status:</Label>
+                    <FieldText name="status" value={formData.status} onChange={handleChange} />
+                    {errors.status &&
+                        <ValidationError>
+                            {errors.status}
+                        </ValidationError>
+                    }
+                    <Label>Description:</Label>
+                    <FieldText name="description" value={formData.description} onChange={handleChange} />
+                    {errors.description &&
+                        <ValidationError>
+                            {errors.description}
+                        </ValidationError>
+                    }
+                    <Label>Photos (comma-sepparated URLs):</Label>
+                    <FieldText name="photos" value={formData.photos.join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim())})} />
+                    {errors.photos &&
+                        <ValidationError>
+                            {errors.photos}
+                        </ValidationError>
+                    }
+                    <Label>Price: </Label>
+                    <FieldText type="number" name="price" value={formData.price} onChange={handleChange} />
+                    {errors.price &&
+                        <ValidationError>
+                            {errors.price}
+                        </ValidationError>
+                    }
+                    <Label>Discount: </Label>
+                    <FieldText type="number" name="discount" value={formData.discount} onChange={handleChange} />
+                    {errors.discount &&
+                        <ValidationError>
+                            {errors.discount}
+                        </ValidationError>
+                    }
+                    <Label>Cancellation Policy:</Label>
+                    <FieldText name="cancellation_policy" value={formData.cancellation_policy} onChange={handleChange} />
+                    {errors.cancellation_policy &&
+                        <ValidationError>
+                            {errors.cancellation_policy}
+                        </ValidationError>
+                    }
+                    <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
+                </EditRoomWrapper>
     )
 }

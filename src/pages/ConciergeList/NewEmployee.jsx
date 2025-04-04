@@ -11,6 +11,7 @@ export const NewEmployee = () => {
         id: '',
         name: '',
         email: '',
+        job_functions: '',
         registration_date: '',
         phone: '',
         schelude: '',

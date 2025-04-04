@@ -103,166 +103,40 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                     </Header>
                     <tbody>
                         {list.map((employee) => {
-                            <tr>
-                                <FieldValue>
-                                    <Checkbox />
-                                </FieldValue>
-                                <FieldValue>
-                                    <EmployeeData name={employee.name} identifier={employee.id} startDate={employee.registration_date} />
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{employee.name}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{employee.job_functions}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{employee.schelude}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText><MdOutlineLocalPhone />{employee.phone}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText color="#5AD07A">{employee.status}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <HiDotsVertical color="#6E6E6E" />
-                                </FieldValue>
-                            </tr>
+                            return (
+                                <tr>
+                                    <FieldValue>
+                                        <Checkbox onChange={(e) => onCheckboxChange(employee.id, e.target.checked)} checked={selected.includes(employee.id)} />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <EmployeeData name={employee.name} identifier={employee.id} startDate={employee.registration_date} />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{employee.name}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{employee.job_functions}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{employee.schelude}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText><MdOutlineLocalPhone />{employee.phone}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                    <FieldText color={employee.status?"#5AD07A":"#E23428"}>
+                                        {employee.status?
+                                        'Active':'Inactive'
+                                        }
+                                        </FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <HiDotsVertical color="#6E6E6E" />
+                                    </FieldValue>
+                                </tr>
+                            )
                         })}
-
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="Louis Humbs" identifier="#12341225" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>loumbs@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Offer restaurant and activity recommendations and assist guests in arranging transportation</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Saturday, Sunday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#E23428">INACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="Jackson Marquez" identifier="#12341225" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>jason@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Act as a liaison between guests and any department necessary including the kitchen, housekeeping, etc</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Wednesday, Sunday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#5AD07A">ACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="Samantha William" identifier="#12341225" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>sahan@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Anticipate guests needs in order to accommodate them and provide an exceptional guest experience</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Monday, Friday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#E23428">INACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="David Here" identifier="#12341225" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>dare@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Answering guest inquiries, directing phone calls, coordinating travel plans, and more.</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Saturday, Sunday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#5AD07A">ACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
-                        <tr>
-                            <FieldValue>
-                                <Checkbox />
-                            </FieldValue>
-                            <FieldValue>
-                                <EmployeeData name="Elina Moss" identifier="#12341225" startDate="Joined on Aug 2th 2017" />
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>ess@gmail.com</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Offer restaurant and activity recommendations and assist guests in arranging transportation</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText>Monday, Friday</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText><MdOutlineLocalPhone />012 334 55512</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <FieldText color="#5AD07A">ACTIVE</FieldText>
-                            </FieldValue>
-                            <FieldValue>
-                                <HiDotsVertical color="#6E6E6E" />
-                            </FieldValue>
-                        </tr>
                     </tbody>
-
                 </Table>
             }
             {type === 'room' &&

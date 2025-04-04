@@ -76,6 +76,13 @@ export const NewEmployee = () => {
                     {errors.email}
                 </ValidationError>
             }
+            <Label>Job Functions</Label>
+            <FieldText name="job_functions" value={formData.job_functions} onChange={handleChange} />
+            {errors.job_functions &&
+                <ValidationError>
+                    {errors.job_functions}
+                </ValidationError>
+            }
             <Label>Registration Date</Label>
             <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} />
             {errors.registration_date &&

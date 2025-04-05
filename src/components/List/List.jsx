@@ -5,15 +5,14 @@ import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, Fie
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
+import { format, parse } from 'date-fns';
 
 export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) => {
 
-    function handleNotes(special_request) {
-        return (
-            <SpecialRequestContainer>
-                {special_request}
-            </SpecialRequestContainer>
-        );
+    const formatDate = (rawDate) => {
+        const parsed = parse(rawDate, 'M/d/yyyy', new Date());
+
+        return format(parsed, "MMM do yyyy hh:mmaa");
     }
 
     return (
@@ -58,13 +57,13 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                                     <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>
                                 </FieldValue>
                                 <FieldValue>
-                                    <FieldText>{booking.order_date}</FieldText>
+                                    <FieldText>{formatDate(booking.order_date)}</FieldText>
                                 </FieldValue>
                                 <FieldValue>
-                                    <FieldText>{booking.check_in_date}</FieldText>
+                                    <FieldText>{formatDate(booking.check_in_date)}</FieldText>
                                 </FieldValue>
                                 <FieldValue>
-                                    <FieldText>{booking.check_out_date}</FieldText>
+                                    <FieldText>{formatDate(booking.check_out_date)}</FieldText>
                                 </FieldValue>
                                 <FieldValue>
                                     <ViewNotesBtn onClick={() => onShowNotes(booking.special_request)}>View Notes</ViewNotesBtn>

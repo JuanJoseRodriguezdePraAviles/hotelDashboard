@@ -1,8 +1,7 @@
 import { Filter } from "../../components/Filter/Filter";
 import LatestReview from "../../components/LatestReview/LatestReview";
 import { List } from "../../components/List/List";
-import { Filters } from "../../components/List/ListStyled";
-import { ReviewsWrapper } from "./ReviewsStyled";
+import { Filters, ReviewsWrapper } from "./ReviewsStyled";
 
 export const ReviewsList = () => {
     return (

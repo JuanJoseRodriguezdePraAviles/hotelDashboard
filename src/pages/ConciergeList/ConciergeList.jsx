@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
-import { Filters } from "../../components/List/ListStyled";
-import { ConciergeListWrapper, EmployeeBtn } from "./ConciergeListStyled";
+import { ConciergeListWrapper, EmployeeBtn, Filters } from "./ConciergeListStyled";
 import { deleteEmployee, fetchEmployees } from "../../redux/slices/EmployeeSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";

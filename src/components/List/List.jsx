@@ -1,12 +1,21 @@
 import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
-import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars, Check } from "./ListStyled";
+import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars, ViewNotesBtn, SpecialRequestContainer } from "./ListStyled";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
 import { IoIosStar } from "react-icons/io";
 
-export const List = ({ type, list, onCheckboxChange, selected }) => {
+export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) => {
+
+    function handleNotes(special_request) {
+        return (
+            <SpecialRequestContainer>
+                {special_request}
+            </SpecialRequestContainer>
+        );
+    }
+
     return (
         <>
             {type === "guest" &&
@@ -58,7 +67,7 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                                     <FieldText>{booking.check_out_date}</FieldText>
                                 </FieldValue>
                                 <FieldValue>
-                                    <FieldText>{booking.special_request}</FieldText>
+                                    <ViewNotesBtn onClick={() => onShowNotes(booking.special_request)}>View Notes</ViewNotesBtn>
                                 </FieldValue>
                                 <FieldValue>
                                     <FieldText>{booking.room_type}</FieldText>
@@ -124,10 +133,10 @@ export const List = ({ type, list, onCheckboxChange, selected }) => {
                                         <FieldText><MdOutlineLocalPhone />{employee.phone}</FieldText>
                                     </FieldValue>
                                     <FieldValue>
-                                    <FieldText color={employee.status?"#5AD07A":"#E23428"}>
-                                        {employee.status?
-                                        'Active':'Inactive'
-                                        }
+                                        <FieldText color={employee.status ? "#5AD07A" : "#E23428"}>
+                                            {employee.status ?
+                                                'Active' : 'Inactive'
+                                            }
                                         </FieldText>
                                     </FieldValue>
                                     <FieldValue>

@@ -1,16 +1,5 @@
 import styled from "styled-components";
 
-export const Filters = styled.div`
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 5rem;
-    background: var(--unnamed-color-f8f8f8) 0% 0% no-repeat padding-box;
-    background: #F8F8F8 0% 0% no-repeat padding-box;
-    opacity: 1;
-    border-bottom: 4px solid #D4D4D4;
-`;
-
 export const Table = styled.table`
     width: 100%;
     align-items: left;
@@ -98,4 +87,24 @@ export const RoomState = styled.div`
     background: ${(props) => props.color || "#393939"};
     border-radius: 12px;
     opacity: 1;
+`;
+
+export const ViewNotesBtn = styled.button`
+    background-color: #FFFFFF;
+    color: #000000;
+    font-weight: 700;
+    font-family: 'Poppins';
+    border-radius: 12px;
+    opacity: 1;
+`;
+
+export const SpecialRequestContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 5rem;
+    background: var(--unnamed-color-f8f8f8) 0% 0% no-repeat padding-box;
+    background: #F8F8F8 0% 0% no-repeat padding-box;
+    opacity: 1;
+    border-bottom: 4px solid #D4D4D4;
 `;

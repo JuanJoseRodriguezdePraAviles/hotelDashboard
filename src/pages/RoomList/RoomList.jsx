@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
-import { Filters } from "../../components/List/ListStyled";
-import { RoomBtn, RoomListWrapper } from "./RoomListStyled";
+import { Filters, RoomBtn, RoomListWrapper } from "./RoomListStyled";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteRoom, fetchRooms } from "../../redux/slices/RoomSlice";

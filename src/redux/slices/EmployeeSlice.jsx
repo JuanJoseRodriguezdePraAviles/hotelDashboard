@@ -25,7 +25,7 @@ const employeesSlice = createSlice({
         },
         editEmployee: (state, action) => {
             const { id, updateEmployee } = action.payload;
-            const index = state.employees.findIndex((employee) => employee.employee_id === Number(id));
+            const index = state.employees.findIndex((employee) => employee.id === Number(id));
             
             if (index !== -1) {
                 state.employees[index] = { ...state.employees[index], ...updateEmployee };
@@ -33,7 +33,7 @@ const employeesSlice = createSlice({
         },
         deleteEmployee: (state, action) => {
             const { id } = action.payload;
-            state.employees = state.employees.filter((employee) => employee.employee_id !== Number(id));
+            state.employees = state.employees.filter((employee) => employee.id !== Number(id));
         }
     },
     extraReducers: (builder) => {

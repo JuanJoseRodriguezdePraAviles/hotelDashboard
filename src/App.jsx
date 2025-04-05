@@ -19,6 +19,7 @@ import { EditGuest } from './pages/GuestList/EditGuest.jsx';
 import { NewRoom } from './pages/RoomList/NewRoom.jsx';
 import { EditRoom } from './pages/RoomList/EditRoom.jsx';
 import { NewEmployee } from './pages/ConciergeList/NewEmployee.jsx';
+import { EditEmployee } from './pages/ConciergeList/EditEmployee.jsx';
 
 
 
@@ -54,6 +55,10 @@ const router = createHashRouter([
       {
         path: 'newEmployee',
         element: <NewEmployee />
+      },
+      {
+        path: 'editEmployee/:employeeId',
+        element: <EditEmployee />
       },
       {
         path: 'guestList',

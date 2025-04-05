@@ -3,7 +3,7 @@ import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { Filters } from "../../components/List/ListStyled";
 import { ConciergeListWrapper, EmployeeBtn } from "./ConciergeListStyled";
-import { fetchEmployees } from "../../redux/slices/EmployeeSlice";
+import { deleteEmployee, fetchEmployees } from "../../redux/slices/EmployeeSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 

@@ -6,7 +6,7 @@ export const FilterContainer = styled.div`
     display: flex;
     flex-direction: row;
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;
     padding: 1rem;
     color: ${(props) => props.color};

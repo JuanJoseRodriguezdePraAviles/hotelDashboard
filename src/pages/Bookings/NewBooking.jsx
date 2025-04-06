@@ -55,42 +55,42 @@ export const NewBooking = () => {
         <NewBookingWrapper>
             <NewBookingTitle>New booking</NewBookingTitle>
             <Label>Client ID</Label>
-            <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
+            <FieldText name="client_id" value={formData.client_id} onChange={handleChange}/>
             {errors.client_id &&
                 <ValidationError>
                     {errors.client_id}
                 </ValidationError>
             }
             <Label>Client Name</Label>
-            <FieldText name="client_name" value={formData.client_name} onChange={handleChange} />
+            <FieldText name="client_name" value={formData.client_name} onChange={handleChange} required/>
             {errors.client_name &&
                 <ValidationError>
                     {errors.client_name}
                 </ValidationError>
             }
             <Label>Client Email</Label>
-            <FieldText name="client_email" value={formData.client_email} onChange={handleChange} />
+            <FieldText name="client_email" value={formData.client_email} onChange={handleChange} required/>
             {errors.client_email &&
                 <ValidationError>
                     {errors.client_email}
                 </ValidationError>
             }
             <Label>Client Phone</Label>
-            <FieldText name="client_phone" value={formData.client_phone} onChange={handleChange} />
+            <FieldText name="client_phone" value={formData.client_phone} onChange={handleChange} required/>
             {errors.client_name &&
                 <ValidationError>
                     {errors.client_name}
                 </ValidationError>
             }
             <Label>Check In Date</Label>
-            <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} />
+            <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} required/>
             {errors.check_in_date &&
                 <ValidationError>
                     {errors.check_in_date}
                 </ValidationError>
             }
             <Label>Check Out Date</Label>
-            <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} />
+            <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} required/>
             {errors.check_out_date &&
                 <ValidationError>
                     {errors.check_out_date}
@@ -104,14 +104,14 @@ export const NewBooking = () => {
                 </ValidationError>
             }
             <Label>Room ID</Label>
-            <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+            <FieldText name="room_id" value={formData.room_id} onChange={handleChange} required/>
             {errors.room_id &&
                 <ValidationError>
                     {errors.room_id}
                 </ValidationError>
             }
             <Label>Room Type</Label>
-            <FieldText name="room_type" value={formData.room_type} onChange={handleChange} />
+            <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required/>
             {errors.room_type &&
                 <ValidationError>
                     {errors.room_type}

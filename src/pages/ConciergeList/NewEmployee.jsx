@@ -63,42 +63,42 @@ export const NewEmployee = () => {
                 </ValidationError>
             }
             <Label>Employee Name</Label>
-            <FieldText name="name" value={formData.name} onChange={handleChange} />
+            <FieldText name="name" value={formData.name} onChange={handleChange} required/>
             {errors.name &&
                 <ValidationError>
                     {errors.name}
                 </ValidationError>
             }
             <Label>Employee Email</Label>
-            <FieldText name="email" value={formData.email} onChange={handleChange} />
+            <FieldText name="email" value={formData.email} onChange={handleChange} required/>
             {errors.email &&
                 <ValidationError>
                     {errors.email}
                 </ValidationError>
             }
             <Label>Job Functions</Label>
-            <FieldText name="job_functions" value={formData.job_functions} onChange={handleChange} />
+            <FieldText name="job_functions" value={formData.job_functions} onChange={handleChange} required/>
             {errors.job_functions &&
                 <ValidationError>
                     {errors.job_functions}
                 </ValidationError>
             }
             <Label>Registration Date</Label>
-            <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} />
+            <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} required/>
             {errors.registration_date &&
                 <ValidationError>
                     {errors.registration_date}
                 </ValidationError>
             }
             <Label>Phone</Label>
-            <FieldText name="phone" value={formData.phone} onChange={handleChange} />
+            <FieldText name="phone" value={formData.phone} onChange={handleChange} required/>
             {errors.phone &&
                 <ValidationError>
                     {errors.phone}
                 </ValidationError>
             }
             <Label>Schelude</Label>
-            <FieldText name="schelude" value={formData.schelude} onChange={handleChange} />
+            <FieldText name="schelude" value={formData.schelude} onChange={handleChange} required/>
             {errors.schelude &&
                 <ValidationError>
                     {errors.schelude}

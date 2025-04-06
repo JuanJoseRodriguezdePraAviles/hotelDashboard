@@ -48,44 +48,60 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                         </tr>
                     </Header>
                     <tbody>
-                        {list.map((booking) => {
-                            return (<tr>
-                                <FieldValue>
-                                    <Checkbox onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)} checked={selected.includes(booking.booking_id)} />
-                                </FieldValue>
-                                <FieldValue>
-                                    <CustomerData client={booking.client_name} email={booking.client_email} phone={booking.client_phone} identifier={booking.client_id}></CustomerData>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{formatDate(booking.order_date)}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{formatDate(booking.check_in_date)}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{formatDate(booking.check_out_date)}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <ViewNotesBtn onClick={() => onShowNotes(booking.special_request)}>View Notes</ViewNotesBtn>
-                                </FieldValue>
-                                <FieldValue>
-                                    <FieldText>{booking.room_type}</FieldText>
-                                </FieldValue>
-                                <FieldValue>
-                                    <RoomState color="#FFEDEC">
-                                        <FieldText color="#E23428">{booking.status}</FieldText>
-                                    </RoomState>
-                                </FieldValue>
-                                <FieldValue>
-                                    <HiDotsVertical color="#6E6E6E" />
-                                </FieldValue>
-                            </tr>);
-                        })}
+                        {list.length === 0 ? (
+                            <tr>
+                                <td colSpan="9">
+                                    <p>No bookings found</p>
+                                </td>
+                            </tr>
+                        ) : (
+                            list.map((booking) => (
+                                <tr key={booking.booking_id}>
+                                    <FieldValue>
+                                        <Checkbox
+                                            onChange={(e) => onCheckboxChange(booking.booking_id, e.target.checked)}
+                                            checked={selected.includes(booking.booking_id)}
+                                        />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <CustomerData
+                                            client={booking.client_name}
+                                            email={booking.client_email}
+                                            phone={booking.client_phone}
+                                            identifier={booking.client_id}
+                                        />
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{formatDate(booking.order_date)}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{formatDate(booking.check_in_date)}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{formatDate(booking.check_out_date)}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <ViewNotesBtn onClick={() => onShowNotes(booking.special_request)}>View Notes</ViewNotesBtn>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <FieldText>{booking.room_type}</FieldText>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <RoomState color="#FFEDEC">
+                                            <FieldText color="#E23428">{booking.status}</FieldText>
+                                        </RoomState>
+                                    </FieldValue>
+                                    <FieldValue>
+                                        <HiDotsVertical color="#6E6E6E" />
+                                    </FieldValue>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
-
-                </Table>
+                </Table >
             }
-            {type === 'employee' &&
+            {
+                type === 'employee' &&
                 <Table>
                     <Header>
                         <tr>
@@ -110,7 +126,14 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                         </tr>
                     </Header>
                     <tbody>
-                        {list.map((employee) => {
+                        {list.length === 0 ? (
+                            <tr>
+                                <td colSpan="9">
+                                    <p>No employees found</p>
+                                </td>
+                            </tr>
+                        ) : (
+                            list.map((employee) => {
                             return (
                                 <tr>
                                     <FieldValue>
@@ -143,11 +166,12 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                                     </FieldValue>
                                 </tr>
                             )
-                        })}
+                        }))}
                     </tbody>
                 </Table>
             }
-            {type === 'room' &&
+            {
+                type === 'room' &&
                 <Table>
                     <Header>
                         <tr>
@@ -175,7 +199,14 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                         </tr>
                     </Header>
                     <tbody>
-                        {list.map((room) => {
+                        {list.length === 0 ? (
+                            <tr>
+                                <td colSpan="9">
+                                    <p>No rooms found</p>
+                                </td>
+                            </tr>
+                        ) : (
+                            list.map(((room) => {
                             return (
                                 <tr>
                                     <FieldValue>
@@ -205,12 +236,13 @@ export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) =>
                                         <HiDotsVertical color="#6E6E6E" />
                                     </FieldValue>
                                 </tr>);
-                        })}
+                        })))}
                     </tbody>
 
                 </Table>
             }
-            {type === 'review' &&
+            {
+                type === 'review' &&
                 <Table>
                     <Header>
                         <tr>

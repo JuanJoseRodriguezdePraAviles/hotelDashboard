@@ -7,11 +7,19 @@ import { addBooking } from "../../redux/slices/BookingSlice";
 export const NewBooking = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const getFormattedToday = () => {
+        const today = new Date();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const year = today.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
     const [formData, setFormData] = useState({
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
+        order_date: getFormattedToday(),
         check_in_date: '',
         check_out_date: '',
         special_request: '',
@@ -24,7 +32,8 @@ export const NewBooking = () => {
     const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
+        
         setFormData({
             ...formData,
             [name]: value
@@ -46,7 +55,19 @@ export const NewBooking = () => {
             return;
         }
 
-        dispatch(addBooking(formData));
+        const formattedData = { ...formData };
+
+        if(formattedData.check_in_date) {
+            const [year, month, day] = formattedData.check_in_date.split("-");
+            formattedData.check_in_date = `${month}/${day}/${year}`;
+        }
+
+        if(formattedData.check_out_date) {
+            const [year, month, day] = formattedData.check_out_date.split("-");
+            formattedData.check_out_date = `${month}/${day}/${year}`;
+        }
+
+        dispatch(addBooking(formattedData));
 
         navigate("/bookings");
     }

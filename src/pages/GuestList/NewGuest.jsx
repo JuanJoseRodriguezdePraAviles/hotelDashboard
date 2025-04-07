@@ -7,11 +7,19 @@ import { addGuest } from "../../redux/slices/GuestSlice";
 export const NewGuest = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const getFormattedToday = () => {
+        const today = new Date();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const year = today.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
     const [formData, setFormData] = useState({
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
+        order_date: getFormattedToday(),
         check_in_date: '',
         check_out_date: '',
         special_request: '',
@@ -46,7 +54,19 @@ export const NewGuest = () => {
             return;
         }
 
-        dispatch(addGuest(formData));
+        const formattedData = { ...formData };
+
+        if(formattedData.check_in_date) {
+            const [year, month, day] = formattedData.check_in_date.split("-");
+            formattedData.check_in_date = `${month}/${day}/${year}`;
+        }
+
+        if(formattedData.check_out_date) {
+            const [year, month, day] = formattedData.check_out_date.split("-");
+            formattedData.check_out_date = `${month}/${day}/${year}`;
+        }
+
+        dispatch(addGuest(formattedData));
 
         navigate("/guestList");
     }

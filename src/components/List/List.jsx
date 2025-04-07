@@ -10,6 +10,10 @@ import { format, parse } from 'date-fns';
 export const List = ({ type, list, onCheckboxChange, selected, onShowNotes }) => {
 
     const formatDate = (rawDate) => {
+        const dateRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+        if(!dateRegex.test(rawDate)){
+            return rawDate;
+        }
         const parsed = parse(rawDate, 'M/d/yyyy', new Date());
 
         return format(parsed, "MMM do yyyy hh:mmaa");

@@ -77,7 +77,19 @@ export const EditBooking = () => {
             return;
         }
 
-        dispatch(editBooking({ id: bookingId, updateBooking: formData }));
+        const formattedData = { ...formData };
+
+        if(formattedData.check_in_date) {
+            const [year, month, day] = formattedData.check_in_date.split("-");
+            formattedData.check_in_date = `${month}/${day}/${year}`;
+        }
+
+        if(formattedData.check_out_date) {
+            const [year, month, day] = formattedData.check_out_date.split("-");
+            formattedData.check_out_date = `${month}/${day}/${year}`;
+        }
+
+        dispatch(editBooking({ id: bookingId, updateBooking: formattedData }));
 
         navigate("/bookings");
     }

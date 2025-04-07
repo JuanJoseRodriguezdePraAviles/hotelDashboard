@@ -13,6 +13,7 @@ export const EditBooking = () => {
     const booking = useSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id === Number(bookingId)));
 
     const [formData, setFormData] = useState({
+        booking_id: '',
         client_id: '',
         client_name: '',
         client_email: '',
@@ -40,6 +41,7 @@ export const EditBooking = () => {
 
 
             setFormData({
+                booking_id: booking.booking_id,
                 client_id: booking.client_id,
                 client_name: booking.client_name,
                 client_email: booking.client_email,
@@ -97,6 +99,13 @@ export const EditBooking = () => {
     return (
         <EditBookingWrapper>
             <EditBookingTitle>Edit booking</EditBookingTitle>
+            <Label>Booking ID</Label>
+            <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} readonly='readonly'/>
+            {errors.booking_id &&
+                <ValidationError>
+                    {errors.booking_id}
+                </ValidationError>
+            }
             <Label>Client ID</Label>
             <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
             {errors.client_id &&

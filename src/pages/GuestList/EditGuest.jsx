@@ -96,7 +96,7 @@ export const EditGuest = () => {
         <EditGuestWrapper>
             <EditGuestTitle>Edit guest</EditGuestTitle>
             <Label>Client ID</Label>
-            <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
+            <FieldText name="client_id" value={formData.client_id} onChange={handleChange} readonly='readonly'/>
             {errors.client_id &&
                 <ValidationError>
                     {errors.client_id}

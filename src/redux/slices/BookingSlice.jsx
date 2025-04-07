@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 export const fetchBookings = createAsyncThunk(
     'bookings/fetchBookings',

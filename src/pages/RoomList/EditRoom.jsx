@@ -89,7 +89,7 @@ export const EditRoom = () => {
         <EditRoomWrapper>
                     <EditRoomTitle>Edit room</EditRoomTitle>
                     <Label>Room ID</Label>
-                    <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+                    <FieldText name="room_id" value={formData.room_id} onChange={handleChange} readonly='readonly'/>
                     {errors.room_id &&
                         <ValidationError>
                             {errors.room_id}

@@ -84,7 +84,7 @@ export const EditEmployee = () => {
         <EditEmployeeWrapper>
             <EditEmployeeTitle>Edit employee</EditEmployeeTitle>
             <Label>Employee ID</Label>
-            <FieldText name="id" value={formData.id} onChange={handleChange} />
+            <FieldText name="id" value={formData.id} onChange={handleChange} readonly='readonly'/>
             {errors.id &&
                 <ValidationError>
                     {errors.id}

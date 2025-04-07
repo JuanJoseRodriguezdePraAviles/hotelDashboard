@@ -15,6 +15,7 @@ export const NewBooking = () => {
         return `${month}/${day}/${year}`;
     }
     const [formData, setFormData] = useState({
+        booking_id: '',
         client_id: '',
         client_name: '',
         client_email: '',
@@ -75,6 +76,13 @@ export const NewBooking = () => {
     return (
         <NewBookingWrapper>
             <NewBookingTitle>New booking</NewBookingTitle>
+            <Label>Booking ID</Label>
+            <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange}/>
+            {errors.booking_id &&
+                <ValidationError>
+                    {errors.booking_id}
+                </ValidationError>
+            }
             <Label>Client ID</Label>
             <FieldText name="client_id" value={formData.client_id} onChange={handleChange}/>
             {errors.client_id &&

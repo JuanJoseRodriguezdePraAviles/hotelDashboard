@@ -4,6 +4,7 @@ import { RectCard } from '../../components/RectCard/RectCard';
 import { BsBoxArrowInRight, BsBoxArrowInLeft } from "react-icons/bs";
 import LatestReview from '../../components/LatestReview/LatestReview';
 import { DashboardWrapper } from "./DashboardStyled";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Dashboard = () => {
     return (

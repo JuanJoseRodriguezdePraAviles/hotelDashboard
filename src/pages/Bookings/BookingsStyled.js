@@ -10,6 +10,8 @@ export const BookingsWrapper = styled.div`
     background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;
     padding: 1rem;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const Filters = styled.div`
@@ -61,6 +63,26 @@ export const CloseBtn = styled.button`
     color: white;
     border: none;
     border-radius: 5px;
+`;
+
+export const Loading = styled.div`
+    background-color: #135846;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: auto;
+`;
+
+export const Notification = styled.div`
+    position: fixed;
+    top: 45%;
+    right: 45%;
+    padding: 10px 20px;
+    background-color:rgb(54, 228, 182);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 

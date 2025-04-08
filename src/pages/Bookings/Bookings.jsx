@@ -1,12 +1,13 @@
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 
-import { BookingBtn, BookingsWrapper, CloseBtn, Filters, ModalContainer, ModalTextContainer } from "./BookingsStyled";
+import { BookingBtn, BookingsWrapper, CloseBtn, Filters, Loading, ModalContainer, ModalTextContainer, Notification } from "./BookingsStyled";
 import { fetchBookings } from '../../redux/slices/BookingSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteBooking } from "../../redux/slices/BookingSlice";
+import { useLocation } from "react-router-dom";
 
 export const Bookings = () => {
     const dispatch = useDispatch();
@@ -14,6 +15,9 @@ export const Bookings = () => {
     const bookings = useSelector((state) => state.bookings.bookings);
     const status = useSelector((state) => state.bookings.status);
     const error = useSelector((state) => state.bookings.error);
+
+    const location = useLocation();
+    const [showNotification, setShowNotification] = useState(false);
 
     const [selectedBookings, setSelectedBookings] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -34,6 +38,15 @@ export const Bookings = () => {
             dispatch(fetchBookings());
         }
     }, [dispatch, status]);
+
+    useEffect(() => {
+        if (location.state?.created) {
+            setShowNotification(true);
+            setTimeout(() => {
+                setShowNotification(false);
+            }, 3000);
+        }
+    }, [location])
 
     const handleCheckboxChange = (bookingId, isChecked) => {
         setSelectedBookings((prevSelected) => {
@@ -56,49 +69,57 @@ export const Bookings = () => {
 
     return (
         <>
-            <BookingsWrapper>
-                {status === 'loading' && <button>Loading Bookings...</button>}
-                {status === 'failed' && <button>Failed to load bookings</button>}
-                <Filters>
-                    <Filter name="All Guest" color="#135846"></Filter>
-                    <Filter name="Pending" color="#6E6E6E"></Filter>
-                    <Filter name="Booked" color="#6E6E6E"></Filter>
-                    <Filter name="Cancelled" color="#6E6E6E"></Filter>
-                    <Filter name="Refund" color="#6E6E6E"></Filter>
-                </Filters>
+            <div>
+                {showNotification && (
+                    <Notification>Booking Created!</Notification>
+                )}
 
-                <Link to="/NewBooking">
-                    <BookingBtn>New Booking</BookingBtn>
-                </Link>
-                {isSingleSelection ?
-                    <>
-                        <Link to={`/EditBooking/${selectedBookings[0]}`}>
-                            <BookingBtn>Edit Booking</BookingBtn>
-                        </Link>
-                        <BookingBtn onClick={() => handleDelete(selectedBookings[0])}>Delete Booking</BookingBtn>
-                        <Link to={`/GuestDetails/${selectedBookings[0]}`}>
-                            <BookingBtn>Booking Details</BookingBtn>
-                        </Link>
-                    </>
-                    :
-                    <>
-                        <BookingBtn disabled>Edit Booking</BookingBtn>
-                        <BookingBtn disabled>Delete Booking</BookingBtn>
-                        <BookingBtn disabled>Booking Details</BookingBtn>
-                    </>
-                }
-                <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
-            </BookingsWrapper>
+                <div>
+                    <BookingsWrapper>
+                        {status === 'loading' && <Loading>Loading Bookings...</Loading>}
+                        {status === 'failed' && <button>Failed to load bookings</button>}
+                        <Filters>
+                            <Filter name="All Guest" color="#135846"></Filter>
+                            <Filter name="Pending" color="#6E6E6E"></Filter>
+                            <Filter name="Booked" color="#6E6E6E"></Filter>
+                            <Filter name="Cancelled" color="#6E6E6E"></Filter>
+                            <Filter name="Refund" color="#6E6E6E"></Filter>
+                        </Filters>
 
-            {showModal && (
-                <ModalContainer>
-                    <ModalTextContainer>
-                        <h2>Special Request</h2>
-                        <p>{modalContent || "No notes available"}</p>
-                        <CloseBtn onClick={handleCloseModal}>Close</CloseBtn>
-                    </ModalTextContainer>
-                </ModalContainer>
-            )}
+                        <Link to="/NewBooking">
+                            <BookingBtn>New Booking</BookingBtn>
+                        </Link>
+                        {isSingleSelection ?
+                            <>
+                                <Link to={`/EditBooking/${selectedBookings[0]}`}>
+                                    <BookingBtn>Edit Booking</BookingBtn>
+                                </Link>
+                                <BookingBtn onClick={() => handleDelete(selectedBookings[0])}>Delete Booking</BookingBtn>
+                                <Link to={`/GuestDetails/${selectedBookings[0]}`}>
+                                    <BookingBtn>Booking Details</BookingBtn>
+                                </Link>
+                            </>
+                            :
+                            <>
+                                <BookingBtn disabled>Edit Booking</BookingBtn>
+                                <BookingBtn disabled>Delete Booking</BookingBtn>
+                                <BookingBtn disabled>Booking Details</BookingBtn>
+                            </>
+                        }
+                        <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
+                    </BookingsWrapper>
+
+                    {showModal && (
+                        <ModalContainer>
+                            <ModalTextContainer>
+                                <h2>Special Request</h2>
+                                <p>{modalContent || "No notes available"}</p>
+                                <CloseBtn onClick={handleCloseModal}>Close</CloseBtn>
+                            </ModalTextContainer>
+                        </ModalContainer>
+                    )}
+                </div>
+            </div>
         </>
     );
 }

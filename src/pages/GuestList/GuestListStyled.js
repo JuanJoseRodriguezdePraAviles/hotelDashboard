@@ -63,3 +63,16 @@ export const CloseBtn = styled.button`
     border-radius: 5px;
 `;
 
+export const Notification = styled.div`
+    position: fixed;
+    top: 45%;
+    right: 45%;
+    padding: 10px 20px;
+    background-color:rgb(54, 228, 182);
+    color: #fff;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+`;
+

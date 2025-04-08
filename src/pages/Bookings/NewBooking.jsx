@@ -70,7 +70,7 @@ export const NewBooking = () => {
 
         dispatch(addBooking(formattedData));
 
-        navigate("/bookings");
+        navigate("/bookings", { state: { created: true }});
     }
 
     return (

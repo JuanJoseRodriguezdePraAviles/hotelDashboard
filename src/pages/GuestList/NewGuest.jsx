@@ -68,7 +68,7 @@ export const NewGuest = () => {
 
         dispatch(addGuest(formattedData));
 
-        navigate("/guestList");
+        navigate("/guestList", { state: { created: true }});
     }
 
     return (

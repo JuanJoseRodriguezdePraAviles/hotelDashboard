@@ -49,7 +49,7 @@ export const NewEmployee = () => {
 
         dispatch(addEmployee(formData));
 
-        navigate("/conciergeList");
+        navigate("/conciergeList", { state: { created: true }});
     }
 
     return (

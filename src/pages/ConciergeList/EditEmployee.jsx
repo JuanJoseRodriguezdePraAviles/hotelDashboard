@@ -77,7 +77,7 @@ export const EditEmployee = () => {
         }
         dispatch(editEmployee({ id: employeeId, updateEmployee: formData }));
 
-        navigate("/conciergeList");
+        navigate("/conciergeList", { state: { edited: true }});
     }
 
     return (

@@ -101,7 +101,6 @@ function App() {
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-
   )
 }
 

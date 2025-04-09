@@ -31,7 +31,7 @@ export const Header = ({ title }) => {
                 <HeaderIconContainer>
                     <HiOutlineBars3BottomLeft color="#000000" size="2rem" />
                 </HeaderIconContainer>
-                <PageTitle>{location}</PageTitle>
+                <PageTitle cy-id="page-title">{location}</PageTitle>
                 <SearchInput />
                 <HeaderIconContainer>
                     <FaRegHeart color="#135846" size="2rem" />
@@ -50,7 +50,7 @@ export const Header = ({ title }) => {
                 </Link>
                 <LanguageSelector />
                 <HeaderIconContainer>
-                    <IoMdLogOut onClick={handleLogout} color="#135846" size="2rem" />
+                    <IoMdLogOut onClick={handleLogout} color="#135846" size="2rem" cy-id="logout-icon"/>
                 </HeaderIconContainer>
             </HeaderWrapper>
         </>

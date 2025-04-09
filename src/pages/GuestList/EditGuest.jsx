@@ -89,7 +89,7 @@ export const EditGuest = () => {
 
         dispatch(editGuest({ id: guestId, updateGuest: formattedData }));
 
-        navigate("/guestList");
+        navigate("/guestList", { state: { edited: true }});
     }
 
     return (

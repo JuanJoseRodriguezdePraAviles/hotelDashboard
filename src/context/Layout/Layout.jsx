@@ -23,7 +23,7 @@ export const Layout = () => {
         <LayoutWrapper>
           <SideMenu />
           <Content>
-            <Header title="Dashboard" />
+            <Header title="Dashboard" cy-id="header-title"/>
             <Outlet></Outlet>
           </Content>
         </LayoutWrapper >

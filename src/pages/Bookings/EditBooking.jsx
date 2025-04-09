@@ -93,7 +93,7 @@ export const EditBooking = () => {
 
         dispatch(editBooking({ id: bookingId, updateBooking: formattedData }));
 
-        navigate("/bookings");
+        navigate("/bookings", { state: { edited: true }});
     }
 
     return (

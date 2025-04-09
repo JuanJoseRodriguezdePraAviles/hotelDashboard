@@ -14,6 +14,8 @@ export const RoomList = () => {
     const error = useSelector((state) => state.rooms.error);
 
     const [selectedRooms, setSelectedRooms] = useState([]);
+    const [showNotificationCreated, setShowNotificationCreated] = useState(false);
+    const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
     useEffect(() => {
         if (status === 'idle') {

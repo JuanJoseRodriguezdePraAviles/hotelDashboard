@@ -14,7 +14,8 @@ export const GuestList = () => {
     const error = useSelector((state) => state.guests.error);
 
     const location = useLocation();
-    const [showNotification, setShowNotification] = useState(false);
+    const [showNotificationCreated, setShowNotificationCreated] = useState(false);
+    const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
     const [selectedGuests, setSelectedGuests] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -38,9 +39,15 @@ export const GuestList = () => {
 
     useEffect(() => {
         if (location.state?.created) {
-            setShowNotification(true);
+            setShowNotificationCreated(true);
             setTimeout(() => {
-                setShowNotification(false);
+                setShowNotificationCreated(false);
+            }, 3000);
+        }
+        if (location.state?.edited) {
+            setShowNotificationEdited(true);
+            setTimeout(() => {
+                setShowNotificationEdited(false);
             }, 3000);
         }
     }, [location]);
@@ -65,8 +72,11 @@ export const GuestList = () => {
     return (
         <>
             <div>
-                {showNotification && (
+                {showNotificationCreated && (
                     <Notification>Guest Created!</Notification>
+                )}
+                {showNotificationEdited && (
+                    <Notification>Guest Edited!</Notification>
                 )}
 
                 <div>

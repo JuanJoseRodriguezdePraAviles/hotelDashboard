@@ -27,11 +27,11 @@ export const Login = () => {
         <LoginWrapper>
             <LoginTitle>Hotel Miranda Dashboard</LoginTitle>
             {error && <ErrorMessage>{error}</ErrorMessage>}
-            <UserInput value={username}
+            <UserInput value={username} cy-id="user-input"
                         onChange={(e) => setUsername(e.target.value)}/>
-            <PasswordInput value={password}
+            <PasswordInput value={password} cy-id="password-input"
                         onChange={(e) => setPassword(e.target.value)}/>
-            <LoginBtn onClick={handleLogin}>Login</LoginBtn>
+            <LoginBtn onClick={handleLogin} cy-id="btn-login">Login</LoginBtn>
         </LoginWrapper>
     );
 }

@@ -17,7 +17,8 @@ export const Bookings = () => {
     const error = useSelector((state) => state.bookings.error);
 
     const location = useLocation();
-    const [showNotification, setShowNotification] = useState(false);
+    const [showNotificationCreated, setShowNotificationCreated] = useState(false);
+    const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
     const [selectedBookings, setSelectedBookings] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -41,9 +42,16 @@ export const Bookings = () => {
 
     useEffect(() => {
         if (location.state?.created) {
-            setShowNotification(true);
+
+            setShowNotificationCreated(true);
             setTimeout(() => {
-                setShowNotification(false);
+                setShowNotificationCreated(false);
+            }, 3000);
+        }
+        if (location.state?.edited) {
+            setShowNotificationEdited(true);
+            setTimeout(() => {
+                setShowNotificationEdited(false);
             }, 3000);
         }
     }, [location])
@@ -70,8 +78,11 @@ export const Bookings = () => {
     return (
         <>
             <div>
-                {showNotification && (
-                    <Notification>Booking Created!</Notification>
+                {showNotificationCreated && (
+                    <Notification>Booking created!</Notification>
+                )}
+                {showNotificationEdited && (
+                    <Notification>Booking edited!</Notification>
                 )}
 
                 <div>

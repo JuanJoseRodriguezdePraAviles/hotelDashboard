@@ -14,7 +14,8 @@ export const ConciergeList = () => {
     const error = useSelector((state) => state.employees.error);
 
     const location = useLocation();
-    const [showNotification, setShowNotification] = useState(false);
+    const [showNotificationCreated, setShowNotificationCreated] = useState(false);
+    const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
     const [selectedEmployees, setSelectedEmployees] = useState([]);
 
@@ -27,9 +28,15 @@ export const ConciergeList = () => {
 
     useEffect(() => {
         if (location.state?.created) {
-            setShowNotification(true);
+            setShowNotificationCreated(true);
             setTimeout(() => {
-                setShowNotification(false);
+                setShowNotificationCreated(false);
+            }, 3000);
+        }
+        if (location.state?.edited) {
+            setShowNotificationEdited(true);
+            setTimeout(() => {
+                setShowNotificationEdited(false);
             }, 3000);
         }
     }, [location]);
@@ -55,8 +62,11 @@ export const ConciergeList = () => {
 
     return (
         <div>
-            {showNotification && (
+            {showNotificationCreated && (
                 <Notification>Employee Created!</Notification>
+            )}
+            {showNotificationEdited && (
+                <Notification>Employee Edited!</Notification>
             )}
 
             <div>

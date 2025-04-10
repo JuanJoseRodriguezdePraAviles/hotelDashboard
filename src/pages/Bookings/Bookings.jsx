@@ -117,7 +117,7 @@ export const Bookings = () => {
                                 <BookingBtn disabled>Booking Details</BookingBtn>
                             </>
                         }
-                        <List type="guest" list={bookings} onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
+                        <List type="guest" list={bookings} fieldsName={["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
                     </BookingsWrapper>
 
                     {showModal && (

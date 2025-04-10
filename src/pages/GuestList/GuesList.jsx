@@ -105,7 +105,7 @@ export const GuestList = () => {
                             </>
                         }
 
-                        <List type="guest" list={guests} onCheckboxChange={handleCheckboxChange} selected={selectedGuests} onShowNotes={handleShowNotes} />
+                        <List type="guest" list={guests} fieldsName={["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedGuests} onShowNotes={handleShowNotes} />
                     </GuestListWrapper>
                     {
                         showModal && (

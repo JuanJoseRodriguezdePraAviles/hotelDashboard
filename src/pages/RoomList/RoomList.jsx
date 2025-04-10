@@ -65,7 +65,7 @@ export const RoomList = () => {
                     <RoomBtn disabled>Delete Room</RoomBtn>
                 </>
             }
-            <List type="room" list={rooms} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>
+            <List type="room" list={rooms} fieldsName={["Room Name", "Bed Type", "Room Floor", "Facilities", "Rate", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>
         </RoomListWrapper>
     );
 }

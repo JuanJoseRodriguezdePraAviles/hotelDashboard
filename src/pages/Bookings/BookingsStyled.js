@@ -10,8 +10,6 @@ export const BookingsWrapper = styled.div`
     background: #F8F8F8 0% 0% no-repeat padding-box;
     opacity: 1;
     padding: 1rem;
-    justify-content: center;
-    align-items: center;
 `;
 
 export const Filters = styled.div`

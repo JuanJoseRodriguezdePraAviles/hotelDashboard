@@ -94,7 +94,7 @@ export const ConciergeList = () => {
                             <EmployeeBtn disabled>Delete Employee</EmployeeBtn>
                         </>
                     }
-                    <List type="employee" list={employees} onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
+                    <List type="employee" list={employees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
                 </ConciergeListWrapper>
             </div>
         </div>

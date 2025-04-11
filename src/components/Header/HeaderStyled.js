@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const HeaderWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    background: #FFFFFF;
     box-shadow: 0px 3px 10px #00000005;
     opacity: 1;
     padding: 1rem;

@@ -4,7 +4,6 @@ export const SideMenuWrapper = styled.div`
     width: ${({ collapsed }) => (collapsed ? "0" : "auto")};
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 13px 3px 40px #00000005;
     opacity: 1;
     margin: 0;
     padding: 0;
@@ -50,7 +49,7 @@ export const NavBtns = styled.div`
 export const PageBtn = styled.div`
     display: flex;
     padding: 2rem 0;
-    padding: ${({ active }) => (active ? "2rem 0" : "2rem 1rem")};
+    padding: ${({ active }) => (active ? "1rem 0" : "1rem 1rem")};
     color: ${({ active }) => (active ? "red" : "#799283")};
     font-size: ${({ active }) => (active ? "1.4rem" : "1rem")};
     align-items: center;

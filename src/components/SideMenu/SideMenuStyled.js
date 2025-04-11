@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
 export const SideMenuWrapper = styled.div`
+    width: ${({ collapsed }) => (collapsed ? "0" : "auto")};
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
     background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 13px 3px 40px #00000005;
     opacity: 1;
     margin: 0;
-    padding: 0 2.5rem;
-    //height: 100vh;
+    padding: ${({ collapsed }) => (collapsed ? "0" : "0 2.5rem")};
     height: auto;
     position: relative;
+    transition: width 2s;
 `;
 
 export const WebIconContainer = styled.div`

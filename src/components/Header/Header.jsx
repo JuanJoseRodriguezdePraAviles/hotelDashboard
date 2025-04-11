@@ -8,7 +8,7 @@ import { IoMdLogOut } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
 
-export const Header = ({ title }) => {
+export const Header = ({ title, toggleMenu }) => {
 
     const { logout } = useAuth();
 
@@ -28,7 +28,7 @@ export const Header = ({ title }) => {
     return (
         <>
             <HeaderWrapper>
-                <HeaderIconContainer>
+                <HeaderIconContainer onClick={toggleMenu}>
                     <HiOutlineBars3BottomLeft color="#000000" size="2rem" />
                 </HeaderIconContainer>
                 <PageTitle cy-id="page-title">{location}</PageTitle>

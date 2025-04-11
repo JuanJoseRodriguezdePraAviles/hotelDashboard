@@ -4,10 +4,11 @@ import { Outlet } from 'react-router-dom';
 import { Login } from "../../pages/Login/Login.jsx";
 import { useAuth } from "../AuthContext.jsx";
 import { Header } from "../../components/Header/Header.jsx";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export const Layout = () => {
     const { auth, login, logout } = useAuth();
+    const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
 
     useEffect(() => {
       const isLogin = localStorage.getItem("login")==='true';
@@ -21,9 +22,9 @@ export const Layout = () => {
     return (
       auth ?
         <LayoutWrapper>
-          <SideMenu />
+          <SideMenu collapsed={isMenuCollapsed}/>
           <Content>
-            <Header title="Dashboard" cy-id="header-title"/>
+            <Header title="Dashboard" cy-id="header-title" toggleMenu={() => setIsMenuCollapsed(prev => !prev)}/>
             <Outlet></Outlet>
           </Content>
         </LayoutWrapper >

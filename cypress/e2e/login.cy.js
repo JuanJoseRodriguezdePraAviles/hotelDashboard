@@ -5,7 +5,7 @@ describe('Login', () => {
 
   it('renders Login if user is not authenticated', () => {
     cy.visit('/');
-    cy.get('button[cy-id="btn-login"]').should(($button) => {
+    cy.get('[cy-id="btn-login"]').should(($button) => {
       expect($button.text()).equal("Login");
     });
   })

@@ -6,34 +6,40 @@ import { FaRegUser } from "react-icons/fa";
 import { HiOutlinePuzzle } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-export const SideMenu = () => {
+export const SideMenu = ({ collapsed }) => {
     return (
         <>
-            <SideMenuWrapper>
-                <WebIconContainer>
-                    <WebIcon src="/src/assets/hotel.svg" />
-                    <WebTitleContainer>
-                        <TitleWeb>travl</TitleWeb>
-                        <SubtitleWeb>Hotel Admin Dashboard</SubtitleWeb>
-                    </WebTitleContainer>
-                </WebIconContainer>
-                <NavBtns>
-                    <Link to="/">
-                        <PageBtn><TbLayoutDashboard /> Dashboard</PageBtn>
-                    </Link>
-                    <Link to="/roomList">
-                        <PageBtn><SlKey />Room</PageBtn>
-                    </Link>
-                    <Link to="/bookings">
-                        <PageBtn><PiCalendarCheckLight />Bookings</PageBtn>
-                    </Link>
-                    <Link to="/guestList">
-                        <PageBtn><FaRegUser />Guest</PageBtn>
-                    </Link>
-                    <Link to="/conciergeList">
-                        <PageBtn><HiOutlinePuzzle />Concierge</PageBtn>
-                    </Link>
-                </NavBtns>
+            <SideMenuWrapper collapsed={collapsed}>
+                {!collapsed && (
+                    <>
+                        <WebIconContainer>
+                            <WebIcon src="/src/assets/hotel.svg" />
+                            {!collapsed && (
+                                <WebTitleContainer>
+                                    <TitleWeb>travl</TitleWeb>
+                                    <SubtitleWeb>Hotel Admin Dashboard</SubtitleWeb>
+                                </WebTitleContainer>
+                            )}
+                        </WebIconContainer>
+                        <NavBtns>
+                            <Link to="/">
+                                <PageBtn>{<TbLayoutDashboard />} {!collapsed && "Dashboard"}</PageBtn>
+                            </Link>
+                            <Link to="/roomList">
+                                <PageBtn>{<SlKey />}{!collapsed && "Room"}</PageBtn>
+                            </Link>
+                            <Link to="/bookings">
+                                <PageBtn>{<PiCalendarCheckLight />}{!collapsed && "Bookings"}</PageBtn>
+                            </Link>
+                            <Link to="/guestList">
+                                <PageBtn>{<FaRegUser />}{!collapsed && "Guest"}</PageBtn>
+                            </Link>
+                            <Link to="/conciergeList">
+                                <PageBtn>{<HiOutlinePuzzle />}{!collapsed && "Concierge"}</PageBtn>
+                            </Link>
+                        </NavBtns>
+                    </>)}
+
             </SideMenuWrapper>
         </>
     );

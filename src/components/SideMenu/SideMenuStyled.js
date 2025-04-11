@@ -7,7 +7,7 @@ export const SideMenuWrapper = styled.div`
     box-shadow: 13px 3px 40px #00000005;
     opacity: 1;
     margin: 0;
-    padding: ${({ collapsed }) => (collapsed ? "0" : "0 2.5rem")};
+    padding: 0;
     height: auto;
     position: relative;
     transition: width 2s;
@@ -15,7 +15,7 @@ export const SideMenuWrapper = styled.div`
 
 export const WebIconContainer = styled.div`
     display: flex;
-    padding: 2rem 0;
+    padding: 2rem 2rem;
 `;
 
 export const WebIcon = styled.img`
@@ -50,6 +50,22 @@ export const NavBtns = styled.div`
 export const PageBtn = styled.div`
     display: flex;
     padding: 2rem 0;
-    color: #799283;
+    padding: ${({ active }) => (active ? "2rem 0" : "2rem 1rem")};
+    color: ${({ active }) => (active ? "red" : "#799283")};
+    font-size: ${({ active }) => (active ? "1.4rem" : "1rem")};
     align-items: center;
+`;
+
+export const RedIndicator = styled.div`
+    background-color: red;
+    width: 0.5rem;
+    height: 3rem;
+    border-radius: 0% 50% 50% 0%;
+    position: relative;
+    left: 0rem;
+    margin-right: 1rem;
+`;
+
+export const PageText = styled.div`
+    padding: 0.5rem;
 `;

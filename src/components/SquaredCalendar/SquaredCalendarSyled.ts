@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const DayWrapper = styled.div`
+interface DayWrapperProps {
+    $bg?: string;
+}
+
+export const DayWrapper = styled.div<DayWrapperProps>`
     display: flex;
     justify-content: center;
     align-items: center;

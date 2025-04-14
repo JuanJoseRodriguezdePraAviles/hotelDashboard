@@ -1,7 +1,11 @@
 import React from "react";
 import { AvatarWrapper } from "./UserAvatarSquaredStyled";
 
-export const UserAvatarSquared = ({size}) => {
+interface UserAvatarSquaredProps {
+    size?: 'large' | 'largest';
+}
+
+export const UserAvatarSquared: React.FC<UserAvatarSquaredProps> = ({size}) => {
     return (
         <>
             <AvatarWrapper size={size}></AvatarWrapper>

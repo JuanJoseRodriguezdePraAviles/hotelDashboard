@@ -1,6 +1,11 @@
 import styled from "styled-components";
 
-export const SideMenuWrapper = styled.div`
+interface SideMenuProps {
+    collapsed: string;
+    active: boolean;
+}
+
+export const SideMenuWrapper = styled.div<SideMenuProps>`
     width: ${({ collapsed }) => (collapsed ? "0" : "auto")};
     background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
     background: #FFFFFF 0% 0% no-repeat padding-box;
@@ -46,7 +51,7 @@ export const NavBtns = styled.div`
     padding: 2rem 0;
 `;
 
-export const PageBtn = styled.div`
+export const PageBtn = styled.div<SideMenuProps>`
     display: flex;
     padding: 2rem 0;
     padding: ${({ active }) => (active ? "1rem 0" : "1rem 1rem")};

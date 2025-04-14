@@ -7,7 +7,7 @@ import { Status } from '../../interfaces/Status';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-interface Booking {
+export interface Booking {
     booking_id: number,
     room_id: number,
     room_name: string,

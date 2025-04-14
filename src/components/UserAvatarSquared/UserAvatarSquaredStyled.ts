@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const AvatarWrapper = styled.div`
+interface AvatarWrapperProps {
+    size?: 'small' | 'large' | 'largest';
+}
+
+export const AvatarWrapper = styled.div<AvatarWrapperProps>`
     width: ${(props) => props.size === 'large'? '6rem' : props.size === 'largest'? '10rem' : '4rem'};
     height: ${(props) => props.size === 'large'? '6rem' : props.size === 'largest'? '10rem' : '4rem'};
     background: var(--unnamed-color-c5c5c5) 0% 0% no-repeat padding-box;

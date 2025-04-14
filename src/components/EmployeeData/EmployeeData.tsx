@@ -1,3 +1,4 @@
+import React from "react";
 import { UserAvatarSquared } from "../UserAvatarSquared/UserAvatarSquared";
 import { DataWrapper, EmployeeDataContainer, Identifier, StartDate, Username } from "./EmployeeDataStyled";
 

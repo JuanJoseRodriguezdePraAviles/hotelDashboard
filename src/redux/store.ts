@@ -16,3 +16,6 @@ export const store = configureStore({
         reviews: reviewsReducer
     }
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

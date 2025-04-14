@@ -1,3 +1,4 @@
+import React from "react";
 import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
 import { FaRegHeart, FaRegEnvelope } from "react-icons/fa";
 import { AiOutlineBell } from "react-icons/ai";

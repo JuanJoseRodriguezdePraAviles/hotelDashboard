@@ -6,15 +6,16 @@ import { Amenities } from '../../interfaces/Amenities';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-interface Room {
+export interface Room {
     room_id: Number,
+    room_name: string,
     room_type: RoomType,
     room_floor: String,
     status: RoomStatus,
     description: String,
     photos: String,
     offer: Boolean,
-    price: Number,
+    price: number,
     discount: Number,
     cancellation_policy: String,
     room_amenities: Amenities[]

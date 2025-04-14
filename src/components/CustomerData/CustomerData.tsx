@@ -1,3 +1,4 @@
+import React from "react";
 import { UserAvatarSquared } from "../UserAvatarSquared/UserAvatarSquared";
 import { Email } from "./CustomerDataStyled";
 import { PhoneNumber } from "./CustomerDataStyled";
@@ -9,7 +10,7 @@ export const CustomerData = ({client, email, phone, identifier}) => {
     return (
         <>
             <CustomerDataContainer>
-                <UserAvatarSquared />
+                <UserAvatarSquared/>
                 <DataWrapper>
                     <Username>{client}</Username>
                     <Email>{email}</Email>
@@ -18,7 +19,6 @@ export const CustomerData = ({client, email, phone, identifier}) => {
                 </DataWrapper>
             </CustomerDataContainer>
         </>
-
     );
 }
 

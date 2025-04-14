@@ -1,15 +1,31 @@
+import React from "react";
 import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
 import { Checkbox, Header, FieldName, Table, FieldValue, FieldTextContainer, FieldText, RoomState, Stars, ViewNotesBtn, SpecialRequestContainer } from "./ListStyled";
 import { HiDotsVertical } from "react-icons/hi";
 import { MdOutlineLocalPhone } from "react-icons/md";
-import { IoIosStar } from "react-icons/io";
 import { format, parse } from 'date-fns';
+import { Guest } from "../../redux/slices/GuestSlice";
+import { Employee } from "../../redux/slices/EmployeeSlice";
+import { Room } from "../../redux/slices/RoomSlice";
 
-export const List = ({ type, list, fieldsName, onCheckboxChange, selected, onShowNotes }) => {
+type Item = Guest | Employee | Room;
 
-    const formatDate = (rawDate) => {
+type ListType = "guest" | "employee" | "room";
+
+interface ListProps {
+    type: ListType;
+    list: Item[];
+    fieldsName: string[];
+    onCheckboxChange: (id: string, checked: boolean) => void;
+    selected: string[];
+    onShowNotes: (notes: string) => void;
+}
+
+export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxChange, selected, onShowNotes }) => {
+
+    const formatDate = (rawDate: string) => {
         const dateRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
         if (!dateRegex.test(rawDate)) {
             return rawDate;
@@ -19,62 +35,64 @@ export const List = ({ type, list, fieldsName, onCheckboxChange, selected, onSho
         return format(parsed, "MMM do yyyy hh:mmaa");
     }
 
-    const renderRowFields = (item) => {
+    const renderRowFields = (item: Item) => {
         switch (type) {
             case 'guest':
+                const guest = item as Guest;
                 return (
                     <>
                         <FieldValue>
                             <CustomerData
-                                client={item.client_name}
-                                email={item.client_email}
-                                phone={item.client_phone}
-                                identifier={item.client_id}
+                                client={guest.client_name}
+                                email={guest.client_email}
+                                phone={guest.client_phone}
+                                identifier={guest.client_id}
                             />
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(item.order_date)}</FieldText>
+                            <FieldText>{formatDate(guest.order_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(item.check_in_date)}</FieldText>
+                            <FieldText>{formatDate(guest.check_in_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(item.check_out_date)}</FieldText>
+                            <FieldText>{formatDate(guest.check_out_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <ViewNotesBtn onClick={() => onShowNotes(item.special_request)}>View Notes</ViewNotesBtn>
+                            <ViewNotesBtn onClick={() => onShowNotes(guest.special_request)}>View Notes</ViewNotesBtn>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.room_type}</FieldText>
+                            <FieldText>{guest.room_type}</FieldText>
                         </FieldValue>
                         <FieldValue>
                             <RoomState color="#FFEDEC">
-                                <FieldText color="#E23428">{item.status}</FieldText>
+                                <FieldText color="#E23428">{guest.status}</FieldText>
                             </RoomState>
                         </FieldValue>
                     </>
                 );
             case 'employee':
+                const employee = item as Employee;
                 return (
                     <>
                         <FieldValue>
-                            <EmployeeData name={item.name} identifier={item.id} startDate={item.registration_date} />
+                            <EmployeeData name={employee.name} identifier={employee.id} startDate={employee.registration_date} />
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.name}</FieldText>
+                            <FieldText>{employee.name}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.job_functions}</FieldText>
+                            <FieldText>{employee.job_functions}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.schelude}</FieldText>
+                            <FieldText>{employee.schelude}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText><MdOutlineLocalPhone />{item.phone}</FieldText>
+                            <FieldText><MdOutlineLocalPhone />{employee.phone}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText color={item.status ? "#5AD07A" : "#E23428"}>
-                                {item.status ?
+                            <FieldText color={employee.status ? "#5AD07A" : "#E23428"}>
+                                {employee.status ?
                                     'Active' : 'Inactive'
                                 }
                             </FieldText>
@@ -82,26 +100,27 @@ export const List = ({ type, list, fieldsName, onCheckboxChange, selected, onSho
                     </>
                 );
             case 'room':
+                const room = item as Room;
                 return (
                     <>
                         <FieldValue>
-                            <RoomData name={item.room_name} identifier={item.room_id} />
+                            <RoomData name={room.room_name} identifier={room.room_id} />
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.room_type}</FieldText>
+                            <FieldText>{room.room_type}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.room_floor}</FieldText>
+                            <FieldText>{room.room_floor}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.room_amenities}</FieldText>
+                            <FieldText>{room.room_amenities}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{item.price}$ /night</FieldText>
+                            <FieldText>{room.price}$ /night</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldTextContainer color={item.status === 'Available' ? "#5AD07A" : "#E23428"}>
-                                <FieldText color="#FFFFFF">{item.status}</FieldText>
+                            <FieldTextContainer color={room.status === 'Available' ? "#5AD07A" : "#E23428"}>
+                                <FieldText color="#FFFFFF">{room.status}</FieldText>
                             </FieldTextContainer>
                         </FieldValue>
                     </>
@@ -146,7 +165,7 @@ export const List = ({ type, list, fieldsName, onCheckboxChange, selected, onSho
             <tbody>
                 {list.length === 0 ? (
                     <tr>
-                        <td colSpan="9">
+                        <td colSpan={9}>
                             <p>{emptyMessage[type]}</p>
                         </td>
                     </tr>

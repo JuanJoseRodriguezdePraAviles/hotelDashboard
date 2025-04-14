@@ -3,7 +3,7 @@ import { Status } from '../../interfaces/Status';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-interface Employee {
+export interface Employee {
     id: number,
     name: String,
     email: String,

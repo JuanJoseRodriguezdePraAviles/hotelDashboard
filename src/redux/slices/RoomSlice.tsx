@@ -1,6 +1,36 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RoomType } from '../../interfaces/RoomType';
+import { RoomStatus } from '../../interfaces/RoomStatus';
+import { Status } from '../../interfaces/Status';
+import { Amenities } from '../../interfaces/Amenities';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+interface Room {
+    room_id: Number,
+    room_type: RoomType,
+    room_floor: String,
+    status: RoomStatus,
+    description: String,
+    photos: String,
+    offer: Boolean,
+    price: Number,
+    discount: Number,
+    cancellation_policy: String,
+    room_amenities: Amenities[]
+}
+
+interface RoomsState {
+    rooms: Room[],
+    status: Status,
+    error: string | undefined
+}
+
+const initialState: RoomsState = {
+    rooms: [],
+    status: Status.Loading,
+    error: ""
+}
 
 export const fetchRooms = createAsyncThunk(
     'rooms/fetchRooms',
@@ -14,11 +44,7 @@ export const fetchRooms = createAsyncThunk(
 
 const roomsSlice = createSlice({
     name: "rooms",
-    initialState: {
-        rooms: [],
-        status: 'idle',
-        error: null
-    },
+    initialState,
     reducers: {
         addRoom: (state, action) => {
             state.rooms.push(action.payload)
@@ -39,14 +65,14 @@ const roomsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchRooms.pending, (state) => {
-                state.status = 'loading';
+                state.status = Status.Loading;
             })
             .addCase(fetchRooms.fulfilled, (state, action) => {
-                state.status = 'succeeded';
+                state.status = Status.Suceeded;
                 state.rooms = action.payload;
             })
             .addCase(fetchRooms.rejected, (state, action) => {
-                state.status = 'failed';
+                state.status = Status.Failed;
                 state.error = action.error.message;
             });
     }

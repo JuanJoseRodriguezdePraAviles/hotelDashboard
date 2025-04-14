@@ -1,8 +1,45 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Status } from '../../interfaces/Status';
+import { BookingStatus } from '../../interfaces/BookingStatus';
+import { RoomType } from '../../interfaces/RoomType';
+import { RoomStatus } from '../../interfaces/RoomStatus';
+import { Amenities } from '../../interfaces/Amenities';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const fetchGuests = createAsyncThunk(
+interface Guest {
+    booking_id: number,
+    room_id: number,
+    room_name: string,
+    room_description: string,
+    room_type: RoomType,
+    room_price: number,
+    room_status: RoomStatus,
+    room_amenities: Amenities[],
+    client_id: number,
+    client_name: string,
+    client_email: string,
+    client_phone: string,
+    order_date: Date,
+    check_in_date: Date,
+    check_out_date: Date,
+    status: BookingStatus,
+    special_request: string
+}
+
+interface GuestsState {
+    guests: Guest[],
+    status: Status,
+    error: string | undefined
+}
+
+const initialState: GuestsState = {
+    guests: [],
+    status: Status.Loading,
+    error: ""
+}
+
+export const fetchGuests = createAsyncThunk<Guest[], number>(
     'guests/fetchGuests',
     async () => {
         await delay(200);
@@ -14,11 +51,7 @@ export const fetchGuests = createAsyncThunk(
 
 const guestsSlice = createSlice({
     name: "guests",
-    initialState: {
-        guests: [],
-        status: 'idle',
-        error: null
-    },
+    initialState,
     reducers: {
         addGuest: (state, action) => {
             state.guests.push(action.payload)
@@ -26,7 +59,7 @@ const guestsSlice = createSlice({
         editGuest: (state, action) => {
             const { id, updateGuest } = action.payload;
             const index = state.guests.findIndex((guest) => guest.client_id === Number(id));
-            
+
             if (index !== -1) {
                 state.guests[index] = { ...state.guests[index], ...updateGuest };
             }
@@ -39,14 +72,14 @@ const guestsSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchGuests.pending, (state) => {
-                state.status = 'loading';
+                state.status = Status.Loading;
             })
             .addCase(fetchGuests.fulfilled, (state, action) => {
-                state.status = 'succeeded';
+                state.status = Status.Suceeded;
                 state.guests = action.payload;
             })
             .addCase(fetchGuests.rejected, (state, action) => {
-                state.status = 'failed';
+                state.status = Status.Failed;
                 state.error = action.error.message;
             });
     }

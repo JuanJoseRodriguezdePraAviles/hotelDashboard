@@ -1,6 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState = {
+interface initialStateInterface {
+    isAuthenticated: boolean,
+    username: string,
+    email: string
+}
+
+const initialState: initialStateInterface = {
     isAuthenticated: false,
     username: '',
     email: ''
@@ -20,9 +26,9 @@ export const authSlice = createSlice({
             state.username = '',
             state.email = ''
         },
-        updateEmail: (state, action) => {
-            if(action?.payload?.email) {
-                state.email = action.payload.email;
+        updateEmail: (state, action: PayloadAction<string>) => {
+            if(action?.payload) {
+                state.email = action.payload;
             }
         }
     }

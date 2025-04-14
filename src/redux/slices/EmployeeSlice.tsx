@@ -1,8 +1,32 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { Status } from '../../interfaces/Status';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const fetchEmployees = createAsyncThunk(
+interface Employee {
+    id: number,
+    name: String,
+    email: String,
+    job_functions: String,
+    registration_date: Date,
+    phone: String,
+    schelude: String,
+    status: Boolean
+}
+
+interface EmployeesState {
+    employees: Employee[],
+    status: Status,
+    error: string | undefined
+}
+
+const initialState: EmployeesState = {
+    employees: [],
+    status: Status.Loading,
+    error: ""
+}
+
+export const fetchEmployees = createAsyncThunk<Employee[], number>(
     'employees/fetchEmployees',
     async () => {
         await delay(200);
@@ -14,11 +38,7 @@ export const fetchEmployees = createAsyncThunk(
 
 const employeesSlice = createSlice({
     name: "employees",
-    initialState: {
-        employees: [],
-        status: 'idle',
-        error: null
-    },
+    initialState,
     reducers: {
         addEmployee: (state, action) => {
             state.employees.push(action.payload)
@@ -39,14 +59,14 @@ const employeesSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchEmployees.pending, (state) => {
-                state.status = 'loading';
+                state.status = Status.Loading;
             })
             .addCase(fetchEmployees.fulfilled, (state, action) => {
-                state.status = 'succeeded';
+                state.status = Status.Suceeded;
                 state.employees = action.payload;
             })
             .addCase(fetchEmployees.rejected, (state, action) => {
-                state.status = 'failed';
+                state.status = Status.Failed;
                 state.error = action.error.message;
             });
     }

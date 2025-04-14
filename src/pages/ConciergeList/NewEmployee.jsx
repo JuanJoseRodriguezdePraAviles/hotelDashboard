@@ -3,6 +3,7 @@ import { DateInput, FieldText, Label, NewEmployeeTitle, NewEmployeeWrapper, Subm
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "../../redux/slices/EmployeeSlice";
+import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
 export const NewEmployee = () => {
     const dispatch = useDispatch();
@@ -49,61 +50,91 @@ export const NewEmployee = () => {
 
         dispatch(addEmployee(formData));
 
-        navigate("/conciergeList", { state: { created: true }});
+        navigate("/conciergeList", { state: { created: true } });
     }
 
     return (
         <NewEmployeeWrapper>
             <NewEmployeeTitle>New employee</NewEmployeeTitle>
-            <Label>Employee ID</Label>
-            <FieldText name="id" value={formData.id} onChange={handleChange} />
-            {errors.id &&
-                <ValidationError>
-                    {errors.id}
-                </ValidationError>
-            }
-            <Label>Employee Name</Label>
-            <FieldText name="name" value={formData.name} onChange={handleChange} required/>
-            {errors.name &&
-                <ValidationError>
-                    {errors.name}
-                </ValidationError>
-            }
-            <Label>Employee Email</Label>
-            <FieldText name="email" value={formData.email} onChange={handleChange} required/>
-            {errors.email &&
-                <ValidationError>
-                    {errors.email}
-                </ValidationError>
-            }
-            <Label>Job Functions</Label>
-            <FieldText name="job_functions" value={formData.job_functions} onChange={handleChange} required/>
-            {errors.job_functions &&
-                <ValidationError>
-                    {errors.job_functions}
-                </ValidationError>
-            }
-            <Label>Registration Date</Label>
-            <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} required/>
-            {errors.registration_date &&
-                <ValidationError>
-                    {errors.registration_date}
-                </ValidationError>
-            }
-            <Label>Phone</Label>
-            <FieldText name="phone" value={formData.phone} onChange={handleChange} required/>
-            {errors.phone &&
-                <ValidationError>
-                    {errors.phone}
-                </ValidationError>
-            }
-            <Label>Schelude</Label>
-            <FieldText name="schelude" value={formData.schelude} onChange={handleChange} required/>
-            {errors.schelude &&
-                <ValidationError>
-                    {errors.schelude}
-                </ValidationError>
-            }
+            <Fields>
+                <FieldWrapper>
+                    {errors.id &&
+                        <ValidationError>
+                            {errors.id}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Employee ID</Label>
+                        <FieldText name="id" value={formData.id} onChange={handleChange} />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.name &&
+                        <ValidationError>
+                            {errors.name}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Employee Name</Label>
+                        <FieldText name="name" value={formData.name} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.email &&
+                        <ValidationError>
+                            {errors.email}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Employee Email</Label>
+                        <FieldText name="email" value={formData.email} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.job_functions &&
+                        <ValidationError>
+                            {errors.job_functions}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Job Functions</Label>
+                        <FieldText name="job_functions" value={formData.job_functions} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.registration_date &&
+                        <ValidationError>
+                            {errors.registration_date}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Registration Date</Label>
+                        <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.phone &&
+                        <ValidationError>
+                            {errors.phone}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Phone</Label>
+                        <FieldText name="phone" value={formData.phone} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.schelude &&
+                        <ValidationError>
+                            {errors.schelude}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Schelude</Label>
+                        <FieldText name="schelude" value={formData.schelude} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+            </Fields>
             <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
         </NewEmployeeWrapper>
     )

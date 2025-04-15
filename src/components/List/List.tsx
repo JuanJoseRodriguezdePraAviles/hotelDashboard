@@ -71,13 +71,13 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                             />
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{guest.order_date && formatDate(guest.order_date.toDateString())}</FieldText>
+                            <FieldText>{guest.order_date? new Date(guest.order_date).toLocaleDateString() : 'No date'}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{guest.check_in_date && formatDate(guest.check_in_date.toDateString())}</FieldText>
+                            <FieldText>{guest.check_in_date? new Date(guest.check_in_date).toLocaleDateString() : 'No date'}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{guest.check_out_date && formatDate(guest.check_out_date.toDateString())}</FieldText>
+                            <FieldText>{guest.check_out_date? new Date(guest.check_out_date).toLocaleDateString() : 'No date'}</FieldText>
                         </FieldValue>
                         <FieldValue>
                             <ViewNotesBtn onClick={() => guest.special_request && onShowNotes?(guest.special_request ?? ""): ""}>View Notes</ViewNotesBtn>

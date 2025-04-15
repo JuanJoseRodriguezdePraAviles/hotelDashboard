@@ -1,25 +1,24 @@
 import { useState } from 'react'
 import React from 'react';
 import './App.css'
-import Dashboard from './pages/Dashboard/Dashboard.jsx';
-import { GuestList } from './pages/GuestList/GuesList.jsx';
-import { Bookings } from './pages/Bookings/Bookings.jsx';
-import { ConciergeList } from './pages/ConciergeList/ConciergeList.jsx';
-import { RoomList } from './pages/RoomList/RoomList.jsx';
-import { ReviewsList } from './pages/ReviewsList/ReviewsList.jsx';
+import Dashboard from './pages/Dashboard/Dashboard.js';
+import { GuestList } from './pages/GuestList/GuesList.js';
+import { Bookings } from './pages/Bookings/Bookings.js';
+import { ConciergeList } from './pages/ConciergeList/ConciergeList.js';
+import { RoomList } from './pages/RoomList/RoomList.js';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext.jsx';
-import { Layout } from './context/Layout/Layout.jsx';
-import { Profile } from './pages/Profile/Profile.jsx';
-import { NewBooking } from './pages/Bookings/NewBooking.jsx';
-import { EditBooking } from './pages/Bookings/EditBooking.jsx';
-import { GuestDetails } from './pages/GuestDetails/GuestDetails.jsx';
-import { NewGuest } from './pages/GuestList/NewGuest.jsx';
-import { EditGuest } from './pages/GuestList/EditGuest.jsx';
-import { NewRoom } from './pages/RoomList/NewRoom.jsx';
-import { EditRoom } from './pages/RoomList/EditRoom.jsx';
-import { NewEmployee } from './pages/ConciergeList/NewEmployee.jsx';
-import { EditEmployee } from './pages/ConciergeList/EditEmployee.jsx';
+import { AuthProvider, useAuth } from './context/AuthContext.js';
+import { Layout } from './context/Layout/Layout.js';
+import { Profile } from './pages/Profile/Profile.js';
+import { NewBooking } from './pages/Bookings/NewBooking.js';
+import { EditBooking } from './pages/Bookings/EditBooking.js';
+import { GuestDetails } from './pages/GuestDetails/GuestDetails.js';
+import { NewGuest } from './pages/GuestList/NewGuest.js';
+import { EditGuest } from './pages/GuestList/EditGuest.js';
+import { NewRoom } from './pages/RoomList/NewRoom.js';
+import { EditRoom } from './pages/RoomList/EditRoom.js';
+import { NewEmployee } from './pages/ConciergeList/NewEmployee.js';
+import { EditEmployee } from './pages/ConciergeList/EditEmployee.js';
 
 
 
@@ -71,10 +70,6 @@ const router = createHashRouter([
       {
         path: 'editGuest/:guestId',
         element: <EditGuest />
-      },
-      {
-        path: 'reviewsList',
-        element: <ReviewsList />
       },
       {
         path: 'roomList',

@@ -20,4 +20,4 @@ export const ReviewUnit: React.FC<Review> = ({ email, subject, comment, customer
     );
 }
 
-export default Review;
+export default ReviewUnit;

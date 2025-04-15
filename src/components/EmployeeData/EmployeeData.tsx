@@ -11,7 +11,7 @@ export const EmployeeData: React.FC<Employee> = ({name, id, registration_date}) 
                 <DataWrapper>
                     <Username>{name}</Username>
                     <Identifier>{id}</Identifier>
-                    <StartDate>{registration_date.toDateString()}</StartDate>
+                    <StartDate>{registration_date? new Date(registration_date).toLocaleDateString(): 'No Date'}</StartDate>
                 </DataWrapper>
             </EmployeeDataContainer>
         </>

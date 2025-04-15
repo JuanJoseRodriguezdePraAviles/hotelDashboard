@@ -3,7 +3,7 @@ import { Status } from '../../interfaces/Status';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export interface Review {
+interface Review {
     id: Number,
     email: string,
     date: Date,
@@ -76,3 +76,4 @@ const reviewsSlice = createSlice({
 export const { addReview, editReview, deleteReview } = reviewsSlice.actions;
 export const { actions, reducer } = reviewsSlice;
 export default reducer;
+export type { Review }

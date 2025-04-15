@@ -9,8 +9,9 @@ import { format, parse } from 'date-fns';
 import { Guest } from "../../redux/slices/GuestSlice";
 import { Employee } from "../../redux/slices/EmployeeSlice";
 import { Room } from "../../redux/slices/RoomSlice";
+import { Booking } from "../../redux/slices/BookingSlice";
 
-type Item = Guest | Employee | Room;
+type Item = Guest | Employee | Room | Booking;
 
 type ListType = "guest" | "employee" | "room";
 
@@ -20,7 +21,14 @@ interface ListProps {
     fieldsName: string[];
     onCheckboxChange: (id: string, checked: boolean) => void;
     selected: string[];
-    onShowNotes: (notes: string) => void;
+    onShowNotes?: (notes: string) => void;
+}
+
+function getIdByType(item: Item, type: ListType): string {
+    if (type === "guest") return (item as Booking).client_id;
+    if (type === "employee") return (item as Employee).id;
+    if (type === "room") return (item as Room).room_id;
+    return "";
 }
 
 export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxChange, selected, onShowNotes }) => {
@@ -43,23 +51,36 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                     <>
                         <FieldValue>
                             <CustomerData
-                                client={guest.client_name}
-                                email={guest.client_email}
-                                phone={guest.client_phone}
-                                identifier={guest.client_id}
+                                client_name={guest.client_name}
+                                client_email={guest.client_email}
+                                client_phone={guest.client_phone}
+                                client_id={guest.client_id}
+                                booking_id={guest.booking_id}
+                                room_id={guest.room_id}
+                                room_name={guest.room_name}
+                                room_description={guest.room_description}
+                                room_type={guest.room_type}
+                                room_price={guest.room_price}
+                                room_status={guest.room_status}
+                                room_amenities={guest.room_amenities}
+                                order_date={guest.order_date}
+                                check_in_date={guest.check_in_date}
+                                check_out_date={guest.check_out_date}
+                                status={guest.status}
+                                special_request={guest.special_request}
                             />
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(guest.order_date.toDateString())}</FieldText>
+                            <FieldText>{guest.order_date && formatDate(guest.order_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(guest.check_in_date.toDateString())}</FieldText>
+                            <FieldText>{guest.check_in_date && formatDate(guest.check_in_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <FieldText>{formatDate(guest.check_out_date.toDateString())}</FieldText>
+                            <FieldText>{guest.check_out_date && formatDate(guest.check_out_date.toDateString())}</FieldText>
                         </FieldValue>
                         <FieldValue>
-                            <ViewNotesBtn onClick={() => onShowNotes(guest.special_request)}>View Notes</ViewNotesBtn>
+                            <ViewNotesBtn onClick={() => guest.special_request && onShowNotes?(guest.special_request ?? ""): ""}>View Notes</ViewNotesBtn>
                         </FieldValue>
                         <FieldValue>
                             <FieldText>{guest.room_type}</FieldText>
@@ -76,7 +97,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                 return (
                     <>
                         <FieldValue>
-                            <EmployeeData name={employee.name} identifier={employee.id} startDate={employee.registration_date} />
+                            <EmployeeData name={employee.name} id={employee.id} registration_date={employee.registration_date} />
                         </FieldValue>
                         <FieldValue>
                             <FieldText>{employee.name}</FieldText>
@@ -104,7 +125,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                 return (
                     <>
                         <FieldValue>
-                            <RoomData name={room.room_name} identifier={room.room_id} />
+                            <RoomData room_name={room.room_name} room_id={room.room_id} />
                         </FieldValue>
                         <FieldValue>
                             <FieldText>{room.room_type}</FieldText>

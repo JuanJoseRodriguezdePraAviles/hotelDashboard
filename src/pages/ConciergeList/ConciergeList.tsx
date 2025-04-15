@@ -1,27 +1,29 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { ConciergeListWrapper, EmployeeBtn, Filters, Notification } from "./ConciergeListStyled";
 import { deleteEmployee, fetchEmployees } from "../../redux/slices/EmployeeSlice";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Status } from "../../interfaces/Status";
 
 export const ConciergeList = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const employees = useSelector((state) => state.employees.employees);
-    const status = useSelector((state) => state.employees.status);
-    const error = useSelector((state) => state.employees.error);
+    const employees = useAppSelector((state) => state.employees.employees);
+    const status = useAppSelector((state) => state.employees.status);
+    const error = useAppSelector((state) => state.employees.error);
 
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
+    const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
 
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === Status.Loading) {
             dispatch(fetchEmployees());
         }
     }, [dispatch, status]);
@@ -71,8 +73,8 @@ export const ConciergeList = () => {
 
             <div>
                 <ConciergeListWrapper>
-                    {status === 'loading' && <button>Loading Employees...</button>}
-                    {status === 'failed' && <button>Failed to load employees</button>}
+                    {status === Status.Loading && <button>Loading Employees...</button>}
+                    {status === Status.Failed && <button>Failed to load employees</button>}
                     <Filters>
                         <Filter name="All Employee" color="#135846"></Filter>
                         <Filter name="Active Employee" color="#6E6E6E"></Filter>
@@ -94,7 +96,8 @@ export const ConciergeList = () => {
                             <EmployeeBtn disabled>Delete Employee</EmployeeBtn>
                         </>
                     }
-                    <List type="employee" list={employees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
+                    <List type="employee" list={employees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]}
+                        onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
                 </ConciergeListWrapper>
             </div>
         </div>

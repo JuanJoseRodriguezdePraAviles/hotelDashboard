@@ -1,23 +1,25 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { CloseBtn, Filters, GuestBtn, GuestListWrapper, ModalContainer, ModalTextContainer, Notification } from "./GuestListStyled";
 import { useEffect, useState } from "react";
 import { deleteGuest, fetchGuests } from "../../redux/slices/GuestSlice";
 import { Link, useLocation } from "react-router-dom";
+import { Status } from "../../interfaces/Status";
 
 export const GuestList = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const guests = useSelector((state) => state.guests.guests);
-    const status = useSelector((state) => state.guests.status);
-    const error = useSelector((state) => state.guests.error);
+    const guests = useAppSelector((state) => state.guests.guests);
+    const status = useAppSelector((state) => state.guests.status);
+    const error = useAppSelector((state) => state.guests.error);
 
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
-    const [selectedGuests, setSelectedGuests] = useState([]);
+    const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
@@ -32,7 +34,7 @@ export const GuestList = () => {
     }
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === Status.Loading) {
             dispatch(fetchGuests());
         }
     }, [dispatch, status]);

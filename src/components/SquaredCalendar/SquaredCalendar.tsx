@@ -1,3 +1,4 @@
+import React from "react";
 import { DayWrapper } from "./SquaredCalendarSyled";
 
 export const SquaredCalendar = ({bgColor, children}) => {

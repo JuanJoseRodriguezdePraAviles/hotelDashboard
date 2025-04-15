@@ -1,20 +1,32 @@
+import React from "react";
 import { useEffect, useState } from "react"
 import { FieldText, Label, EditEmployeeTitle, EditEmployeeWrapper, SubmitBtn, ValidationError } from "./EditEmployeeStyled";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editEmployee } from "../../redux/slices/EmployeeSlice";
 import { DateInput } from "./NewEmployeeStyled";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
 export const EditEmployee = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { employeeId } = useParams();
 
-    const employee = useSelector((state) => state.employees.employees.find((employee) => employee.id === Number(employeeId)));
+    const employee = useAppSelector((state) => state.employees.employees.find((employee) => employee.id === employeeId));
 
-    const [formData, setFormData] = useState({
+    interface FormData {
+        id: string,
+        name: string,
+        email: string,
+        job_functions: string,
+        registration_date: string,
+        phone: string,
+        schelude: string,
+        status: boolean
+    }
+
+    const [formData, setFormData] = useState<FormData>({
         id: '',
         name: '',
         email: '',
@@ -25,7 +37,7 @@ export const EditEmployee = () => {
         status: false
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -40,12 +52,12 @@ export const EditEmployee = () => {
             setFormData({
                 id: employee.id,
                 name: employee.name,
-                email: employee.email,
-                job_functions: employee.job_functions,
-                registration_date: employee.registration_date,
-                phone: employee.phone,
-                schelude: employee.schelude,
-                status: employee.status
+                email: employee.email ?? "",
+                job_functions: employee.job_functions ?? "",
+                registration_date: employee.registration_date.toDateString(),
+                phone: employee.phone ?? "",
+                schelude: employee.schelude ?? "",
+                status: employee.status || false
             });
         }
     }, [employee]);
@@ -93,7 +105,7 @@ export const EditEmployee = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Employee ID</Label>
-                        <FieldText name="id" value={formData.id} onChange={handleChange} readonly='readonly' />
+                        <FieldText name="id" value={formData.id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

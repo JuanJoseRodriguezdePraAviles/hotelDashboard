@@ -9,7 +9,12 @@ import { IoMdLogOut } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
 
-export const Header = ({ title, toggleMenu }) => {
+interface HeaderProps {
+    title: string,
+    toggleMenu: () => void
+}
+
+export const Header: React.FC<HeaderProps> = ({ title, toggleMenu }) => {
 
     const { logout } = useAuth();
 

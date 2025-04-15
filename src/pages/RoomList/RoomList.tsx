@@ -1,24 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { Filters, RoomBtn, RoomListWrapper } from "./RoomListStyled";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { deleteRoom, fetchRooms } from "../../redux/slices/RoomSlice";
+import { Status } from "../../interfaces/Status";
 
 export const RoomList = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const rooms = useSelector((state) => state.rooms.rooms);
-    const status = useSelector((state) => state.rooms.status);
-    const error = useSelector((state) => state.rooms.error);
+    const rooms = useAppSelector((state) => state.rooms.rooms);
+    const status = useAppSelector((state) => state.rooms.status);
+    const error = useAppSelector((state) => state.rooms.error);
 
-    const [selectedRooms, setSelectedRooms] = useState([]);
+    const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === Status.Loading) {
             dispatch(fetchRooms());
         }
     }, [dispatch, status]);
@@ -42,8 +44,8 @@ export const RoomList = () => {
     
     return (
         <RoomListWrapper>
-            {status === 'loading' && <button>Loading Rooms...</button>}
-            {status === 'failed' && <button>Failed to load rooms</button>}
+            {status === Status.Loading && <button>Loading Rooms...</button>}
+            {status === Status.Failed && <button>Failed to load rooms</button>}
             <Filters>
                 <Filter name="All Rooms" color="#135846"></Filter>
                 <Filter name="Available Room" color="#6E6E6E"></Filter>

@@ -1,19 +1,41 @@
-import { useState } from "react"
-import { DateInput, FieldText, Label, NewRoomTitle, NewRoomWrapper, SubmitBtn, ValidationError } from "./NewRoomStyled";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addRoom } from "../../redux/slices/RoomSlice";
+import React from "react";
+import { useEffect, useState } from "react"
+import { FieldText, Label, EditRoomTitle, EditRoomWrapper, SubmitBtn, ValidationError } from "./EditRoomStyled";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { editRoom } from "../../redux/slices/RoomSlice";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { RoomType } from "../../interfaces/RoomType";
+import { RoomStatus } from "../../interfaces/RoomStatus";
 
-export const NewRoom = () => {
-    const dispatch = useDispatch();
+export const EditRoom = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+
+    const { roomId } = useParams();
+
+    const room = useAppSelector((state) => state.rooms.rooms.find((room) => room.room_id === roomId));
+
+    interface FormData {
+        room_id: string,
+        room_name: string,
+        room_type: RoomType,
+        room_floor: string,
+        status: RoomStatus,
+        description: string,
+        photos: string[],
+        offer: boolean,
+        price: number,
+        discount: number,
+        cancellation_policy: string
+    }
+
+    const [formData, setFormData] = useState<FormData>({
         room_id: '',
         room_name: '',
-        room_type: '',
+        room_type: RoomType.SingleBed,
         room_floor: '',
-        status: '',
+        status: RoomStatus.Booked,
         description: '',
         photos: [],
         offer: false,
@@ -22,8 +44,33 @@ export const NewRoom = () => {
         cancellation_policy: ''
     });
 
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const [errors, setErrors] = useState({});
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+
+    useEffect(() => {
+        if (room) {
+            setFormData({
+                room_id: room.room_id,
+                room_name: room.room_name,
+                room_type: room.room_type ?? RoomType.SingleBed,
+                room_floor: room.room_floor ?? "",
+                status: room.status ?? RoomStatus.Booked,
+                description: room.description ?? "",
+                photos: Array.isArray(room.photos) ? room.photos : [],
+                offer: room.offer ?? false,
+                price: room.price ?? 0,
+                discount: room.discount ?? 0,
+                cancellation_policy: room.cancellation_policy ?? ""
+            });
+        }
+    }, [room]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -41,7 +88,7 @@ export const NewRoom = () => {
             if (formData[key] === '' ||
                 formData[key] === null ||
                 formData[key] === undefined ||
-                (Array.isArray(formData[key] && formData[key].length === 0))
+                (Array.isArray(formData[key]) && formData[key].length === 0)
             ) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
@@ -51,15 +98,14 @@ export const NewRoom = () => {
             setErrors(newErrors);
             return;
         }
-
-        dispatch(addRoom(formData));
+        dispatch(editRoom({ id: roomId, updateRoom: formData }));
 
         navigate("/roomList");
     }
 
     return (
-        <NewRoomWrapper>
-            <NewRoomTitle>New room</NewRoomTitle>
+        <EditRoomWrapper>
+            <EditRoomTitle>Edit room</EditRoomTitle>
             <Fields>
                 <FieldWrapper>
                     {errors.room_id &&
@@ -69,7 +115,7 @@ export const NewRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Room ID</Label>
-                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -127,7 +173,6 @@ export const NewRoom = () => {
                         <FieldText name="description" value={formData.description} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
-
                 <FieldWrapper>
                     {errors.photos &&
                         <ValidationError>
@@ -173,7 +218,8 @@ export const NewRoom = () => {
                     </FieldLabelContainer>
                 </FieldWrapper>
             </Fields>
+
             <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
-        </NewRoomWrapper>
+        </EditRoomWrapper>
     )
 }

@@ -1,17 +1,18 @@
+import React from "react";
 import { Email, EmailContainer, EmailInput, ProfileTitle, ProfileWrapper, Username } from "./ProfileStyled";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../redux/hooks";
 import { MdEdit } from "react-icons/md";
 import { useState } from "react";
 import { updateEmail } from "../../redux/slices/AuthSlice";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/hooks";
 
 
 export const Profile = () => {
-    const username = useSelector((state) => state.auth.username);
-    const email = useSelector((state) => state.auth.email);
+    const username = useAppSelector((state) => state.auth.username);
+    const email = useAppSelector((state) => state.auth.email);
     const [emailInput, setEmailInput] = useState(localStorage.getItem('email') || email);
     const [isEditEmail, setIsEditEmail] = useState(false);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleEmailChange = (e) => {
         setEmailInput(e.target.value);
@@ -19,7 +20,7 @@ export const Profile = () => {
 
     const handleEmail = () => {
         if(isEditEmail){
-            dispatch(updateEmail({email: emailInput}));
+            dispatch(updateEmail(emailInput));
             localStorage.setItem("email", emailInput);
         }
         setIsEditEmail(!isEditEmail);

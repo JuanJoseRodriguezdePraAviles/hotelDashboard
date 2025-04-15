@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface AvatarWrapperProps {
-    size?: 'small' | 'large' | 'largest';
+    size?: 'wide' | 'large' | 'largest';
 }
 
 export const AvatarWrapper = styled.div<AvatarWrapperProps>`

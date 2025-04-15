@@ -5,12 +5,14 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Review {
     id: Number,
+    email: string,
     date: Date,
-    customer_name: String,
-    phone: String,
-    subject: String,
-    comment: String,
-    archived: Boolean
+    customer_id: number
+    customer_name: string,
+    phone: string,
+    subject: string,
+    comment: string,
+    archived: boolean
 }
 
 interface ReviewsState {
@@ -25,7 +27,7 @@ const initialState: ReviewsState = {
     error: ""
 }
 
-export const fetchReviews = createAsyncThunk<Review[], number>(
+export const fetchReviews = createAsyncThunk<Review[]>(
     'reviews/fetchReviews',
     async () => {
         await delay(200);

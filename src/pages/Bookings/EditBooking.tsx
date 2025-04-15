@@ -1,18 +1,33 @@
+import React from "react";
 import { useEffect, useState } from "react"
 import { DateInput, FieldText, Label, EditBookingTitle, EditBookingWrapper, SubmitBtn, ValidationError, FieldWrapper, Fields, FieldLabelContainer } from "./EditBookingStyled";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editBooking } from "../../redux/slices/BookingSlice";
 
 export const EditBooking = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { bookingId } = useParams();
 
-    const booking = useSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id === Number(bookingId)));
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id === bookingId));
 
-    const [formData, setFormData] = useState({
+    interface FormData {
+        booking_id: string,
+        client_id: string,
+        client_name: string,
+        client_email: string,
+        client_phone: string,
+        check_in_date: string,
+        check_out_date: string,
+        special_request: string,
+        room_id: string,
+        room_type: string,
+        status: string
+    }
+
+    const [formData, setFormData] = useState<FormData>({
         booking_id: '',
         client_id: '',
         client_name: '',
@@ -26,7 +41,7 @@ export const EditBooking = () => {
         status: 'booked'
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -38,20 +53,18 @@ export const EditBooking = () => {
 
     useEffect(() => {
         if (booking) {
-
-
             setFormData({
                 booking_id: booking.booking_id,
                 client_id: booking.client_id,
-                client_name: booking.client_name,
-                client_email: booking.client_email,
-                client_phone: booking.client_phone,
+                client_name: booking.client_name ?? "",
+                client_email: booking.client_email ?? "",
+                client_phone: booking.client_phone ?? "",
                 check_in_date: formatDate(booking.check_in_date),
                 check_out_date: formatDate(booking.check_out_date),
-                special_request: booking.special_request,
-                room_id: booking.room_id,
+                special_request: booking.special_request ?? "",
+                room_id: booking.room_id ?? "",
                 room_type: booking.room_type,
-                status: booking.status
+                status: booking.status ?? ""
             });
         }
     }, [booking])
@@ -108,7 +121,7 @@ export const EditBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Booking ID</Label>
-                        <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} readonly='readonly' />
+                        <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

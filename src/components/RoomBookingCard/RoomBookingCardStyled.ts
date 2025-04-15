@@ -43,7 +43,7 @@ export const Title = styled.p`
     opacity: 1;
 `;
 
-export const Guest = styled.p`
+export const GuestContainer = styled.p`
     width: auto;
     height: 2.5rem;
     margin: 0;

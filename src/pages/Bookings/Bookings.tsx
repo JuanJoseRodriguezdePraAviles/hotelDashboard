@@ -1,26 +1,28 @@
+import React from "react";
 import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 
 import { BookingBtn, BookingsWrapper, CloseBtn, Filters, Loading, ModalContainer, ModalTextContainer, Notification } from "./BookingsStyled";
 import { fetchBookings } from '../../redux/slices/BookingSlice';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Link } from "react-router-dom";
 import { deleteBooking } from "../../redux/slices/BookingSlice";
 import { useLocation } from "react-router-dom";
+import { Status } from "../../interfaces/Status";
 
 export const Bookings = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const bookings = useSelector((state) => state.bookings.bookings);
-    const status = useSelector((state) => state.bookings.status);
-    const error = useSelector((state) => state.bookings.error);
+    const bookings = useAppSelector((state) => state.bookings.bookings);
+    const status = useAppSelector((state) => state.bookings.status);
+    const error = useAppSelector((state) => state.bookings.error);
 
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
 
-    const [selectedBookings, setSelectedBookings] = useState([]);
+    const [selectedBookings, setSelectedBookings] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
@@ -35,7 +37,7 @@ export const Bookings = () => {
     }
 
     useEffect(() => {
-        if (status === 'idle') {
+        if (status === Status.Loading) {
             dispatch(fetchBookings());
         }
     }, [dispatch, status]);
@@ -87,8 +89,8 @@ export const Bookings = () => {
 
                 <div>
                     <BookingsWrapper>
-                        {status === 'loading' && <Loading>Loading Bookings...</Loading>}
-                        {status === 'failed' && <button>Failed to load bookings</button>}
+                        {status === Status.Loading && <Loading>Loading Bookings...</Loading>}
+                        {status === Status.Failed && <button>Failed to load bookings</button>}
                         <Filters>
                             <Filter name="All Guest" color="#135846"></Filter>
                             <Filter name="Pending" color="#6E6E6E"></Filter>
@@ -117,7 +119,8 @@ export const Bookings = () => {
                                 <BookingBtn disabled>Booking Details</BookingBtn>
                             </>
                         }
-                        <List type="guest" list={bookings} fieldsName={["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
+                        <List type="guest" list={bookings} fieldsName={["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"]}
+                            onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
                     </BookingsWrapper>
 
                     {showModal && (

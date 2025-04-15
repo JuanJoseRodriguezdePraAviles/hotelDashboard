@@ -8,23 +8,23 @@ import { Amenities } from '../../interfaces/Amenities';
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Guest {
-    booking_id: number,
-    room_id: number,
-    room_name: string,
-    room_description: string,
-    room_type: RoomType,
-    room_price: number,
-    room_status: RoomStatus,
-    room_amenities: Amenities[],
-    client_id: number,
-    client_name: string,
-    client_email: string,
-    client_phone: string,
-    order_date: Date,
-    check_in_date: Date,
-    check_out_date: Date,
-    status: BookingStatus,
-    special_request: string
+    booking_id?: string,
+    room_id?: string,
+    room_name?: string,
+    room_description?: string,
+    room_type?: RoomType,
+    room_price?: string,
+    room_status?: RoomStatus,
+    room_amenities?: Amenities[],
+    client_id: string,
+    client_name?: string,
+    client_email?: string,
+    client_phone?: string,
+    order_date?: Date,
+    check_in_date?: Date,
+    check_out_date?: Date,
+    status?: BookingStatus,
+    special_request?: string
 }
 
 interface GuestsState {
@@ -39,7 +39,7 @@ const initialState: GuestsState = {
     error: ""
 }
 
-export const fetchGuests = createAsyncThunk<Guest[], number>(
+export const fetchGuests = createAsyncThunk<Guest[]>(
     'guests/fetchGuests',
     async () => {
         await delay(200);
@@ -58,7 +58,7 @@ const guestsSlice = createSlice({
         },
         editGuest: (state, action) => {
             const { id, updateGuest } = action.payload;
-            const index = state.guests.findIndex((guest) => guest.client_id === Number(id));
+            const index = state.guests.findIndex((guest) => guest.client_id === id);
 
             if (index !== -1) {
                 state.guests[index] = { ...state.guests[index], ...updateGuest };
@@ -66,7 +66,7 @@ const guestsSlice = createSlice({
         },
         deleteGuest: (state, action) => {
             const { id } = action.payload;
-            state.guests = state.guests.filter((guest) => guest.client_id !== Number(id));
+            state.guests = state.guests.filter((guest) => guest.client_id !== id);
         }
     },
     extraReducers: (builder) => {

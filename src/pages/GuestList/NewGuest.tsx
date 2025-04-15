@@ -1,57 +1,54 @@
-import { useEffect, useState } from "react"
-import { DateInput, FieldText, Label, EditGuestTitle, EditGuestWrapper, SubmitBtn, ValidationError } from "./EditGuestStyled";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { editGuest } from "../../redux/slices/GuestSlice";
+import React from "react";
+import { useState } from "react"
+import { DateInput, FieldText, Label, NewGuestTitle, NewGuestWrapper, SubmitBtn, ValidationError } from "./NewGuestStyled";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../redux/hooks";
+import { addGuest } from "../../redux/slices/GuestSlice";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { BookingStatus } from "../../interfaces/BookingStatus";
+import { RoomType } from "../../interfaces/RoomType";
+import { RoomStatus } from "../../interfaces/RoomStatus";
 
-export const EditGuest = () => {
-    const dispatch = useDispatch();
+export const NewGuest = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const getFormattedToday = () => {
+        const today = new Date();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const year = today.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
 
-    const { guestId } = useParams();
-
-    const guest = useSelector((state) => state.guests.guests.find((guest) => guest.client_id === Number(guestId)));
+    interface FormData {
+        client_id: string,
+        client_name: string,
+        client_email: string,
+        client_phone: string,
+        check_in_date: string,
+        check_out_date: string,
+        special_request: string,
+        room_id: string,
+        room_type: RoomType,
+        status: RoomStatus
+    }
 
     const [formData, setFormData] = useState({
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
+        order_date: getFormattedToday(),
         check_in_date: '',
         check_out_date: '',
         special_request: '',
         room_id: '',
-        room_type: '',
-        status: 'booked'
+        room_type: RoomType.SingleBed,
+        status: BookingStatus.InProgress
     });
 
-    const [errors, setErrors] = useState({});
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
-
-    useEffect(() => {
-        if (guest) {
-            setFormData({
-                client_id: guest.client_id,
-                client_name: guest.client_name,
-                client_email: guest.client_email,
-                client_phone: guest.client_phone,
-                check_in_date: formatDate(guest.check_in_date),
-                check_out_date: formatDate(guest.check_out_date),
-                special_request: guest.special_request,
-                room_id: guest.room_id,
-                room_type: guest.room_type,
-                status: guest.status
-            });
-        }
-    }, [guest])
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -88,14 +85,14 @@ export const EditGuest = () => {
             formattedData.check_out_date = `${month}/${day}/${year}`;
         }
 
-        dispatch(editGuest({ id: guestId, updateGuest: formattedData }));
+        dispatch(addGuest(formattedData));
 
-        navigate("/guestList", { state: { edited: true } });
+        navigate("/guestList", { state: { created: true } });
     }
 
     return (
-        <EditGuestWrapper>
-            <EditGuestTitle>Edit guest</EditGuestTitle>
+        <NewGuestWrapper>
+            <NewGuestTitle>New Guest</NewGuestTitle>
             <Fields>
                 <FieldWrapper>
                     {errors.client_id &&
@@ -105,7 +102,7 @@ export const EditGuest = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Client ID</Label>
-                        <FieldText name="client_id" value={formData.client_id} onChange={handleChange} readonly='readonly' />
+                        <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -198,6 +195,6 @@ export const EditGuest = () => {
                 </FieldWrapper>
             </Fields>
             <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
-        </EditGuestWrapper>
+        </NewGuestWrapper>
     )
 }

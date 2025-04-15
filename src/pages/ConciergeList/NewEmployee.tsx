@@ -1,14 +1,27 @@
+import React from "react";
 import { useState } from "react"
 import { DateInput, FieldText, Label, NewEmployeeTitle, NewEmployeeWrapper, SubmitBtn, ValidationError } from "./NewEmployeeStyled";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../redux/hooks";
 import { addEmployee } from "../../redux/slices/EmployeeSlice";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
 export const NewEmployee = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+
+    interface FormData {
+        id: string,
+        name: string,
+        email: string,
+        job_functions: string,
+        registration_date: string,
+        phone: string,
+        schelude: string,
+        status: boolean
+    }
+
+    const [formData, setFormData] = useState<FormData>({
         id: '',
         name: '',
         email: '',
@@ -19,7 +32,7 @@ export const NewEmployee = () => {
         status: false
     });
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
     const handleChange = (e) => {
         const { name, value } = e.target;

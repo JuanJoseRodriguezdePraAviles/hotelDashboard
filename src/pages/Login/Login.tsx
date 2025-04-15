@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ErrorMessage, LoginBtn, LoginTitle, LoginWrapper, PasswordInput, UserInput } from "./LoginStyled";
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { login } from '../../redux/slices/AuthSlice';
 
 export const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { login: contextLogin } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const email = useSelector((state) => state.auth.email);
+    const email = useAppSelector((state) => state.auth.email);
 
     const handleLogin = () => {
         if (username === 'admin' && password === 'admin') {

@@ -1,9 +1,10 @@
-import { SideMenu } from "../../components/SideMenu/SideMenu.jsx";
+import React from "react";
+import { SideMenu } from "../../components/SideMenu/SideMenu.js";
 import { Content, LayoutWrapper } from './LayoutStyled.js';
 import { Outlet } from 'react-router-dom';
 import { Login } from "../../pages/Login/Login.jsx";
 import { useAuth } from "../AuthContext.jsx";
-import { Header } from "../../components/Header/Header.jsx";
+import { Header } from "../../components/Header/Header.js";
 import { useState, useEffect } from "react";
 
 export const Layout = () => {

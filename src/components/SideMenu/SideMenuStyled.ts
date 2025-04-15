@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface SideMenuProps {
-    collapsed: string;
-    active: boolean;
+    collapsed?: string;
+    active?: boolean;
 }
 
 export const SideMenuWrapper = styled.div<SideMenuProps>`

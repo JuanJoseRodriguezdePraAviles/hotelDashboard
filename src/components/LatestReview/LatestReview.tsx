@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
-import Review from "../Review/Review";
+import { ReviewUnit } from "../Review/ReviewUnit";
 import { Reviews, ReviewsContainer, Title } from "./LatestReviewStyled";
 import { useEffect } from "react";
 import { fetchReviews } from "../../redux/slices/ReviewSlice";
@@ -16,7 +16,7 @@ export const LatestReview: React.FC = () => {
 
     useEffect(() => {
         if (status === Status.Loading) {
-            dispatch(fetchReviews(0));
+            dispatch(fetchReviews());
         }
     }, [dispatch, status]);
     return (
@@ -27,7 +27,7 @@ export const LatestReview: React.FC = () => {
                 </Title>
                 <ReviewsContainer>
                     {reviews.map((review) => {
-                        return <Review subject={review.subject} description={review.comment} client={review.customer_name} email='' phone={review.phone} />
+                        return <ReviewUnit id={review.id} customer_id={review.customer_id} customer_name={review.customer_name} subject={review.subject} comment={review.comment} date={review.date} email='' phone={review.phone} archived={review.archived}/>
                     })}
                 </ReviewsContainer>
             </Reviews>

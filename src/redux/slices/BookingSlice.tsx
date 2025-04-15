@@ -8,26 +8,26 @@ import { Status } from '../../interfaces/Status';
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Booking {
-    booking_id: number,
-    room_id: number,
+    booking_id: string,
+    room_id: string,
     room_name: string,
     room_description: string,
     room_type: RoomType,
     room_price: number,
-    room_status: RoomStatus,
-    room_amenities: Amenities[],
-    client_id: number,
-    client_name: string,
-    client_email: string,
-    client_phone: string,
-    order_date: Date,
-    check_in_date: Date,
-    check_out_date: Date,
-    status: BookingStatus,
-    special_request: string
+    room_status?: RoomStatus,
+    room_amenities?: Amenities[],
+    client_id: string,
+    client_name?: string,
+    client_email?: string,
+    client_phone?: string,
+    order_date?: Date,
+    check_in_date?: Date,
+    check_out_date?: Date,
+    status?: BookingStatus,
+    special_request?: string
 }
 
-interface BookingsState {
+export interface BookingsState {
     bookings: Booking[],
     status: Status,
     error: string | undefined
@@ -39,7 +39,7 @@ const initialState: BookingsState = {
     error: ""
 }
 
-export const fetchBookings = createAsyncThunk<Booking[], number>(
+export const fetchBookings = createAsyncThunk<Booking[]>(
     'bookings/fetchBookings',
     async () => {
         await delay(200);
@@ -58,7 +58,7 @@ const bookingsSlice = createSlice({
         },
         editBooking: (state, action) => {
             const { id, updateBooking } = action.payload;
-            const index = state.bookings.findIndex((booking) => booking.booking_id === Number(id));
+            const index = state.bookings.findIndex((booking) => booking.booking_id === id);
             
             if (index !== -1) {
                 state.bookings[index] = { ...state.bookings[index], ...updateBooking };
@@ -66,7 +66,7 @@ const bookingsSlice = createSlice({
         },
         deleteBooking: (state, action) => {
             const { id } = action.payload;
-            state.bookings = state.bookings.filter((booking) => booking.booking_id !== Number(id));
+            state.bookings = state.bookings.filter((booking) => booking.booking_id !== id);
         }
     },
     extraReducers: (builder) => {

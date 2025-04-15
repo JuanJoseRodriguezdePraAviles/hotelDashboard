@@ -1,3 +1,4 @@
+import React from "react";
 import { Photo } from "./RoomPhotoStyled";
 
 export const RoomPhoto = () => {

@@ -7,18 +7,18 @@ import { Amenities } from '../../interfaces/Amenities';
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Room {
-    room_id: Number,
+    room_id: string,
     room_name: string,
-    room_type: RoomType,
-    room_floor: String,
-    status: RoomStatus,
-    description: String,
-    photos: String,
-    offer: Boolean,
-    price: number,
-    discount: Number,
-    cancellation_policy: String,
-    room_amenities: Amenities[]
+    room_type?: RoomType,
+    room_floor?: string,
+    status?: RoomStatus,
+    description?: string,
+    photos?: [],
+    offer?: boolean,
+    price?: number,
+    discount?: number,
+    cancellation_policy?: string,
+    room_amenities?: Amenities[]
 }
 
 interface RoomsState {
@@ -52,7 +52,7 @@ const roomsSlice = createSlice({
         },
         editRoom: (state, action) => {
             const { id, updateRoom } = action.payload;
-            const index = state.rooms.findIndex((room) => room.room_id === Number(id));
+            const index = state.rooms.findIndex((room) => room.room_id === id);
             
             if (index !== -1) {
                 state.rooms[index] = { ...state.rooms[index], ...updateRoom };
@@ -60,7 +60,7 @@ const roomsSlice = createSlice({
         },
         deleteRoom: (state, action) => {
             const { id } = action.payload;
-            state.rooms = state.rooms.filter((room) => room.room_id !== Number(id));
+            state.rooms = state.rooms.filter((room) => room.room_id !== id);
         }
     },
     extraReducers: (builder) => {

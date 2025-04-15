@@ -1,12 +1,12 @@
+import React from "react";
 import { useState } from "react"
-import { DateInput, FieldText, Label, NewGuestTitle, NewGuestWrapper, SubmitBtn, ValidationError } from "./NewGuestStyled";
+import { DateInput, FieldLabelContainer, Fields, FieldText, FieldWrapper, Label, NewBookingTitle, NewBookingWrapper, SubmitBtn, ValidationError } from "./NewBookingStyled";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addGuest } from "../../redux/slices/GuestSlice";
-import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { useAppDispatch } from "../../redux/hooks";
+import { addBooking } from "../../redux/slices/BookingSlice";
 
-export const NewGuest = () => {
-    const dispatch = useDispatch();
+export const NewBooking = () => {
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const getFormattedToday = () => {
         const today = new Date();
@@ -15,12 +15,29 @@ export const NewGuest = () => {
         const year = today.getFullYear();
         return `${month}/${day}/${year}`;
     }
-    const [formData, setFormData] = useState({
+
+    interface FormData {
+        booking_id: string,
+        client_id: string,
+        client_name: string,
+        client_email: string,
+        client_phone: string,
+        order_date: string,
+        check_in_date: string,
+        check_out_date: string,
+        special_request: string,
+        room_id: string,
+        room_type: string,
+        status: string
+    }
+
+    const [formData, setFormData] = useState<FormData>({
+        booking_id: '',
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
-        order_date: getFormattedToday(),
+        order_date: getFormattedToday().toString(),
         check_in_date: '',
         check_out_date: '',
         special_request: '',
@@ -30,10 +47,11 @@ export const NewGuest = () => {
     });
 
 
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type } = e.target;
+
         setFormData({
             ...formData,
             [name]: value
@@ -67,15 +85,27 @@ export const NewGuest = () => {
             formattedData.check_out_date = `${month}/${day}/${year}`;
         }
 
-        dispatch(addGuest(formattedData));
+        dispatch(addBooking(formattedData));
 
-        navigate("/guestList", { state: { created: true } });
+        navigate("/bookings", { state: { created: true } });
     }
 
     return (
-        <NewGuestWrapper>
-            <NewGuestTitle>New Guest</NewGuestTitle>
+        <NewBookingWrapper>
+            <NewBookingTitle>New booking form</NewBookingTitle>
             <Fields>
+                <FieldWrapper>
+                    {errors.booking_id &&
+                        <ValidationError>
+                            {errors.booking_id}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Booking ID:</Label>
+                        <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} />
+                    </FieldLabelContainer>
+
+                </FieldWrapper>
                 <FieldWrapper>
                     {errors.client_id &&
                         <ValidationError>
@@ -83,10 +113,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Client ID</Label>
+                        <Label>Client ID:</Label>
                         <FieldText name="client_id" value={formData.client_id} onChange={handleChange} />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.client_name &&
                         <ValidationError>
@@ -94,10 +125,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Client Name</Label>
+                        <Label>Client Name:</Label>
                         <FieldText name="client_name" value={formData.client_name} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.client_email &&
                         <ValidationError>
@@ -105,10 +137,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Client Email</Label>
+                        <Label>Client Email:</Label>
                         <FieldText name="client_email" value={formData.client_email} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.client_name &&
                         <ValidationError>
@@ -116,10 +149,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Client Phone</Label>
+                        <Label>Client Phone:</Label>
                         <FieldText name="client_phone" value={formData.client_phone} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.check_in_date &&
                         <ValidationError>
@@ -127,10 +161,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Check In Date</Label>
+                        <Label>Check In Date:</Label>
                         <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.check_out_date &&
                         <ValidationError>
@@ -138,10 +173,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Check Out Date</Label>
+                        <Label>Check Out Date:</Label>
                         <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.special_request &&
                         <ValidationError>
@@ -149,10 +185,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Special Request</Label>
-                        <FieldText name="special_request" value={formData.special_request} onChange={handleChange} required />
+                        <Label>Special Request:</Label>
+                        <FieldText name="special_request" value={formData.special_request} onChange={handleChange} />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.room_id &&
                         <ValidationError>
@@ -160,10 +197,11 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room ID</Label>
+                        <Label>Room ID:</Label>
                         <FieldText name="room_id" value={formData.room_id} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
+
                 <FieldWrapper>
                     {errors.room_type &&
                         <ValidationError>
@@ -171,12 +209,12 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room Type</Label>
+                        <Label>Room Type:</Label>
                         <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
             </Fields>
             <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>
-        </NewGuestWrapper>
+        </NewBookingWrapper>
     )
 }

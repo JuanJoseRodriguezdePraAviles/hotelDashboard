@@ -4,14 +4,14 @@ import { Status } from '../../interfaces/Status';
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Employee {
-    id: number,
-    name: String,
-    email: String,
-    job_functions: String,
+    id: string,
+    name: string,
+    email?: string,
+    job_functions?: string,
     registration_date: Date,
-    phone: String,
-    schelude: String,
-    status: Boolean
+    phone?: string,
+    schelude?: string,
+    status?: boolean
 }
 
 interface EmployeesState {
@@ -26,7 +26,7 @@ const initialState: EmployeesState = {
     error: ""
 }
 
-export const fetchEmployees = createAsyncThunk<Employee[], number>(
+export const fetchEmployees = createAsyncThunk<Employee[]>(
     'employees/fetchEmployees',
     async () => {
         await delay(200);
@@ -45,7 +45,7 @@ const employeesSlice = createSlice({
         },
         editEmployee: (state, action) => {
             const { id, updateEmployee } = action.payload;
-            const index = state.employees.findIndex((employee) => employee.id === Number(id));
+            const index = state.employees.findIndex((employee) => employee.id === id);
             
             if (index !== -1) {
                 state.employees[index] = { ...state.employees[index], ...updateEmployee };
@@ -53,7 +53,7 @@ const employeesSlice = createSlice({
         },
         deleteEmployee: (state, action) => {
             const { id } = action.payload;
-            state.employees = state.employees.filter((employee) => employee.id !== Number(id));
+            state.employees = state.employees.filter((employee) => employee.id !== id);
         }
     },
     extraReducers: (builder) => {

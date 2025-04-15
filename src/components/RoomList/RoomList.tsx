@@ -1,3 +1,4 @@
+import React from 'react';
 import RoomBookingCard from '../RoomBookingCard/RoomBookingCard';
 import { Rooms, ViewMore } from './RoomListStyled';
 

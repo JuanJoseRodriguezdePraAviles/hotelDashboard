@@ -1,3 +1,4 @@
+import React from "react";
 import { NavBtns, PageBtn, PageText, RedIndicator, SideMenuWrapper, SubtitleWeb, TitleWeb, WebIcon, WebIconContainer, WebTitleContainer } from "./SideMenuStyled";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { SlKey } from "react-icons/sl";

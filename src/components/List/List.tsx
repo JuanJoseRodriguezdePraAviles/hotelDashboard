@@ -19,16 +19,9 @@ interface ListProps {
     type: ListType;
     list: Item[];
     fieldsName: string[];
-    onCheckboxChange: (id: string, checked: boolean) => void;
+    onCheckboxChange?: (id?: string, checked?: boolean) => void;
     selected: string[];
     onShowNotes?: (notes: string) => void;
-}
-
-function getIdByType(item: Item, type: ListType): string {
-    if (type === "guest") return (item as Booking).client_id;
-    if (type === "employee") return (item as Employee).id;
-    if (type === "room") return (item as Room).room_id;
-    return "";
 }
 
 export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxChange, selected, onShowNotes }) => {
@@ -151,12 +144,12 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
         }
     }
 
-    const getItemId = (item) => {
+    const getItemId = (item: Item, type: ListType) => {
         switch (type) {
-            case 'guest': return item.booking_id;
-            case 'employee': return item.id;
-            case 'room': return item.room_id;
-            default: return null;
+            case 'guest': return (item as Guest).booking_id;
+            case 'employee': return (item as Employee).id;
+            case 'room': return (item as Room).room_id;
+            default: return "-1";
         }
     }
 
@@ -192,12 +185,13 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                     </tr>
                 ) : (
                     list.map((item) => {
-                        const itemId = getItemId(item);
+                        const itemId = getItemId(item, type);
+                        if (!itemId) return null;
                         return (
                             <tr key={itemId}>
                                 <FieldValue>
                                     <Checkbox
-                                        onChange={(e) => onCheckboxChange(itemId, e.target.checked)}
+                                        onChange={(e) => onCheckboxChange?.(itemId, e.target.checked)}
                                         checked={selected.includes(itemId)}
                                     />
                                 </FieldValue>

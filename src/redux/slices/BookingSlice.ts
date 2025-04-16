@@ -5,7 +5,7 @@ import { Amenities } from '../../interfaces/Amenities';
 import { BookingStatus } from '../../interfaces/BookingStatus';
 import { Status } from '../../interfaces/Status';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Booking {
     booking_id: string,
@@ -58,7 +58,7 @@ const bookingsSlice = createSlice({
         },
         editBooking: (state, action) => {
             const { id, updateBooking } = action.payload;
-            const index = state.bookings.findIndex((booking) => booking.booking_id === id);
+            const index = state.bookings.findIndex((booking) => booking.booking_id.toString() === id);
             
             if (index !== -1) {
                 state.bookings[index] = { ...state.bookings[index], ...updateBooking };

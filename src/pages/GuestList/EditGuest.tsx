@@ -15,7 +15,7 @@ export const EditGuest = () => {
 
     const { guestId } = useParams();
 
-    const guest = useAppSelector((state) => state.guests.guests.find((guest) => guest.client_id === guestId));
+    const guest = useAppSelector((state) => state.guests.guests.find((guest) => guest.client_id.toString() === guestId));
 
     interface FormData {
         client_id: string,
@@ -45,7 +45,7 @@ export const EditGuest = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -60,8 +60,8 @@ export const EditGuest = () => {
                 client_name: guest.client_name ?? "",
                 client_email: guest.client_email ?? "",
                 client_phone: guest.client_phone ?? "",
-                check_in_date: formatDate(guest.check_in_date),
-                check_out_date: formatDate(guest.check_out_date),
+                check_in_date: guest.check_in_date? formatDate(guest.check_in_date.toString()) : '',
+                check_out_date: guest.check_out_date? formatDate(guest.check_out_date.toString()) : '',
                 special_request: guest.special_request ?? "",
                 room_id: guest.room_id ?? "",
                 room_type: guest.room_type ?? RoomType.SingleBed,
@@ -70,7 +70,7 @@ export const EditGuest = () => {
         }
     }, [guest])
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -78,13 +78,14 @@ export const EditGuest = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            if (!formData[key]) {
-                newErrors[key] = `Field ${key} cannot be empty`;
+            const typedKey = key as keyof FormData;
+            if (!formData[typedKey]) {
+                newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
 

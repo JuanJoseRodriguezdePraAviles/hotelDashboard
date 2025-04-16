@@ -26,7 +26,7 @@ export const Bookings = () => {
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
-    const handleShowNotes = (notes) => {
+    const handleShowNotes = (notes: string) => {
         setModalContent(notes);
         setShowModal(true);
     }
@@ -58,21 +58,20 @@ export const Bookings = () => {
         }
     }, [location])
 
-    const handleCheckboxChange = (bookingId, isChecked) => {
+    const handleCheckboxChange = (bookingId?: string, isChecked?: boolean) => {
         setSelectedBookings((prevSelected) => {
-            if (isChecked) {
+            if (isChecked && bookingId) {
                 return [...prevSelected, bookingId];
-            } else {
+            } else if (!isChecked && bookingId){
                 return prevSelected.filter((id) => id !== bookingId);
             }
+            return prevSelected;
         });
     }
 
-    const handleDelete = (bookingId) => {
+    const handleDelete = (bookingId: string) => {
         setSelectedBookings((prevSelected) => prevSelected.filter((id) => id !== bookingId));
         dispatch(deleteBooking({ id: bookingId }));
-
-
     }
 
     const isSingleSelection = selectedBookings.length === 1;

@@ -5,7 +5,7 @@ import { RoomType } from '../../interfaces/RoomType';
 import { RoomStatus } from '../../interfaces/RoomStatus';
 import { Amenities } from '../../interfaces/Amenities';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Guest {
     booking_id?: string,
@@ -58,7 +58,7 @@ const guestsSlice = createSlice({
         },
         editGuest: (state, action) => {
             const { id, updateGuest } = action.payload;
-            const index = state.guests.findIndex((guest) => guest.client_id === id);
+            const index = state.guests.findIndex((guest) => guest.client_id.toString() === id);
 
             if (index !== -1) {
                 state.guests[index] = { ...state.guests[index], ...updateGuest };

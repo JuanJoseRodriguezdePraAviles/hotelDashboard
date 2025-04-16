@@ -1,7 +1,7 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import { Status } from '../../interfaces/Status';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 interface Review {
     id: Number,
@@ -46,7 +46,7 @@ const reviewsSlice = createSlice({
         },
         editReview: (state, action) => {
             const { id, updateReview } = action.payload;
-            const index = state.reviews.findIndex((review) => review.id === Number(id));
+            const index = state.reviews.findIndex((review) => review.id.toString() === id);
             
             if (index !== -1) {
                 state.reviews[index] = { ...state.reviews[index], ...updateReview };
@@ -54,7 +54,7 @@ const reviewsSlice = createSlice({
         },
         deleteReview: (state, action) => {
             const { id } = action.payload;
-            state.reviews = state.reviews.filter((review) => review.id !== Number(id));
+            state.reviews = state.reviews.filter((review) => review.id !== id);
         }
     },
     extraReducers: (builder) => {

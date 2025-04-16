@@ -10,9 +10,9 @@ import { format, parse } from 'date-fns';
 
 export const GuestDetails = () => {
     const { bookingId } = useParams();
-    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id === bookingId));
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id.toString() === bookingId));
 
-    const formatDate = (rawDate) => {
+    const formatDate = (rawDate: string) => {
         const parsed = parse(rawDate, 'M/d/yyyy', new Date());
 
         return format(parsed, "MMM do yyyy hh:mmaa");
@@ -37,11 +37,11 @@ export const GuestDetails = () => {
                     <CheckDatesContainer>
                         <DataContainer>
                             <LabelField>Check In</LabelField>
-                            <ValueField>{formatDate(booking?.check_in_date)}</ValueField>
+                            <ValueField>{booking?.check_in_date?.toString()}</ValueField>
                         </DataContainer>
                         <DataContainer>
                             <LabelField>Checkout Out</LabelField>
-                            <ValueField>{formatDate(booking?.check_out_date)}</ValueField>
+                            <ValueField>{booking?.check_out_date?.toString()}</ValueField>
                         </DataContainer>
                     </CheckDatesContainer>
                     <RoomPriceContainer>

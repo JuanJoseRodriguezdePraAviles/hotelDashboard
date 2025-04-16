@@ -13,7 +13,7 @@ export const EditEmployee = () => {
 
     const { employeeId } = useParams();
 
-    const employee = useAppSelector((state) => state.employees.employees.find((employee) => employee.id === employeeId));
+    const employee = useAppSelector((state) => state.employees.employees.find((employee) => employee.id.toString() === employeeId));
 
     interface FormData {
         id: string,
@@ -39,7 +39,7 @@ export const EditEmployee = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -54,7 +54,7 @@ export const EditEmployee = () => {
                 name: employee.name,
                 email: employee.email ?? "",
                 job_functions: employee.job_functions ?? "",
-                registration_date: employee.registration_date.toDateString(),
+                registration_date: employee.registration_date? formatDate(employee.registration_date.toString()) : '',
                 phone: employee.phone ?? "",
                 schelude: employee.schelude ?? "",
                 status: employee.status || false
@@ -62,7 +62,7 @@ export const EditEmployee = () => {
         }
     }, [employee]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -70,17 +70,14 @@ export const EditEmployee = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key] === '' ||
-                formData[key] === null ||
-                formData[key] === undefined ||
-                (Array.isArray(formData[key]) && formData[key].length === 0)
-            ) {
-                newErrors[key] = `Field ${key} cannot be empty`;
+            const typedKey = key as keyof FormData;
+            if (!formData[typedKey]) {
+                newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
 

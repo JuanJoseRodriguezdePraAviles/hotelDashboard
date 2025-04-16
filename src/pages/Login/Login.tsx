@@ -26,7 +26,7 @@ export const Login = () => {
     return (
         <LoginWrapper>
             <LoginTitle>Hotel Miranda Dashboard</LoginTitle>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+            {error !==''? <ErrorMessage>{error}</ErrorMessage>:<></>}
             <UserInput value={username} cy-id="user-input"
                         onChange={(e) => setUsername(e.target.value)}/>
             <PasswordInput value={password} cy-id="password-input"

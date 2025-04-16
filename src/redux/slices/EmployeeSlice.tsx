@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Status } from '../../interfaces/Status';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Employee {
     id: string,
@@ -45,7 +45,7 @@ const employeesSlice = createSlice({
         },
         editEmployee: (state, action) => {
             const { id, updateEmployee } = action.payload;
-            const index = state.employees.findIndex((employee) => employee.id === id);
+            const index = state.employees.findIndex((employee) => employee.id.toString() === id);
             
             if (index !== -1) {
                 state.employees[index] = { ...state.employees[index], ...updateEmployee };

@@ -4,6 +4,8 @@ import { DateInput, FieldText, Label, EditBookingTitle, EditBookingWrapper, Subm
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editBooking } from "../../redux/slices/BookingSlice";
+import { RoomStatus } from "../../interfaces/RoomStatus";
+import { Status } from "../../interfaces/Status";
 
 export const EditBooking = () => {
     const dispatch = useAppDispatch();
@@ -11,7 +13,17 @@ export const EditBooking = () => {
 
     const { bookingId } = useParams();
 
-    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id === bookingId));
+    const { bookings, status } = useAppSelector((state) => state.bookings);
+
+    if (status === Status.Loading) {
+        return <p>Loading bookings</p>
+    }
+
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id.toString() === bookingId));
+    
+    if(!booking) {
+        return <p>Reserva no encontrada</p>
+    }
 
     interface FormData {
         booking_id: string,
@@ -38,12 +50,12 @@ export const EditBooking = () => {
         special_request: '',
         room_id: '',
         room_type: '',
-        status: 'booked'
+        status: RoomStatus.Booked
     });
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const formatDate = (dateString) => {
+    const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -59,8 +71,8 @@ export const EditBooking = () => {
                 client_name: booking.client_name ?? "",
                 client_email: booking.client_email ?? "",
                 client_phone: booking.client_phone ?? "",
-                check_in_date: formatDate(booking.check_in_date),
-                check_out_date: formatDate(booking.check_out_date),
+                check_in_date: booking.check_in_date? formatDate(booking.check_in_date.toString()) : '',
+                check_out_date: booking.check_out_date? formatDate(booking.check_out_date.toString()) : '',
                 special_request: booking.special_request ?? "",
                 room_id: booking.room_id ?? "",
                 room_type: booking.room_type,
@@ -69,7 +81,7 @@ export const EditBooking = () => {
         }
     }, [booking])
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -77,13 +89,14 @@ export const EditBooking = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            if (!formData[key]) {
-                newErrors[key] = `Field ${key} cannot be empty`;
+            const typedKey = key as keyof FormData;
+            if (!formData[typedKey]) {
+                newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
 

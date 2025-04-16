@@ -4,7 +4,7 @@ import { RoomStatus } from '../../interfaces/RoomStatus';
 import { Status } from '../../interfaces/Status';
 import { Amenities } from '../../interfaces/Amenities';
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Room {
     room_id: string,
@@ -52,7 +52,7 @@ const roomsSlice = createSlice({
         },
         editRoom: (state, action) => {
             const { id, updateRoom } = action.payload;
-            const index = state.rooms.findIndex((room) => room.room_id === id);
+            const index = state.rooms.findIndex((room) => room.room_id.toString() === id);
             
             if (index !== -1) {
                 state.rooms[index] = { ...state.rooms[index], ...updateRoom };

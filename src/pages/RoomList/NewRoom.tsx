@@ -43,7 +43,7 @@ export const NewRoom = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -51,17 +51,14 @@ export const NewRoom = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key] === '' ||
-                formData[key] === null ||
-                formData[key] === undefined ||
-                (Array.isArray(formData[key] && formData[key].length === 0))
-            ) {
-                newErrors[key] = `Field ${key} cannot be empty`;
+            const typedKey = key as keyof FormData;
+            if (!formData[typedKey]) {
+                newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
 

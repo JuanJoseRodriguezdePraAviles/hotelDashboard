@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 interface SideMenuProps {
-    collapsed?: string;
-    active?: boolean;
+    collapsed?: boolean;
+    $active?: boolean;
 }
 
 export const SideMenuWrapper = styled.div<SideMenuProps>`
@@ -54,9 +54,9 @@ export const NavBtns = styled.div`
 export const PageBtn = styled.div<SideMenuProps>`
     display: flex;
     padding: 2rem 0;
-    padding: ${({ active }) => (active ? "1rem 0" : "1rem 1rem")};
-    color: ${({ active }) => (active ? "red" : "#799283")};
-    font-size: ${({ active }) => (active ? "1.4rem" : "1rem")};
+    padding: ${({ $active }) => ($active ? "1rem 0" : "1rem 1rem")};
+    color: ${({ $active }) => ($active ? "red" : "#799283")};
+    font-size: ${({ $active }) => ($active ? "1.4rem" : "1rem")};
     align-items: center;
 `;
 

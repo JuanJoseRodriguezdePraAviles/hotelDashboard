@@ -25,17 +25,18 @@ export const RoomList = () => {
         }
     }, [dispatch, status]);
 
-    const handleCheckboxChange = (roomId, isChecked) => {
+    const handleCheckboxChange = (roomId?: string, isChecked?: boolean) => {
         setSelectedRooms((prevSelected) => {
-            if (isChecked) {
+            if (isChecked && roomId) {
                 return [...prevSelected, roomId];
-            } else {
+            } else if (!isChecked && roomId){
                 return prevSelected.filter((id) => id !== roomId);
             }
+            return prevSelected;
         });
     }
 
-    const handleDelete = (roomId) => {
+    const handleDelete = (roomId: string) => {
         setSelectedRooms((prevSelected) => prevSelected.filter((id) => id !== roomId));
         dispatch(deleteRoom({ id: roomId }));
     }

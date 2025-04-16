@@ -14,7 +14,7 @@ export const EditRoom = () => {
 
     const { roomId } = useParams();
 
-    const room = useAppSelector((state) => state.rooms.rooms.find((room) => room.room_id === roomId));
+    const room = useAppSelector((state) => state.rooms.rooms.find((room) => room.room_id.toString() === roomId));
 
     interface FormData {
         room_id: string,
@@ -46,14 +46,6 @@ export const EditRoom = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
-
     useEffect(() => {
         if (room) {
             setFormData({
@@ -72,7 +64,7 @@ export const EditRoom = () => {
         }
     }, [room]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -80,17 +72,14 @@ export const EditRoom = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            if (formData[key] === '' ||
-                formData[key] === null ||
-                formData[key] === undefined ||
-                (Array.isArray(formData[key]) && formData[key].length === 0)
-            ) {
-                newErrors[key] = `Field ${key} cannot be empty`;
+            const typedKey = key as keyof FormData;
+            if (!formData[typedKey]) {
+                newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
 

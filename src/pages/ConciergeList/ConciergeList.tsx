@@ -18,6 +18,7 @@ export const ConciergeList = () => {
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All Employee");
 
     const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
 
@@ -43,7 +44,9 @@ export const ConciergeList = () => {
         }
     }, [location]);
 
-    const handleCheckboxChange = (employeeId, isChecked) => {
+    const handleCheckboxChange = (employeeId?: string, isChecked?: boolean) => {
+        if (employeeId === undefined || isChecked === undefined) return;
+
         setSelectedEmployees((prevSelected) => {
             if (isChecked) {
                 return [...prevSelected, employeeId];
@@ -53,11 +56,9 @@ export const ConciergeList = () => {
         });
     }
 
-    const handleDelete = (employeeId) => {
+    const handleDelete = (employeeId: string) => {
         setSelectedEmployees((prevSelected) => prevSelected.filter((id) => id !== employeeId));
         dispatch(deleteEmployee({ id: employeeId }));
-
-
     }
 
     const isSingleSelection = selectedEmployees.length === 1;
@@ -76,9 +77,19 @@ export const ConciergeList = () => {
                     {status === Status.Loading && <button>Loading Employees...</button>}
                     {status === Status.Failed && <button>Failed to load employees</button>}
                     <Filters>
-                        <Filter name="All Employee" color="#135846"></Filter>
-                        <Filter name="Active Employee" color="#6E6E6E"></Filter>
-                        <Filter name="Inactive Employee" color="#6E6E6E"></Filter>
+                        {[
+                            { name: "All Employee", color: "#6E6E6E" },
+                            { name: "Active Employee", color: "#6E6E6E" },
+                            { name: "Inactive Employee", color: "#6E6E6E" }
+                        ].map((filter) => (
+                            <Filter
+                                key={filter.name}
+                                name={filter.name}
+                                color={filter.color}
+                                onClick={() => setActiveFilter(filter.name)}
+                                active={activeFilter === filter.name}
+                            />
+                        ))}
                     </Filters>
                     <Link to="/NewEmployee">
                         <EmployeeBtn>New Employee</EmployeeBtn>

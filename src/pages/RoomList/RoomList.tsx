@@ -18,6 +18,7 @@ export const RoomList = () => {
     const [selectedRooms, setSelectedRooms] = useState<string[]>([]);
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All Rooms");
 
     useEffect(() => {
         if (status === Status.Loading) {
@@ -48,9 +49,19 @@ export const RoomList = () => {
             {status === Status.Loading && <button>Loading Rooms...</button>}
             {status === Status.Failed && <button>Failed to load rooms</button>}
             <Filters>
-                <Filter name="All Rooms" color="#135846"></Filter>
-                <Filter name="Available Room" color="#6E6E6E"></Filter>
-                <Filter name="Booked Room" color="#6E6E6E"></Filter>
+                {[
+                    {name:"All Rooms", color:"#6E6E6E"},
+                    {name:"Available Room", color:"#6E6E6E"},
+                    {name:"Booked Room", color:"#6E6E6E"}
+                ].map((filter) => (
+                    <Filter
+                        key={filter.name}
+                        name={filter.name}
+                        color={filter.color}
+                        onClick={() => setActiveFilter(filter.name)}
+                        active={activeFilter === filter.name} 
+                    />
+                ))}
             </Filters>
             <Link to="/NewRoom">
                 <RoomBtn>New Room</RoomBtn>

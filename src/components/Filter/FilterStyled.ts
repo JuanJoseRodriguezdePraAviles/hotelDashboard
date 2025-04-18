@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface FilterContainerProps {
     color?: string
+    active?: boolean;
 }
 
 export const FilterContainer = styled.div<FilterContainerProps>`
@@ -9,10 +10,12 @@ export const FilterContainer = styled.div<FilterContainerProps>`
     height: 3rem;
     display: flex;
     flex-direction: row;
-    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
-    background: #F8F8F8 0% 0% no-repeat padding-box;
+    background: ${({ active }) => (active? '#FFFFFF' : '#F8F8F8')};
     opacity: 1;
     padding: 1rem;
-    color: ${(props) => props.color || '#000000'};
-    border-bottom: 2px solid ${(props)=> props.color};
+    color: ${({ active }) => (active? '#135846' : '#000000')};
+    border-bottom: 2px solid ${({ active }) => (active? '#135846' : '#000000')};
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 `;

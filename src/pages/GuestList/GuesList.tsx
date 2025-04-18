@@ -18,12 +18,13 @@ export const GuestList = () => {
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All Guest");
 
     const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
 
-    const handleShowNotes = (notes) => {
+    const handleShowNotes = (notes: string) => {
         setModalContent(notes);
         setShowModal(true);
     }
@@ -84,11 +85,21 @@ export const GuestList = () => {
                 <div>
                     <GuestListWrapper>
                         <Filters>
-                            <Filter name="All Guest" color="#135846"></Filter>
-                            <Filter name="Pending" color="#6E6E6E"></Filter>
-                            <Filter name="Booked" color="#6E6E6E"></Filter>
-                            <Filter name="Cancelled" color="#6E6E6E"></Filter>
-                            <Filter name="Refund" color="#6E6E6E"></Filter>
+                            {[
+                                { name: "All Guest", color: "#6E6E6E" },
+                                { name: "Pending", color: "#6E6E6E" },
+                                { name: "Booked", color: "#6E6E6E" },
+                                { name: "Cancelled", color: "#6E6E6E" },
+                                { name: "Refund", color: "#6E6E6E" },
+                            ].map((filter) => (
+                                <Filter
+                                    key={filter.name}
+                                    name={filter.name}
+                                    color={filter.color}
+                                    onClick={() => setActiveFilter(filter.name)}
+                                    active={activeFilter === filter.name}
+                                />
+                            ))}
                         </Filters>
                         <Link to="/NewGuest">
                             <GuestBtn>New Guest</GuestBtn>

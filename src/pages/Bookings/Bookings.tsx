@@ -21,6 +21,7 @@ export const Bookings = () => {
     const location = useLocation();
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
+    const [activeFilter, setActiveFilter] = useState("All Guest");
 
     const [selectedBookings, setSelectedBookings] = useState<string[]>([]);
     const [showModal, setShowModal] = useState(false);
@@ -62,7 +63,7 @@ export const Bookings = () => {
         setSelectedBookings((prevSelected) => {
             if (isChecked && bookingId) {
                 return [...prevSelected, bookingId];
-            } else if (!isChecked && bookingId){
+            } else if (!isChecked && bookingId) {
                 return prevSelected.filter((id) => id !== bookingId);
             }
             return prevSelected;
@@ -91,11 +92,21 @@ export const Bookings = () => {
                         {status === Status.Loading && <Loading>Loading Bookings...</Loading>}
                         {status === Status.Failed && <button>Failed to load bookings</button>}
                         <Filters>
-                            <Filter name="All Guest" color="#135846"></Filter>
-                            <Filter name="Pending" color="#6E6E6E"></Filter>
-                            <Filter name="Booked" color="#6E6E6E"></Filter>
-                            <Filter name="Cancelled" color="#6E6E6E"></Filter>
-                            <Filter name="Refund" color="#6E6E6E"></Filter>
+                            {[
+                                { name: "All Guest", color: "#6E6E6E" },
+                                { name: "Pending", color: "#6E6E6E" },
+                                { name: "Booked", color: "#6E6E6E" },
+                                { name: "Cancelled", color: "#6E6E6E" },
+                                { name: "Refund", color: "#6E6E6E" },
+                            ].map((filter) => (
+                                <Filter
+                                    key={filter.name}
+                                    name={filter.name}
+                                    color={filter.color}
+                                    onClick={() => setActiveFilter(filter.name)}
+                                    active={activeFilter === filter.name}
+                                />
+                            ))}
                         </Filters>
 
                         <Link to="/NewBooking">

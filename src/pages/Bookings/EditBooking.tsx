@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editBooking } from "../../redux/slices/BookingSlice";
 import { RoomStatus } from "../../interfaces/RoomStatus";
 import { Status } from "../../interfaces/Status";
+import { FieldOption, FieldSelect } from "./NewBookingStyled";
+import { RoomType } from "../../interfaces/RoomType";
 
 export const EditBooking = () => {
     const dispatch = useAppDispatch();
@@ -20,8 +22,8 @@ export const EditBooking = () => {
     }
 
     const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id.toString() === bookingId));
-    
-    if(!booking) {
+
+    if (!booking) {
         return <p>Reserva no encontrada</p>
     }
 
@@ -71,8 +73,8 @@ export const EditBooking = () => {
                 client_name: booking.client_name ?? "",
                 client_email: booking.client_email ?? "",
                 client_phone: booking.client_phone ?? "",
-                check_in_date: booking.check_in_date? formatDate(booking.check_in_date.toString()) : '',
-                check_out_date: booking.check_out_date? formatDate(booking.check_out_date.toString()) : '',
+                check_in_date: booking.check_in_date ? formatDate(booking.check_in_date.toString()) : '',
+                check_out_date: booking.check_out_date ? formatDate(booking.check_out_date.toString()) : '',
                 special_request: booking.special_request ?? "",
                 room_id: booking.room_id ?? "",
                 room_type: booking.room_type,
@@ -81,7 +83,7 @@ export const EditBooking = () => {
         }
     }, [booking])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -232,8 +234,13 @@ export const EditBooking = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room Type</Label>
-                        <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required />
+                        <Label>Room Type:</Label>
+                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
+                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
+                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
+                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
+                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
 

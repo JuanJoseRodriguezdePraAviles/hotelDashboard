@@ -45,6 +45,26 @@ export const FieldText = styled.input`
     font-family: 'Poppins';
 `;
 
+export const FieldSelect = styled.select`
+    background: #FFFFFF;
+    color: #000000;
+    height: 2rem;
+    border-color: #799283;
+    border-radius: 10%/40%;
+    width: 9rem;
+    font-family: 'Poppins';
+`;
+
+export const FieldOption = styled.option`
+    background: #FFFFFF;
+    color: #000000;
+    height: 2rem;
+    border-color: #799283;
+    border-radius: 10%/40%;
+    width: 9rem;
+    font-family: 'Poppins';
+`;
+
 export const DateInput = styled.input`
     background: #FFFFFF;
     color: #000000;

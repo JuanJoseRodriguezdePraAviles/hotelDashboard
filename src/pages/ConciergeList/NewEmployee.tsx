@@ -34,7 +34,7 @@ export const NewEmployee = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -42,16 +42,12 @@ export const NewEmployee = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
-        Object.keys(formData).forEach((key) => {
-            if (formData[key] === '' ||
-                formData[key] === null ||
-                formData[key] === undefined ||
-                (Array.isArray(formData[key] && formData[key].length === 0))
-            ) {
+        (Object.keys(formData) as(keyof FormData)[]).forEach((key) => {
+            if (!formData[key]) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
         });

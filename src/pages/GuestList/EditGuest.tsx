@@ -4,7 +4,7 @@ import { DateInput, FieldText, Label, EditGuestTitle, EditGuestWrapper, SubmitBt
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { editGuest } from "../../redux/slices/GuestSlice";
-import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
 import { BookingStatus } from "../../interfaces/BookingStatus";
@@ -60,8 +60,8 @@ export const EditGuest = () => {
                 client_name: guest.client_name ?? "",
                 client_email: guest.client_email ?? "",
                 client_phone: guest.client_phone ?? "",
-                check_in_date: guest.check_in_date? formatDate(guest.check_in_date.toString()) : '',
-                check_out_date: guest.check_out_date? formatDate(guest.check_out_date.toString()) : '',
+                check_in_date: guest.check_in_date ? formatDate(guest.check_in_date.toString()) : '',
+                check_out_date: guest.check_out_date ? formatDate(guest.check_out_date.toString()) : '',
                 special_request: guest.special_request ?? "",
                 room_id: guest.room_id ?? "",
                 room_type: guest.room_type ?? RoomType.SingleBed,
@@ -70,7 +70,7 @@ export const EditGuest = () => {
         }
     }, [guest])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -210,8 +210,13 @@ export const EditGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room Type</Label>
-                        <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required />
+                        <Label>Room Type:</Label>
+                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
+                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
+                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
+                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
+                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
             </Fields>

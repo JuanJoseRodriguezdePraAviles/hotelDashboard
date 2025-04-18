@@ -4,7 +4,7 @@ import { DateInput, FieldText, Label, NewGuestTitle, NewGuestWrapper, SubmitBtn,
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { addGuest } from "../../redux/slices/GuestSlice";
-import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { BookingStatus } from "../../interfaces/BookingStatus";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
@@ -47,10 +47,9 @@ export const NewGuest = () => {
         status: BookingStatus.InProgress
     });
 
-
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -58,11 +57,11 @@ export const NewGuest = () => {
         });
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newErrors = {};
+        const newErrors: Partial<Record<keyof FormData, string>> = {};
 
-        Object.keys(formData).forEach((key) => {
+        (Object.keys(formData) as (keyof FormData)[]).forEach((key) => {
             if (!formData[key]) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
@@ -189,8 +188,13 @@ export const NewGuest = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room Type</Label>
-                        <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required />
+                        <Label>Room Type:</Label>
+                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
+                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
+                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
+                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
+                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
             </Fields>

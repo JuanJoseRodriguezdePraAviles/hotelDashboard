@@ -4,7 +4,7 @@ import { DateInput, FieldText, Label, NewRoomTitle, NewRoomWrapper, SubmitBtn, V
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addRoom } from "../../redux/slices/RoomSlice";
-import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
+import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
 
@@ -43,7 +43,7 @@ export const NewRoom = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -105,8 +105,13 @@ export const NewRoom = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room Type</Label>
-                        <FieldText name="room_type" value={formData.room_type} onChange={handleChange} required />
+                        <Label>Room Type:</Label>
+                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
+                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
+                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
+                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
+                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -128,7 +133,10 @@ export const NewRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Status:</Label>
-                        <FieldText name="status" value={formData.status} onChange={handleChange} required />
+                        <FieldSelect name="status" value={formData.status} onChange={handleChange} required>
+                            <FieldOption value={RoomStatus.Booked}>{RoomStatus.Booked}</FieldOption>
+                            <FieldOption value={RoomStatus.Available}>{RoomStatus.Available}</FieldOption>
+                        </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

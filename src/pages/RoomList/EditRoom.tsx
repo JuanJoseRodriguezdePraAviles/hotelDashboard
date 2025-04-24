@@ -76,9 +76,11 @@ export const EditRoom = () => {
         e.preventDefault();
         const newErrors: Partial<Record<keyof FormData, string>> = {};
 
+        const skipFalsyCheck: (keyof FormData)[] = ["offer"];
+
         Object.keys(formData).forEach((key) => {
             const typedKey = key as keyof FormData;
-            if (!formData[typedKey]) {
+            if (!skipFalsyCheck.includes(typedKey) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });

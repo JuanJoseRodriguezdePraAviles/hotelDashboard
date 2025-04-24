@@ -46,8 +46,10 @@ export const NewEmployee = () => {
         e.preventDefault();
         const newErrors: Partial<Record<keyof FormData, string>> = {};
 
+        const skipFalsyCheck: (keyof FormData)[] = ["status"];
+
         (Object.keys(formData) as(keyof FormData)[]).forEach((key) => {
-            if (!formData[key]) {
+            if (!skipFalsyCheck.includes(key) && !formData[key]) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
         });

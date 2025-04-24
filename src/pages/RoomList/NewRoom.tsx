@@ -20,7 +20,7 @@ export const NewRoom = () => {
         status: RoomStatus,
         description: string,
         photos: string[],
-        offer: boolean,
+        offer?: boolean,
         price: number,
         discount: number,
         cancellation_policy: string
@@ -55,9 +55,11 @@ export const NewRoom = () => {
         e.preventDefault();
         const newErrors: Partial<Record<keyof FormData, string>> = {};
 
+        const skipFalsyCheck: (keyof FormData)[] = ["offer"];
+
         Object.keys(formData).forEach((key) => {
             const typedKey = key as keyof FormData;
-            if (!formData[typedKey]) {
+            if (!skipFalsyCheck.includes(typedKey) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
@@ -66,10 +68,10 @@ export const NewRoom = () => {
             setErrors(newErrors);
             return;
         }
-
+        
         dispatch(addRoom(formData));
 
-        navigate("/roomList");
+        navigate("/roomList", { state: { created: true } });
     }
 
     return (

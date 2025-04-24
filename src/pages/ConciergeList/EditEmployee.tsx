@@ -54,7 +54,7 @@ export const EditEmployee = () => {
                 name: employee.name,
                 email: employee.email ?? "",
                 job_functions: employee.job_functions ?? "",
-                registration_date: employee.registration_date? formatDate(employee.registration_date.toString()) : '',
+                registration_date: employee.registration_date ? formatDate(employee.registration_date.toString()) : '',
                 phone: employee.phone ?? "",
                 schelude: employee.schelude ?? "",
                 status: employee.status || false
@@ -74,9 +74,11 @@ export const EditEmployee = () => {
         e.preventDefault();
         const newErrors: Partial<Record<keyof FormData, string>> = {};
 
-        Object.keys(formData).forEach((key) => {
+        const skipFalsyCheck: (keyof FormData)[] = ["status"];
+
+        (Object.keys(formData) as(keyof FormData)[]).forEach((key) => {
             const typedKey = key as keyof FormData;
-            if (!formData[typedKey]) {
+            if (!skipFalsyCheck.includes(key) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });

@@ -7,6 +7,7 @@ import { deleteEmployee, fetchEmployees } from "../../redux/slices/EmployeeSlice
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Status } from "../../interfaces/Status";
+import { RoomStatus } from "../../interfaces/RoomStatus";
 
 export const ConciergeList = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +20,13 @@ export const ConciergeList = () => {
     const [showNotificationCreated, setShowNotificationCreated] = useState(false);
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
     const [activeFilter, setActiveFilter] = useState("All Employee");
+
+    const filteredEmployees = employees.filter((employee) => {
+        if (activeFilter === 'All Employee') return true;
+        if (activeFilter === 'Active Employee') return employee.status === true;
+        if (activeFilter === 'Inactive Employee') return employee.status === false;
+        return true;
+    });
 
     const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
 
@@ -107,7 +115,7 @@ export const ConciergeList = () => {
                             <EmployeeBtn disabled>Delete Employee</EmployeeBtn>
                         </>
                     }
-                    <List type="employee" list={employees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]}
+                    <List type="employee" list={filteredEmployees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]}
                         onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
                 </ConciergeListWrapper>
             </div>

@@ -34,15 +34,11 @@ export const SideMenu = ({ collapsed }: { collapsed: boolean}) => {
                             <Link to="/bookings">
                                 <PageBtn $active={location === "/bookings"}>{location === "/bookings" && <RedIndicator/>}{<PiCalendarCheckLight size={location === "/bookings"? "2rem":"1.5rem"}/>}<PageText>{!collapsed && "Bookings"}</PageText></PageBtn>
                             </Link>
-                            <Link to="/guestList">
-                                <PageBtn $active={location === "/guestList"}>{location === "/guestList" && <RedIndicator/>}{<FaRegUser size={location === "/guestList"? "2rem":"1.5rem"}/>}<PageText>{!collapsed && "Guest"}</PageText></PageBtn>
-                            </Link>
                             <Link to="/conciergeList">
                                 <PageBtn $active={location === "/conciergeList"}>{location === "/conciergeList" && <RedIndicator/>}{<HiOutlinePuzzle size={location === "/conciergeList"? "2rem":"1.5rem"}/>}<PageText>{!collapsed && "Concierge"}</PageText></PageBtn>
                             </Link>
                         </NavBtns>
                     </>)}
-
             </SideMenuWrapper>
         </>
     );

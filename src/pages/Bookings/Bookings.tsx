@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { deleteBooking } from "../../redux/slices/BookingSlice";
 import { useLocation } from "react-router-dom";
 import { Status } from "../../interfaces/Status";
+import { BookingStatus } from "../../interfaces/BookingStatus";
 
 export const Bookings = () => {
     const dispatch = useAppDispatch();

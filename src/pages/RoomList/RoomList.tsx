@@ -20,6 +20,13 @@ export const RoomList = () => {
     const [showNotificationEdited, setShowNotificationEdited] = useState(false);
     const [activeFilter, setActiveFilter] = useState("All Rooms");
 
+    const filteredRooms = rooms.filter((room) => {
+        if (activeFilter === 'All Rooms') return true;
+        if (activeFilter === 'Available Room') return room.status === "Available";
+        if (activeFilter === 'Booked Room') return room.status === 'Booked';
+        return true;
+    });
+
     useEffect(() => {
         if (status === Status.Loading) {
             dispatch(fetchRooms());
@@ -79,7 +86,7 @@ export const RoomList = () => {
                     <RoomBtn disabled>Delete Room</RoomBtn>
                 </>
             }
-            <List type="room" list={rooms} fieldsName={["Room Name", "Bed Type", "Room Floor", "Facilities", "Rate", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>
+            <List type="room" list={filteredRooms} fieldsName={["Room Name", "Bed Type", "Room Floor", "Facilities", "Rate", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>
         </RoomListWrapper>
     );
 }

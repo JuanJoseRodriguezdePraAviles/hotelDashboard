@@ -40,8 +40,8 @@ describe('Login', () => {
 
   it('renders Dashboard if user is authenticated', () => {
     cy.visit('/');
-    cy.get('input[cy-id="user-input"]').type('admin');
-    cy.get('input[cy-id="password-input"]').type('admin');
+    cy.get('input[cy-id="user-input"]').type('test@example.com');
+    cy.get('input[cy-id="password-input"]').type('test1234');
     cy.get('button[cy-id="btn-login"]').click();
     cy.get('p[cy-id="page-title"]').should(($title) => {
       expect($title.text()).equal("Dashboard");
@@ -60,8 +60,8 @@ describe('Login', () => {
 
   it('renders Login if user is authenticated and logs out', () => {
     cy.visit('/');
-    cy.get('input[cy-id="user-input"]').type('admin');
-    cy.get('input[cy-id="password-input"]').type('admin');
+    cy.get('input[cy-id="user-input"]').type('test@example.com');
+    cy.get('input[cy-id="password-input"]').type('test1234');
     cy.get('button[cy-id="btn-login"]').click();
     cy.get('svg[cy-id="logout-icon"]').click();
     cy.get('button[cy-id="btn-login"]').should(($button) => {

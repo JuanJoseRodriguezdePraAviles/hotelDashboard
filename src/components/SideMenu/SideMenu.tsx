@@ -16,7 +16,7 @@ export const SideMenu = ({ collapsed }: { collapsed: boolean}) => {
                 {!collapsed && (
                     <>
                         <WebIconContainer>
-                            <WebIcon src="/src/assets/hotel.svg" />
+                            <WebIcon src="/assets/hotel.svg" />
                             {!collapsed && (
                                 <WebTitleContainer>
                                     <TitleWeb>travl</TitleWeb>

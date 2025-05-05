@@ -1,38 +1,44 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { loginThunk } from './LoginThunk';
+import { buildErrorMessage } from 'vite';
 
 export interface initialStateInterface {
     isAuthenticated: boolean,
     username: string,
-    email: string
+    error?: string
 }
 
 const initialState: initialStateInterface = {
     isAuthenticated: false,
-    username: '',
-    email: ''
+    username: ''
 }
 
 export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        login: (state, action) => {
-            state.isAuthenticated = true;
-            state.username = action.payload.username;
-            state.email = action.payload.email;
-        },
         logout: (state) => {
             state.isAuthenticated = false,
-            state.username = '',
-            state.email = ''
+            state.username = ''
         },
         updateEmail: (state, action: PayloadAction<string>) => {
             if(action?.payload) {
-                state.email = action.payload;
+                state.username = action.payload;
             }
         }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginThunk.fulfilled, (state, action) => {
+                state.isAuthenticated = true;
+                state.username= action.payload.username;
+                state.error = undefined;
+            })
+            .addCase(loginThunk.rejected, (state, action) => {
+                state.error = action.payload as string;
+            });
     }
 });
 
-export const { login, logout, updateEmail } = authSlice.actions;
+export const { logout, updateEmail } = authSlice.actions;
 export default authSlice.reducer;

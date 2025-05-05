@@ -19,9 +19,10 @@ export const Header: React.FC<HeaderProps> = ({ title, toggleMenu }) => {
     const { logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.login = false;
-        localStorage.username = '';
-        localStorage.email = '';
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("login");
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
         logout();
     }
 

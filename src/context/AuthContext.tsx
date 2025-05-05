@@ -3,13 +3,15 @@ import { createContext, useContext, useReducer } from "react";
 
 interface AuthState {
     auth: boolean;
+    token: string | null;
 }
 
-type AuthAction = { type: "login" } | { type: "logout" };
+type AuthAction = { type: "login"; token: string } | { type: "logout" };
 
 interface AuthContextType {
     auth: boolean;
-    login: () => void;
+    token: string | null,
+    login: (token: string) => void;
     logout: () => void;
 }
 
@@ -23,13 +25,13 @@ export const useAuth = () => {
     return context;
 }
 
-const initialState: AuthState = { auth: false };
+const initialState: AuthState = { auth: false, token: null };
 
-const authReducer = (state, action) => {
+const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     if (action.type === 'login') {
-        return { ...state, auth: true };
+        return { ...state, auth: true, token: action.token };
     } else if (action.type === 'logout') {
-        return { ...state, auth: false };
+        return { ...state, auth: false, token: null };
     } else {
         return state;
     }
@@ -42,11 +44,19 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const login = () => dispatch({ type: "login" });
-    const logout = () => dispatch({ type: "logout" });
+    const login = (token: string) => {
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("login", "true");
+        dispatch({ type: "login", token });
+    }
+    const logout = () => {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("login");
+        dispatch({ type: "logout" });
+    }
 
     return (
-        <AuthContext.Provider value={{ auth: state.auth, login, logout }}>
+        <AuthContext.Provider value={{ auth: state.auth, token: state.token, login, logout }}>
             {children}
         </AuthContext.Provider>
     );

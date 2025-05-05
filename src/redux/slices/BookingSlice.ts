@@ -42,8 +42,18 @@ const initialState: BookingsState = {
 export const fetchBookings = createAsyncThunk<Booking[]>(
     'bookings/fetchBookings',
     async () => {
-        await delay(200);
-        const response = await fetch("../../public/Bookings.json");
+        const response = await fetch("http://localhost:3001/api/v1/bookings", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if(!response.ok) {
+            throw new Error("Failed to fetch bookings");
+        }
+
         const data = await response.json();
         return data;
     }

@@ -8,13 +8,14 @@ import { Header } from "../../components/Header/Header.js";
 import { useState, useEffect } from "react";
 
 export const Layout = () => {
-    const { auth, login, logout } = useAuth();
+    const { auth, login, logout, token } = useAuth();
     const [isMenuCollapsed, setIsMenuCollapsed] = useState(false);
 
     useEffect(() => {
+      const storedToken = localStorage.getItem("authToken");
       const isLogin = localStorage.getItem("login")==='true';
-      if(isLogin && !auth) {
-        login();
+      if(isLogin && storedToken && !auth) {
+        login(storedToken);
       } else if (!isLogin && auth) {
         logout();
       }

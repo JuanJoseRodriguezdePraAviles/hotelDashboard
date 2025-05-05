@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ErrorMessage, LoginBtn, LoginTitle, LoginWrapper, PasswordInput, UserInput } from "./LoginStyled";
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { login } from '../../redux/slices/AuthSlice';
+import { loginThunk } from '../../redux/slices/LoginThunk';
 
 export const Login = () => {
     const dispatch = useAppDispatch();
@@ -10,17 +10,17 @@ export const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const email = useAppSelector((state) => state.auth.email);
 
-    const handleLogin = () => {
-        if (username === 'admin' && password === 'admin') {
-            localStorage.login = true;
-            localStorage.username = username;
-            localStorage.email = email? email : 'admin@gmail.com';
-            contextLogin();
-            dispatch(login({username: 'admin', email: 'admin@gmail.com'}));
+    const handleLogin = async () => {
+        const resultAction = await dispatch(loginThunk({ username: username, password: password }));
+        if (loginThunk.rejected.match(resultAction)) {
+            setError(resultAction.payload as string || "Login failed");
         } else {
-            setError('Wrong user or password');
+            const data = resultAction.payload as { token: string };
+            localStorage.setItem("authToken", data.token);
+            localStorage.setItem("login", "true");
+            contextLogin(data.token);
+            
         }
     }
     return (

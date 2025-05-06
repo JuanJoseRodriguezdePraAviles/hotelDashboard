@@ -1,11 +1,11 @@
 import React from "react";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DateInput, FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldText, FieldWrapper, Label, NewBookingTitle, NewBookingWrapper, SubmitBtn, ValidationError } from "./NewBookingStyled";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
-import { addBooking } from "../../redux/slices/BookingSlice";
-import { RoomStatus } from "../../interfaces/RoomStatus";
-import { RoomType } from "../../interfaces/RoomType";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { Booking, createBooking } from "../../redux/slices/BookingSlice";
+import { BookingStatus } from "../../interfaces/BookingStatus";
+import { fetchRooms } from "../../redux/slices/RoomSlice";
 
 export const NewBooking = () => {
     const dispatch = useAppDispatch();
@@ -18,38 +18,24 @@ export const NewBooking = () => {
         return `${month}/${day}/${year}`;
     }
 
-    interface FormData {
-        booking_id: string,
-        client_id: string,
-        client_name: string,
-        client_email: string,
-        client_phone: string,
-        order_date: string,
-        check_in_date: string,
-        check_out_date: string,
-        special_request: string,
-        room_id: string,
-        room_type: string,
-        status: string
-    }
-
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<Booking>({
         booking_id: '',
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
-        order_date: getFormattedToday().toString(),
-        check_in_date: '',
-        check_out_date: '',
+        order_date: new Date(),
+        check_in_date: new Date(),
+        check_out_date: new Date(),
         special_request: '',
         room_id: '',
-        room_type: '',
-        status: 'booked'
+        status: BookingStatus.InProgress
     });
 
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Booking, string>>>({});
+
+    const { rooms, status } = useAppSelector((state) => state.rooms);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -62,9 +48,9 @@ export const NewBooking = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Booking, string>> = {};
 
-        (Object.keys(formData) as (keyof FormData)[]).forEach((key) => {
+        (Object.keys(formData) as (keyof Booking)[]).forEach((key) => {
             if (!formData[key]) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
@@ -77,20 +63,14 @@ export const NewBooking = () => {
 
         const formattedData = { ...formData };
 
-        if (formattedData.check_in_date) {
-            const [year, month, day] = formattedData.check_in_date.split("-");
-            formattedData.check_in_date = `${month}/${day}/${year}`;
-        }
-
-        if (formattedData.check_out_date) {
-            const [year, month, day] = formattedData.check_out_date.split("-");
-            formattedData.check_out_date = `${month}/${day}/${year}`;
-        }
-
-        dispatch(addBooking(formattedData));
+        dispatch(createBooking(formattedData as Booking));
 
         navigate("/bookings", { state: { created: true } });
     }
+
+    useEffect(() => {
+        dispatch(fetchRooms());
+    }, [dispatch]);
 
     return (
         <NewBookingWrapper>
@@ -164,7 +144,7 @@ export const NewBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check In Date:</Label>
-                        <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} required />
+                        <DateInput type="date" name="check_in_date" value={formData.check_in_date instanceof Date? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
 
@@ -176,7 +156,7 @@ export const NewBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check Out Date:</Label>
-                        <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} required />
+                        <DateInput type="date" name="check_out_date" value={formData.check_out_date instanceof Date? formData.check_out_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
 
@@ -200,23 +180,13 @@ export const NewBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Room ID:</Label>
-                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} required />
-                    </FieldLabelContainer>
-                </FieldWrapper>
-
-                <FieldWrapper>
-                    {errors.room_type &&
-                        <ValidationError>
-                            {errors.room_type}
-                        </ValidationError>
-                    }
-                    <FieldLabelContainer>
-                        <Label>Room Type:</Label>
-                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
-                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
-                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
-                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
-                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        <FieldSelect name="room_id" value={formData.room_id} onChange={handleChange} required >
+                            <FieldOption value="">Select a room</FieldOption>
+                            {rooms.map((room) => (
+                                <FieldOption key={room._id} value={room._id}>
+                                    {room.room_name} ({room._id})
+                                </FieldOption>
+                            ))}
                         </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>

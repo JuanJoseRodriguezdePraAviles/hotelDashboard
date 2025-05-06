@@ -48,7 +48,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                                 client_email={guest.client_email}
                                 client_phone={guest.client_phone}
                                 client_id={guest.client_id}
-                                booking_id={guest.booking_id}
+                                _id={guest._id}
                                 room_id={guest.room_id}
                                 room_name={guest.room_name}
                                 room_description={guest.room_description}
@@ -146,9 +146,9 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
 
     const getItemId = (item: Item, type: ListType) => {
         switch (type) {
-            case 'guest': return (item as Guest).booking_id;
+            case 'guest': return (item as Guest)._id;
             case 'employee': return (item as Employee).id;
-            case 'room': return (item as Room).room_id;
+            case 'room': return (item as Room)._id;
             default: return "-1";
         }
     }

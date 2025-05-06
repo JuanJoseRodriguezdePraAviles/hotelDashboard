@@ -7,7 +7,7 @@ import { Amenities } from '../../interfaces/Amenities';
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Room {
-    room_id: string,
+    _id: string,
     room_name: string,
     room_type?: RoomType,
     room_floor?: string,
@@ -36,9 +36,19 @@ const initialState: RoomsState = {
 export const fetchRooms = createAsyncThunk(
     'rooms/fetchRooms',
     async () => {
-        await delay(200);
-        const response = await fetch("../../public/Rooms.json");
+        const token = localStorage.getItem("authToken");
+
+        const response = await fetch("http://localhost:3001/api/v1/rooms", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
         const data = await response.json();
+        if(!Array.isArray(data)) {
+            throw new Error("Rooms response is not an array");
+        }
         return data;
     }
 );
@@ -52,7 +62,7 @@ const roomsSlice = createSlice({
         },
         editRoom: (state, action) => {
             const { id, updateRoom } = action.payload;
-            const index = state.rooms.findIndex((room) => room.room_id.toString() === id);
+            const index = state.rooms.findIndex((room) => room._id.toString() === id);
             
             if (index !== -1) {
                 state.rooms[index] = { ...state.rooms[index], ...updateRoom };
@@ -60,7 +70,7 @@ const roomsSlice = createSlice({
         },
         deleteRoom: (state, action) => {
             const { id } = action.payload;
-            state.rooms = state.rooms.filter((room) => room.room_id !== id);
+            state.rooms = state.rooms.filter((room) => room._id !== id);
         }
     },
     extraReducers: (builder) => {

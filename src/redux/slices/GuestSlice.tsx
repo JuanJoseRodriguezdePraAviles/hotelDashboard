@@ -8,7 +8,7 @@ import { Amenities } from '../../interfaces/Amenities';
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Guest {
-    booking_id?: string,
+    _id?: string,
     room_id?: string,
     room_name?: string,
     room_description?: string,

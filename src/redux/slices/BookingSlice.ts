@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction, isRejectedWithValue } from '@reduxjs/toolkit';
 import { RoomType } from '../../interfaces/RoomType';
 import { RoomStatus } from '../../interfaces/RoomStatus';
 import { Amenities } from '../../interfaces/Amenities';
@@ -10,12 +10,6 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export interface Booking {
     booking_id: string,
     room_id: string,
-    room_name: string,
-    room_description: string,
-    room_type: RoomType,
-    room_price: number,
-    room_status?: RoomStatus,
-    room_amenities?: Amenities[],
     client_id: string,
     client_name?: string,
     client_email?: string,
@@ -42,11 +36,13 @@ const initialState: BookingsState = {
 export const fetchBookings = createAsyncThunk<Booking[]>(
     'bookings/fetchBookings',
     async () => {
+        const token = localStorage.getItem("authToken");
+
         const response = await fetch("http://localhost:3001/api/v1/bookings", {
             method: "GET",
-            credentials: "include",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
 
@@ -59,13 +55,36 @@ export const fetchBookings = createAsyncThunk<Booking[]>(
     }
 );
 
+export const createBooking = createAsyncThunk<Booking, Partial<Booking>>(
+    'bookings/createBooking',
+    async (newBooking, { rejectWithValue }) => {
+        const token = localStorage.getItem("authToken");
+        try {
+            const response = await fetch("http://localhost:3001/api/v1/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(newBooking)
+            });
+
+            if(!response.ok) {
+                throw new Error("Failed to create booking");
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 const bookingsSlice = createSlice({
     name: "bookings",
     initialState,
     reducers: {
-        addBooking: (state, action) => {
-            state.bookings.push(action.payload)
-        },
         editBooking: (state, action) => {
             const { id, updateBooking } = action.payload;
             const index = state.bookings.findIndex((booking) => booking.booking_id.toString() === id);
@@ -91,10 +110,17 @@ const bookingsSlice = createSlice({
             .addCase(fetchBookings.rejected, (state, action) => {
                 state.status = Status.Failed;
                 state.error = action.error.message;
-            });
+            })
+            .addCase(createBooking.fulfilled, (state, action) => {
+                state.bookings.push(action.payload);
+            })
+            .addCase(createBooking.rejected, (state, action) => {
+                state.status = Status.Failed;
+                state.error = action.error.message;
+            })
     }
 });
 
-export const { addBooking, editBooking, deleteBooking } = bookingsSlice.actions;
+export const { editBooking, deleteBooking } = bookingsSlice.actions;
 export const { actions, reducer } = bookingsSlice;
 export default reducer;

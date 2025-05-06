@@ -3,11 +3,10 @@ import { useEffect, useState } from "react"
 import { DateInput, FieldText, Label, EditBookingTitle, EditBookingWrapper, SubmitBtn, ValidationError, FieldWrapper, Fields, FieldLabelContainer } from "./EditBookingStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { editBooking } from "../../redux/slices/BookingSlice";
-import { RoomStatus } from "../../interfaces/RoomStatus";
+import { Booking, updateBooking } from "../../redux/slices/BookingSlice";
 import { Status } from "../../interfaces/Status";
 import { FieldOption, FieldSelect } from "./NewBookingStyled";
-import { RoomType } from "../../interfaces/RoomType";
+import { BookingStatus } from "../../interfaces/BookingStatus";
 
 export const EditBooking = () => {
     const dispatch = useAppDispatch();
@@ -21,41 +20,28 @@ export const EditBooking = () => {
         return <p>Loading bookings</p>
     }
 
-    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id.toString() === bookingId));
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking._id.toString() === bookingId));
 
     if (!booking) {
         return <p>Reserva no encontrada</p>
     }
 
-    interface FormData {
-        booking_id: string,
-        client_id: string,
-        client_name: string,
-        client_email: string,
-        client_phone: string,
-        check_in_date: string,
-        check_out_date: string,
-        special_request: string,
-        room_id: string,
-        room_type: string,
-        status: string
-    }
-
-    const [formData, setFormData] = useState<FormData>({
-        booking_id: '',
+    const [formData, setFormData] = useState<Booking>({
+        _id: '',
         client_id: '',
         client_name: '',
         client_email: '',
         client_phone: '',
-        check_in_date: '',
-        check_out_date: '',
+        check_in_date: new Date(),
+        check_out_date: new Date(),
         special_request: '',
         room_id: '',
-        room_type: '',
-        status: RoomStatus.Booked
+        status: BookingStatus.InProgress
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Booking, string>>>({});
+
+    const { rooms } = useAppSelector((state) => state.rooms);
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -68,17 +54,16 @@ export const EditBooking = () => {
     useEffect(() => {
         if (booking) {
             setFormData({
-                booking_id: booking.booking_id,
+                _id: booking._id,
                 client_id: booking.client_id,
                 client_name: booking.client_name ?? "",
                 client_email: booking.client_email ?? "",
                 client_phone: booking.client_phone ?? "",
-                check_in_date: booking.check_in_date ? formatDate(booking.check_in_date.toString()) : '',
-                check_out_date: booking.check_out_date ? formatDate(booking.check_out_date.toString()) : '',
+                check_in_date: booking.check_in_date,
+                check_out_date: booking.check_out_date,
                 special_request: booking.special_request ?? "",
                 room_id: booking.room_id ?? "",
-                room_type: booking.room_type,
-                status: booking.status ?? ""
+                status: booking.status
             });
         }
     }, [booking])
@@ -93,10 +78,10 @@ export const EditBooking = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Booking, string>> = {};
 
         Object.keys(formData).forEach((key) => {
-            const typedKey = key as keyof FormData;
+            const typedKey = key as keyof Booking;
             if (!formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
@@ -109,17 +94,11 @@ export const EditBooking = () => {
 
         const formattedData = { ...formData };
 
-        if (formattedData.check_in_date) {
-            const [year, month, day] = formattedData.check_in_date.split("-");
-            formattedData.check_in_date = `${month}/${day}/${year}`;
+        if (!bookingId) {
+            console.error("Booking ID is undefined");
+            return;
         }
-
-        if (formattedData.check_out_date) {
-            const [year, month, day] = formattedData.check_out_date.split("-");
-            formattedData.check_out_date = `${month}/${day}/${year}`;
-        }
-
-        dispatch(editBooking({ id: bookingId, updateBooking: formattedData }));
+        dispatch(updateBooking({ id: bookingId, updatedBooking: formattedData }));
 
         navigate("/bookings", { state: { edited: true } });
     }
@@ -129,14 +108,14 @@ export const EditBooking = () => {
             <EditBookingTitle>Edit booking form</EditBookingTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.booking_id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.booking_id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Booking ID</Label>
-                        <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} readOnly />
+                        <FieldText name="_id" value={formData._id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -191,7 +170,7 @@ export const EditBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check In Date</Label>
-                        <DateInput type="date" name="check_in_date" value={formData.check_in_date} onChange={handleChange} required />
+                        <DateInput type="date" name="check_in_date" value={formData.check_in_date  instanceof Date? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -202,7 +181,7 @@ export const EditBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check Out Date</Label>
-                        <DateInput type="date" name="check_out_date" value={formData.check_out_date} onChange={handleChange} required />
+                        <DateInput type="date" name="check_out_date" value={formData.check_out_date instanceof Date? formData.check_out_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -223,29 +202,17 @@ export const EditBooking = () => {
                         </ValidationError>
                     }
                     <FieldLabelContainer>
-                        <Label>Room ID</Label>
-                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} required />
-                    </FieldLabelContainer>
-                </FieldWrapper>
-                <FieldWrapper>
-                    {errors.room_type &&
-                        <ValidationError>
-                            {errors.room_type}
-                        </ValidationError>
-                    }
-                    <FieldLabelContainer>
-                        <Label>Room Type:</Label>
-                        <FieldSelect name="room_type" value={formData.room_type} onChange={handleChange} required>
-                            <FieldOption value={RoomType.DoubleBed}>{RoomType.DoubleBed}</FieldOption>
-                            <FieldOption value={RoomType.DoubleSuperior}>{RoomType.DoubleSuperior}</FieldOption>
-                            <FieldOption value={RoomType.SingleBed}>{RoomType.SingleBed}</FieldOption>
-                            <FieldOption value={RoomType.Suite}>{RoomType.Suite}</FieldOption>
+                        <Label>Room ID:</Label>
+                        <FieldSelect name="room_id" value={formData.room_id} onChange={handleChange} required >
+                            <FieldOption value="">Select a room</FieldOption>
+                            {rooms.map((room) => (
+                                <FieldOption key={room._id} value={room._id}>
+                                    {room.room_name} ({room._id})
+                                </FieldOption>
+                            ))}
                         </FieldSelect>
                     </FieldLabelContainer>
                 </FieldWrapper>
-
-
-
             </Fields>
 
             <SubmitBtn onClick={handleSubmit}>Submit</SubmitBtn>

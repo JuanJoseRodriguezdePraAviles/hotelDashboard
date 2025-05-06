@@ -8,7 +8,7 @@ import { Status } from '../../interfaces/Status';
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Booking {
-    booking_id: string,
+    _id: string,
     room_id: string,
     client_id: string,
     client_name?: string,
@@ -81,21 +81,43 @@ export const createBooking = createAsyncThunk<Booking, Partial<Booking>>(
     }
 );
 
+export const updateBooking = createAsyncThunk<
+    Booking,
+    { id: string; updatedBooking: Partial<Booking> },
+    { rejectValue: string}
+>(
+    'bookings/editBooking',
+    async ({ id, updatedBooking }, {rejectWithValue}) => {
+        const token = localStorage.getItem("authToken");
+        try {
+            const response = await fetch(`http://localhost:3001/api/v1/bookings/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(updatedBooking)
+            });
+
+            if(!response.ok) {
+                throw new Error('Failed to update booking');
+            }
+
+            const data = await response.json();
+            return data;
+        } catch(error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+);
+
 const bookingsSlice = createSlice({
     name: "bookings",
     initialState,
     reducers: {
-        editBooking: (state, action) => {
-            const { id, updateBooking } = action.payload;
-            const index = state.bookings.findIndex((booking) => booking.booking_id.toString() === id);
-            
-            if (index !== -1) {
-                state.bookings[index] = { ...state.bookings[index], ...updateBooking };
-            }
-        },
         deleteBooking: (state, action) => {
             const { id } = action.payload;
-            state.bookings = state.bookings.filter((booking) => booking.booking_id !== id);
+            state.bookings = state.bookings.filter((booking) => booking._id !== id);
         }
     },
     extraReducers: (builder) => {
@@ -118,9 +140,19 @@ const bookingsSlice = createSlice({
                 state.status = Status.Failed;
                 state.error = action.error.message;
             })
+            .addCase(updateBooking.fulfilled, (state, action) => {
+                const index = state.bookings.findIndex(b => b._id === action.payload._id);
+                if(index!==-1) {
+                    state.bookings[index] = action.payload;
+                }
+            })
+            .addCase(updateBooking.rejected, (state, action) => {
+                state.status = Status.Failed;
+                state.error = action.payload;
+            });
     }
 });
 
-export const { editBooking, deleteBooking } = bookingsSlice.actions;
+export const { deleteBooking } = bookingsSlice.actions;
 export const { actions, reducer } = bookingsSlice;
 export default reducer;

@@ -19,7 +19,7 @@ export const NewBooking = () => {
     }
 
     const [formData, setFormData] = useState<Booking>({
-        booking_id: '',
+        _id: '',
         client_id: '',
         client_name: '',
         client_email: '',
@@ -35,7 +35,7 @@ export const NewBooking = () => {
 
     const [errors, setErrors] = useState<Partial<Record<keyof Booking, string>>>({});
 
-    const { rooms, status } = useAppSelector((state) => state.rooms);
+    const { rooms } = useAppSelector((state) => state.rooms);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -77,14 +77,14 @@ export const NewBooking = () => {
             <NewBookingTitle>New booking form</NewBookingTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.booking_id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.booking_id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Booking ID:</Label>
-                        <FieldText name="booking_id" value={formData.booking_id} onChange={handleChange} />
+                        <FieldText name="booking_id" value={formData._id} onChange={handleChange} />
                     </FieldLabelContainer>
 
                 </FieldWrapper>

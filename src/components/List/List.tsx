@@ -118,7 +118,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                 return (
                     <>
                         <FieldValue>
-                            <RoomData room_name={room.room_name} room_id={room.room_id} />
+                            <RoomData room_name={room.room_name} _id={room._id} />
                         </FieldValue>
                         <FieldValue>
                             <FieldText>{room.room_type}</FieldText>

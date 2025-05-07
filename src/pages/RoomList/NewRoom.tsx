@@ -2,32 +2,18 @@ import React from "react";
 import { useState } from "react"
 import { DateInput, FieldText, Label, NewRoomTitle, NewRoomWrapper, SubmitBtn, ValidationError } from "./NewRoomStyled";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addRoom } from "../../redux/slices/RoomSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { createRoom, Room } from "../../redux/slices/RoomSlice";
 import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
 
 export const NewRoom = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    interface FormData {
-        room_id: string,
-        room_name: string,
-        room_type: RoomType,
-        room_floor: string,
-        status: RoomStatus,
-        description: string,
-        photos: string[],
-        offer?: boolean,
-        price: number,
-        discount: number,
-        cancellation_policy: string
-    }
 
-    const [formData, setFormData] = useState<FormData>({
-        room_id: '',
+    const [formData, setFormData] = useState<Room>({
         room_name: '',
         room_type: RoomType.SingleBed,
         room_floor: '',
@@ -41,7 +27,7 @@ export const NewRoom = () => {
     });
 
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Room, string>>>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -53,12 +39,12 @@ export const NewRoom = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Room, string>> = {};
 
-        const skipFalsyCheck: (keyof FormData)[] = ["offer"];
+        const skipFalsyCheck: (keyof Room)[] = ["offer"];
 
         Object.keys(formData).forEach((key) => {
-            const typedKey = key as keyof FormData;
+            const typedKey = key as keyof Room;
             if (!skipFalsyCheck.includes(typedKey) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
@@ -68,8 +54,9 @@ export const NewRoom = () => {
             setErrors(newErrors);
             return;
         }
-        
-        dispatch(addRoom(formData));
+        const formattedData = { ...formData };
+
+        dispatch(createRoom(formattedData as Room));
 
         navigate("/roomList", { state: { created: true } });
     }
@@ -79,14 +66,14 @@ export const NewRoom = () => {
             <NewRoomTitle>New room</NewRoomTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.room_id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.room_id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Room ID</Label>
-                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} />
+                        <FieldText name="room_id" value={formData._id} onChange={handleChange} />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -161,7 +148,7 @@ export const NewRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Photos (comma-sepparated URLs):</Label>
-                        <FieldText name="photos" value={formData.photos.join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim()) })} required />
+                        <FieldText name="photos" value={formData.photos??[].join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim()) })} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -172,7 +159,13 @@ export const NewRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Price: </Label>
-                        <FieldText type="number" name="price" value={formData.price} onChange={handleChange} required />
+                        <FieldText type="number" name="price" value={formData.price} onChange={(e) => 
+                            setFormData({
+                                ...formData,
+                                price: Number(e.target.value)
+                            })
+                         }
+                        required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -183,7 +176,11 @@ export const NewRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Discount: </Label>
-                        <FieldText type="number" name="discount" value={formData.discount} onChange={handleChange} required />
+                        <FieldText type="number" name="discount" value={formData.discount} onChange={(e) => 
+                            setFormData({
+                                ...formData,
+                                discount: Number(e.target.value)
+                            })} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

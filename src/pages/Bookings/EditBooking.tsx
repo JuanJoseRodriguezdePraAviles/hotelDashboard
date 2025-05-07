@@ -4,7 +4,6 @@ import { DateInput, FieldText, Label, EditBookingTitle, EditBookingWrapper, Subm
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Booking, updateBooking } from "../../redux/slices/BookingSlice";
-import { Status } from "../../interfaces/Status";
 import { FieldOption, FieldSelect } from "./NewBookingStyled";
 import { BookingStatus } from "../../interfaces/BookingStatus";
 import { fetchRooms } from "../../redux/slices/RoomSlice";
@@ -15,13 +14,7 @@ export const EditBooking = () => {
 
     const { bookingId } = useParams();
 
-    const { bookings, status } = useAppSelector((state) => state.bookings);
-
-    if (status === Status.Loading) {
-        return <p>Loading bookings</p>
-    }
-
-    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking._id.toString() === bookingId));
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking?._id?.toString() === bookingId));
 
     if (!booking) {
         return <p>Reserva no encontrada</p>

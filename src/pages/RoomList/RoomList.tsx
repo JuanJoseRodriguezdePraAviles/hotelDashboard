@@ -46,7 +46,7 @@ export const RoomList = () => {
 
     const handleDelete = (roomId: string) => {
         setSelectedRooms((prevSelected) => prevSelected.filter((id) => id !== roomId));
-        dispatch(deleteRoom({ id: roomId }));
+        dispatch(deleteRoom(roomId));
     }
 
     const isSingleSelection = selectedRooms.length === 1;

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { FieldText, Label, EditRoomTitle, EditRoomWrapper, SubmitBtn, ValidationError } from "./EditRoomStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { editRoom } from "../../redux/slices/RoomSlice";
+import { updateRoom, Room } from "../../redux/slices/RoomSlice";
 import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
@@ -14,24 +14,11 @@ export const EditRoom = () => {
 
     const { roomId } = useParams();
 
-    const room = useAppSelector((state) => state.rooms.rooms.find((room) => room.room_id.toString() === roomId));
+    const room = useAppSelector((state) => state.rooms.rooms.find((room) => room?._id?.toString() === roomId));
 
-    interface FormData {
-        room_id: string,
-        room_name: string,
-        room_type: RoomType,
-        room_floor: string,
-        status: RoomStatus,
-        description: string,
-        photos: string[],
-        offer: boolean,
-        price: number,
-        discount: number,
-        cancellation_policy: string
-    }
 
-    const [formData, setFormData] = useState<FormData>({
-        room_id: '',
+    const [formData, setFormData] = useState<Room>({
+        _id: '',
         room_name: '',
         room_type: RoomType.SingleBed,
         room_floor: '',
@@ -44,12 +31,12 @@ export const EditRoom = () => {
         cancellation_policy: ''
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Room, string>>>({});
 
     useEffect(() => {
         if (room) {
             setFormData({
-                room_id: room.room_id,
+                _id: room._id,
                 room_name: room.room_name,
                 room_type: room.room_type ?? RoomType.SingleBed,
                 room_floor: room.room_floor ?? "",
@@ -74,12 +61,12 @@ export const EditRoom = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Room, string>> = {};
 
-        const skipFalsyCheck: (keyof FormData)[] = ["offer"];
+        const skipFalsyCheck: (keyof Room)[] = ["offer"];
 
         Object.keys(formData).forEach((key) => {
-            const typedKey = key as keyof FormData;
+            const typedKey = key as keyof Room;
             if (!skipFalsyCheck.includes(typedKey) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
@@ -89,7 +76,13 @@ export const EditRoom = () => {
             setErrors(newErrors);
             return;
         }
-        dispatch(editRoom({ id: roomId, updateRoom: formData }));
+        const formattedData = { ...formData };
+
+        if (!roomId) {
+            console.error("Room ID is undefined");
+            return;
+        }
+        dispatch(updateRoom({ id: roomId, updatedRoom: formattedData }));
 
         navigate("/roomList");
     }
@@ -99,14 +92,14 @@ export const EditRoom = () => {
             <EditRoomTitle>Edit room</EditRoomTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.room_id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.room_id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Room ID</Label>
-                        <FieldText name="room_id" value={formData.room_id} onChange={handleChange} readOnly />
+                        <FieldText name="room_id" value={formData._id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -180,7 +173,7 @@ export const EditRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Photos (comma-sepparated URLs):</Label>
-                        <FieldText name="photos" value={formData.photos.join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim()) })} required />
+                        <FieldText name="photos" value={formData.photos?.join(',')} onChange={(e) => setFormData({ ...formData, photos: e.target.value.split(',').map(url => url.trim()) })} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -191,7 +184,12 @@ export const EditRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Price: </Label>
-                        <FieldText type="number" name="price" value={formData.price} onChange={handleChange} required />
+                        <FieldText type="number" name="price" value={formData.price} onChange={(e) => 
+                            setFormData({
+                                ...formData,
+                                price: Number(e.target.value)
+                            })
+                         } required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -202,7 +200,11 @@ export const EditRoom = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Discount: </Label>
-                        <FieldText type="number" name="discount" value={formData.discount} onChange={handleChange} required />
+                        <FieldText type="number" name="discount" value={formData.discount} onChange={(e) => 
+                            setFormData({
+                                ...formData,
+                                discount: Number(e.target.value)
+                            })} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

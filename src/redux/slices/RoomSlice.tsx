@@ -109,7 +109,7 @@ export const deleteRoom = createAsyncThunk<
     string,
     { rejectValue: string }
 >(
-    'bookings/deleteRoom',
+    'rooms/deleteRoom',
     async (id, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {

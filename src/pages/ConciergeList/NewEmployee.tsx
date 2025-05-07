@@ -3,36 +3,24 @@ import { useState } from "react"
 import { DateInput, FieldText, Label, NewEmployeeTitle, NewEmployeeWrapper, SubmitBtn, ValidationError } from "./NewEmployeeStyled";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
-import { addEmployee } from "../../redux/slices/EmployeeSlice";
+import { createEmployee, Employee } from "../../redux/slices/EmployeeSlice";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
 export const NewEmployee = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
-    interface FormData {
-        id: string,
-        name: string,
-        email: string,
-        job_functions: string,
-        registration_date: string,
-        phone: string,
-        schelude: string,
-        status: boolean
-    }
-
-    const [formData, setFormData] = useState<FormData>({
-        id: '',
+    const [formData, setFormData] = useState<Employee>({
         name: '',
         email: '',
         job_functions: '',
-        registration_date: '',
+        registration_date: new Date(),
         phone: '',
         schelude: '',
         status: false
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Employee, string>>>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -44,11 +32,11 @@ export const NewEmployee = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Employee, string>> = {};
 
-        const skipFalsyCheck: (keyof FormData)[] = ["status"];
+        const skipFalsyCheck: (keyof Employee)[] = ["status"];
 
-        (Object.keys(formData) as(keyof FormData)[]).forEach((key) => {
+        (Object.keys(formData) as(keyof Employee)[]).forEach((key) => {
             if (!skipFalsyCheck.includes(key) && !formData[key]) {
                 newErrors[key] = `Field ${key} cannot be empty`;
             }
@@ -59,7 +47,9 @@ export const NewEmployee = () => {
             return;
         }
 
-        dispatch(addEmployee(formData));
+        const formattedData = { ...formData };
+
+        dispatch(createEmployee(formattedData as Employee));
 
         navigate("/conciergeList", { state: { created: true } });
     }
@@ -69,14 +59,14 @@ export const NewEmployee = () => {
             <NewEmployeeTitle>New employee</NewEmployeeTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Employee ID</Label>
-                        <FieldText name="id" value={formData.id} onChange={handleChange} />
+                        <FieldText name="id" value={formData._id} onChange={handleChange} />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -120,7 +110,7 @@ export const NewEmployee = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Registration Date</Label>
-                        <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} required />
+                        <DateInput type="date" name="registration_date" value={formData.registration_date instanceof Date? formData.registration_date?.toISOString().split("T")[0]:""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

@@ -66,7 +66,7 @@ export const ConciergeList = () => {
 
     const handleDelete = (employeeId: string) => {
         setSelectedEmployees((prevSelected) => prevSelected.filter((id) => id !== employeeId));
-        dispatch(deleteEmployee({ id: employeeId }));
+        dispatch(deleteEmployee(employeeId));
     }
 
     const isSingleSelection = selectedEmployees.length === 1;

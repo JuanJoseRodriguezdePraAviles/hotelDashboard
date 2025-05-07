@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { FieldText, Label, EditEmployeeTitle, EditEmployeeWrapper, SubmitBtn, ValidationError } from "./EditEmployeeStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { editEmployee } from "../../redux/slices/EmployeeSlice";
+import { updateEmployee, Employee } from "../../redux/slices/EmployeeSlice";
 import { DateInput } from "./NewEmployeeStyled";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
@@ -13,31 +13,20 @@ export const EditEmployee = () => {
 
     const { employeeId } = useParams();
 
-    const employee = useAppSelector((state) => state.employees.employees.find((employee) => employee.id.toString() === employeeId));
+    const employee = useAppSelector((state) => state.employees.employees.find((employee) => employee?._id?.toString() === employeeId));
 
-    interface FormData {
-        id: string,
-        name: string,
-        email: string,
-        job_functions: string,
-        registration_date: string,
-        phone: string,
-        schelude: string,
-        status: boolean
-    }
-
-    const [formData, setFormData] = useState<FormData>({
-        id: '',
+    const [formData, setFormData] = useState<Employee>({
+        _id: '',
         name: '',
         email: '',
         job_functions: '',
-        registration_date: '',
+        registration_date: new Date(),
         phone: '',
         schelude: '',
         status: false
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof Employee, string>>>({});
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
@@ -50,11 +39,11 @@ export const EditEmployee = () => {
     useEffect(() => {
         if (employee) {
             setFormData({
-                id: employee.id,
+                _id: employee._id,
                 name: employee.name,
                 email: employee.email ?? "",
                 job_functions: employee.job_functions ?? "",
-                registration_date: employee.registration_date ? formatDate(employee.registration_date.toString()) : '',
+                registration_date: employee.registration_date,
                 phone: employee.phone ?? "",
                 schelude: employee.schelude ?? "",
                 status: employee.status || false
@@ -72,13 +61,13 @@ export const EditEmployee = () => {
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        const newErrors: Partial<Record<keyof FormData, string>> = {};
+        const newErrors: Partial<Record<keyof Employee, string>> = {};
 
-        const skipFalsyCheck: (keyof FormData)[] = ["status"];
+        const skipFalsyCheck: (keyof Employee)[] = ["status"];
 
-        (Object.keys(formData) as(keyof FormData)[]).forEach((key) => {
-            const typedKey = key as keyof FormData;
-            if (!skipFalsyCheck.includes(key) && !formData[typedKey]) {
+        Object.keys(formData).forEach((key) => {
+            const typedKey = key as keyof Employee;
+            if (!formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });
@@ -87,7 +76,13 @@ export const EditEmployee = () => {
             setErrors(newErrors);
             return;
         }
-        dispatch(editEmployee({ id: employeeId, updateEmployee: formData }));
+        const formattedData = { ...formData };
+
+        if (!employeeId) {
+            console.error("ID is undefined");
+            return;
+        }
+        dispatch(updateEmployee({ id: employeeId, updatedEmployee: formData }));
 
         navigate("/conciergeList", { state: { edited: true } });
     }
@@ -97,14 +92,14 @@ export const EditEmployee = () => {
             <EditEmployeeTitle>Edit employee</EditEmployeeTitle>
             <Fields>
                 <FieldWrapper>
-                    {errors.id &&
+                    {errors._id &&
                         <ValidationError>
-                            {errors.id}
+                            {errors._id}
                         </ValidationError>
                     }
                     <FieldLabelContainer>
                         <Label>Employee ID</Label>
-                        <FieldText name="id" value={formData.id} onChange={handleChange} readOnly />
+                        <FieldText name="id" value={formData._id} onChange={handleChange} readOnly />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>
@@ -148,7 +143,7 @@ export const EditEmployee = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Registration Date</Label>
-                        <DateInput type="date" name="registration_date" value={formData.registration_date} onChange={handleChange} required />
+                        <DateInput type="date" name="registration_date" value={formData.registration_date instanceof Date? formData.registration_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

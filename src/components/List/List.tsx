@@ -90,7 +90,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                 return (
                     <>
                         <FieldValue>
-                            <EmployeeData name={employee.name} id={employee.id} registration_date={employee.registration_date} />
+                            <EmployeeData name={employee.name} _id={employee._id} email={employee.email} password={employee.password} registration_date={employee.registration_date} />
                         </FieldValue>
                         <FieldValue>
                             <FieldText>{employee.name}</FieldText>
@@ -147,7 +147,7 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
     const getItemId = (item: Item, type: ListType) => {
         switch (type) {
             case 'guest': return (item as Guest)._id;
-            case 'employee': return (item as Employee).id;
+            case 'employee': return (item as Employee)._id;
             case 'room': return (item as Room)._id;
             default: return "-1";
         }

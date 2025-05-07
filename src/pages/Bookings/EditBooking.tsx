@@ -168,7 +168,7 @@ export const EditBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check In Date</Label>
-                        <DateInput type="date" name="check_in_date" value={formData.check_in_date  instanceof Date? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
+                        <DateInput type="date" name="check_in_date" value={formData.check_in_date instanceof Date? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

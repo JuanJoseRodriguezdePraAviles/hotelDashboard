@@ -19,7 +19,6 @@ export const NewBooking = () => {
     }
 
     const [formData, setFormData] = useState<Booking>({
-        _id: '',
         client_id: '',
         client_name: '',
         client_email: '',
@@ -76,18 +75,6 @@ export const NewBooking = () => {
         <NewBookingWrapper>
             <NewBookingTitle>New booking form</NewBookingTitle>
             <Fields>
-                <FieldWrapper>
-                    {errors._id &&
-                        <ValidationError>
-                            {errors._id}
-                        </ValidationError>
-                    }
-                    <FieldLabelContainer>
-                        <Label>Booking ID:</Label>
-                        <FieldText name="booking_id" value={formData._id} onChange={handleChange} />
-                    </FieldLabelContainer>
-
-                </FieldWrapper>
                 <FieldWrapper>
                     {errors.client_id &&
                         <ValidationError>

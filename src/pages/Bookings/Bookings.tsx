@@ -73,7 +73,7 @@ export const Bookings = () => {
 
     const handleDelete = (bookingId: string) => {
         setSelectedBookings((prevSelected) => prevSelected.filter((id) => id !== bookingId));
-        dispatch(deleteBooking({ id: bookingId }));
+        dispatch(deleteBooking(bookingId));
     }
 
     const isSingleSelection = selectedBookings.length === 1;

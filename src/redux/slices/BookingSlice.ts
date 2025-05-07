@@ -8,7 +8,7 @@ import { Status } from '../../interfaces/Status';
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export interface Booking {
-    _id: string,
+    _id?: string,
     room_id: string,
     client_id: string,
     client_name?: string,
@@ -107,14 +107,37 @@ export const updateBooking = createAsyncThunk<
     }
 );
 
+export const deleteBooking = createAsyncThunk<
+    string,
+    string,
+    { rejectValue: string }
+>(
+    'bookings/deleteBooking',
+    async (id, { rejectWithValue }) => {
+        const token = localStorage.getItem("authToken");
+        try {
+            const response = await fetch(`http://localhost:3001/api/v1/bookings/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if(!response.ok) {
+                throw new Error('Failed to delete booking');
+            }
+            return id;
+        } catch (error: any) {
+            return rejectWithValue(error.message);
+        }
+    }
+)
+
 const bookingsSlice = createSlice({
     name: "bookings",
     initialState,
     reducers: {
-        deleteBooking: (state, action) => {
-            const { id } = action.payload;
-            state.bookings = state.bookings.filter((booking) => booking._id !== id);
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -145,10 +168,15 @@ const bookingsSlice = createSlice({
             .addCase(updateBooking.rejected, (state, action) => {
                 state.status = Status.Failed;
                 state.error = action.payload;
+            })
+            .addCase(deleteBooking.fulfilled, (state, action) => {
+                state.bookings = state.bookings.filter(booking => booking._id !== action.payload);
+            })
+            .addCase(deleteBooking.rejected, (state, action) => {
+                state.status = Status.Failed;
+                state.error = action.payload;
             });
     }
 });
-
-export const { deleteBooking } = bookingsSlice.actions;
 export const { actions, reducer } = bookingsSlice;
 export default reducer;

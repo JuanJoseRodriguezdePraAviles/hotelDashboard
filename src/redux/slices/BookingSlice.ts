@@ -99,10 +99,6 @@ export const updateBooking = createAsyncThunk<
                 body: JSON.stringify(updatedBooking)
             });
 
-            if(!response.ok) {
-                throw new Error('Failed to update booking');
-            }
-
             const data = await response.json();
             return data;
         } catch(error: any) {

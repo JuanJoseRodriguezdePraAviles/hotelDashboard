@@ -7,6 +7,7 @@ import { Booking, updateBooking } from "../../redux/slices/BookingSlice";
 import { Status } from "../../interfaces/Status";
 import { FieldOption, FieldSelect } from "./NewBookingStyled";
 import { BookingStatus } from "../../interfaces/BookingStatus";
+import { fetchRooms } from "../../redux/slices/RoomSlice";
 
 export const EditBooking = () => {
     const dispatch = useAppDispatch();
@@ -102,6 +103,10 @@ export const EditBooking = () => {
 
         navigate("/bookings", { state: { edited: true } });
     }
+
+    useEffect(() => {
+            dispatch(fetchRooms());
+    }, [dispatch]);
 
     return (
         <EditBookingWrapper>

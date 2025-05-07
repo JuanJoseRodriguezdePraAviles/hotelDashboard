@@ -20,7 +20,6 @@ export const Login = () => {
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("login", "true");
             contextLogin(data.token);
-            
         }
     }
     return (

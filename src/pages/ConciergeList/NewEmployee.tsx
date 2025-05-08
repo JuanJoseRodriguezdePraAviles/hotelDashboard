@@ -13,6 +13,7 @@ export const NewEmployee = () => {
     const [formData, setFormData] = useState<Employee>({
         name: '',
         email: '',
+        password: '',
         job_functions: '',
         registration_date: new Date(),
         phone: '',
@@ -89,6 +90,17 @@ export const NewEmployee = () => {
                     <FieldLabelContainer>
                         <Label>Employee Email</Label>
                         <FieldText name="email" value={formData.email} onChange={handleChange} required />
+                    </FieldLabelContainer>
+                </FieldWrapper>
+                <FieldWrapper>
+                    {errors.password &&
+                        <ValidationError>
+                            {errors.password}
+                        </ValidationError>
+                    }
+                    <FieldLabelContainer>
+                        <Label>Employee Password</Label>
+                        <FieldText name="password" value={formData.password} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

@@ -19,6 +19,7 @@ export const EditEmployee = () => {
         _id: '',
         name: '',
         email: '',
+        password: '',
         job_functions: '',
         registration_date: new Date(),
         phone: '',
@@ -42,6 +43,7 @@ export const EditEmployee = () => {
                 _id: employee._id,
                 name: employee.name,
                 email: employee.email ?? "",
+                password: employee.password,
                 job_functions: employee.job_functions ?? "",
                 registration_date: employee.registration_date,
                 phone: employee.phone ?? "",
@@ -65,9 +67,9 @@ export const EditEmployee = () => {
 
         const skipFalsyCheck: (keyof Employee)[] = ["status"];
 
-        Object.keys(formData).forEach((key) => {
+        (Object.keys(formData) as (keyof Employee)[]).forEach((key) => {
             const typedKey = key as keyof Employee;
-            if (!formData[typedKey]) {
+            if (!skipFalsyCheck.includes(key) && !formData[typedKey]) {
                 newErrors[typedKey] = `Field ${key} cannot be empty`;
             }
         });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomerData from "../CustomerData/CustomerData";
 import { EmployeeData } from "../EmployeeData/EmployeeData";
 import { RoomData } from "../RoomData/RoomData";
@@ -10,6 +10,7 @@ import { Guest } from "../../redux/slices/GuestSlice";
 import { Employee } from "../../redux/slices/EmployeeSlice";
 import { Room } from "../../redux/slices/RoomSlice";
 import { Booking } from "../../redux/slices/BookingSlice";
+import { DropdownMenu } from "../DropDownMenu/DropdownMenu";
 
 type Item = Guest | Employee | Room | Booking;
 
@@ -26,6 +27,7 @@ interface ListProps {
 
 export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxChange, selected, onShowNotes }) => {
 
+    const [menuVisibleId, setMenuVisibledId] = useState<string | null>(null);
     const formatDate = (rawDate: string) => {
         const dateRegex = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
         if (!dateRegex.test(rawDate)) {
@@ -197,7 +199,16 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                                 </FieldValue>
                                 {renderRowFields(item)}
                                 <FieldValue>
-                                    <HiDotsVertical color="#6E6E6E" />
+                                    <HiDotsVertical color="#6E6E6E"
+                                        onClick={() => setMenuVisibledId(prev => prev === itemId ? null : itemId)} />
+                                    {menuVisibleId === itemId && (
+                                        <DropdownMenu
+                                            onCreate={() => console.log("Create", itemId)}
+                                            onEdit={() => console.log("Edit", itemId)}
+                                            onDetails={() => console.log("Details", itemId)}
+                                            onDelete={() => console.log("Delete", itemId)}    
+                                        />
+                                    )}
                                 </FieldValue>
                             </tr>
                         );

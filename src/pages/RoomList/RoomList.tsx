@@ -5,7 +5,7 @@ import { List } from "../../components/List/List";
 import { Filters, RoomBtn, RoomListWrapper } from "./RoomListStyled";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { deleteRoom, fetchRooms } from "../../redux/slices/RoomSlice";
+import { deleteRoom, fetchRooms } from "../../redux/thunks/RoomThunk";
 import { Status } from "../../interfaces/Status";
 
 export const RoomList = () => {

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import { ReviewUnit } from "../Review/ReviewUnit";
 import { Reviews, ReviewsContainer, Title } from "./LatestReviewStyled";
-import { fetchReviews } from "../../redux/slices/ReviewSlice";
+import { fetchReviews } from "../../redux/thunks/ReviewThunk";
 import { Status } from "../../interfaces/Status";
 
 export const LatestReview: React.FC = () => {

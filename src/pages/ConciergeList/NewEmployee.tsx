@@ -3,7 +3,8 @@ import { useState } from "react"
 import { DateInput, FieldText, Label, NewEmployeeTitle, NewEmployeeWrapper, SubmitBtn, ValidationError } from "./NewEmployeeStyled";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
-import { createEmployee, Employee } from "../../redux/slices/EmployeeSlice";
+import { Employee } from "../../redux/slices/EmployeeSlice";
+import { createEmployee } from "../../redux/thunks/EmployeeThunk";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
 export const NewEmployee = () => {

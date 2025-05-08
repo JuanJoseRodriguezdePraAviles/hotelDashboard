@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { loginThunk } from './LoginThunk';
+import { loginThunk } from '../thunks/LoginThunk';
 import { buildErrorMessage } from 'vite';
 
 export interface initialStateInterface {
@@ -19,10 +19,10 @@ export const authSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.isAuthenticated = false,
-            state.username = ''
+                state.username = ''
         },
         updateEmail: (state, action: PayloadAction<string>) => {
-            if(action?.payload) {
+            if (action?.payload) {
                 state.username = action.payload;
             }
         }
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
         builder
             .addCase(loginThunk.fulfilled, (state, action) => {
                 state.isAuthenticated = true;
-                state.username= action.payload.username;
+                state.username = action.payload.username;
                 state.error = undefined;
             })
             .addCase(loginThunk.rejected, (state, action) => {

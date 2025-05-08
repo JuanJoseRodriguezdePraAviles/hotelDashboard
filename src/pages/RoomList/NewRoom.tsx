@@ -3,7 +3,8 @@ import { useState } from "react"
 import { DateInput, FieldText, Label, NewRoomTitle, NewRoomWrapper, SubmitBtn, ValidationError } from "./NewRoomStyled";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { createRoom, Room } from "../../redux/slices/RoomSlice";
+import { Room } from "../../redux/slices/RoomSlice";
+import { createRoom } from "../../redux/thunks/RoomThunk";
 import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";
@@ -11,7 +12,6 @@ import { RoomStatus } from "../../interfaces/RoomStatus";
 export const NewRoom = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
 
     const [formData, setFormData] = useState<Room>({
         room_name: '',

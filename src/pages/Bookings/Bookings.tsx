@@ -3,11 +3,11 @@ import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 
 import { BookingBtn, BookingsWrapper, CloseBtn, Filters, Loading, ModalContainer, ModalTextContainer, Notification } from "./BookingsStyled";
-import { fetchBookings } from '../../redux/slices/BookingSlice';
+import { fetchBookings } from "../../redux/thunks/BookingThunk";
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Link } from "react-router-dom";
-import { deleteBooking } from "../../redux/slices/BookingSlice";
+import { deleteBooking } from "../../redux/thunks/BookingThunk";
 import { useLocation } from "react-router-dom";
 import { Status } from "../../interfaces/Status";
 import { BookingStatus } from "../../interfaces/BookingStatus";

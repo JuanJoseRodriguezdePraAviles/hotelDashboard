@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { FieldText, Label, EditRoomTitle, EditRoomWrapper, SubmitBtn, ValidationError } from "./EditRoomStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { updateRoom, Room } from "../../redux/slices/RoomSlice";
+import { Room } from "../../redux/slices/RoomSlice";
+import { updateRoom } from "../../redux/thunks/RoomThunk";
 import { FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldWrapper } from "../Bookings/NewBookingStyled";
 import { RoomType } from "../../interfaces/RoomType";
 import { RoomStatus } from "../../interfaces/RoomStatus";

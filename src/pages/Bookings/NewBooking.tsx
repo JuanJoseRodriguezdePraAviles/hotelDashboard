@@ -3,9 +3,10 @@ import { useState, useEffect } from "react"
 import { DateInput, FieldLabelContainer, FieldOption, Fields, FieldSelect, FieldText, FieldWrapper, Label, NewBookingTitle, NewBookingWrapper, SubmitBtn, ValidationError } from "./NewBookingStyled";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Booking, createBooking } from "../../redux/slices/BookingSlice";
+import { Booking } from "../../redux/slices/BookingSlice";
 import { BookingStatus } from "../../interfaces/BookingStatus";
-import { fetchRooms } from "../../redux/slices/RoomSlice";
+import { fetchRooms } from "../../redux/thunks/RoomThunk";
+import { createBooking } from "../../redux/thunks/BookingThunk";
 
 export const NewBooking = () => {
     const dispatch = useAppDispatch();
@@ -131,7 +132,7 @@ export const NewBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check In Date:</Label>
-                        <DateInput type="date" name="check_in_date" value={formData.check_in_date instanceof Date? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
+                        <DateInput type="date" name="check_in_date" value={formData.check_in_date instanceof Date ? formData.check_in_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
 
@@ -143,7 +144,7 @@ export const NewBooking = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Check Out Date:</Label>
-                        <DateInput type="date" name="check_out_date" value={formData.check_out_date instanceof Date? formData.check_out_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
+                        <DateInput type="date" name="check_out_date" value={formData.check_out_date instanceof Date ? formData.check_out_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
 

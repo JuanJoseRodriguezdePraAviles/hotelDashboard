@@ -3,7 +3,8 @@ import { useEffect, useState } from "react"
 import { FieldText, Label, EditEmployeeTitle, EditEmployeeWrapper, SubmitBtn, ValidationError } from "./EditEmployeeStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { updateEmployee, Employee } from "../../redux/slices/EmployeeSlice";
+import { Employee } from "../../redux/slices/EmployeeSlice";
+import { updateEmployee } from "../../redux/thunks/EmployeeThunk";
 import { DateInput } from "./NewEmployeeStyled";
 import { FieldLabelContainer, Fields, FieldWrapper } from "../Bookings/NewBookingStyled";
 
@@ -145,7 +146,7 @@ export const EditEmployee = () => {
                     }
                     <FieldLabelContainer>
                         <Label>Registration Date</Label>
-                        <DateInput type="date" name="registration_date" value={formData.registration_date instanceof Date? formData.registration_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
+                        <DateInput type="date" name="registration_date" value={formData.registration_date instanceof Date ? formData.registration_date?.toISOString().split("T")[0] : ""} onChange={handleChange} required />
                     </FieldLabelContainer>
                 </FieldWrapper>
                 <FieldWrapper>

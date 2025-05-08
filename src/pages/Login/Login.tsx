@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ErrorMessage, LoginBtn, LoginTitle, LoginWrapper, PasswordInput, UserInput } from "./LoginStyled";
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { loginThunk } from '../../redux/slices/LoginThunk';
+import { loginThunk } from '../../redux/thunks/LoginThunk';
 
 export const Login = () => {
     const dispatch = useAppDispatch();
@@ -25,11 +25,11 @@ export const Login = () => {
     return (
         <LoginWrapper>
             <LoginTitle>Hotel Miranda Dashboard</LoginTitle>
-            {error !==''? <ErrorMessage>{error}</ErrorMessage>:<></>}
+            {error !== '' ? <ErrorMessage>{error}</ErrorMessage> : <></>}
             <UserInput value={username} cy-id="user-input"
-                        onChange={(e) => setUsername(e.target.value)}/>
+                onChange={(e) => setUsername(e.target.value)} />
             <PasswordInput value={password} cy-id="password-input"
-                        onChange={(e) => setPassword(e.target.value)}/>
+                onChange={(e) => setPassword(e.target.value)} />
             <LoginBtn onClick={handleLogin} cy-id="btn-login">Login</LoginBtn>
         </LoginWrapper>
     );

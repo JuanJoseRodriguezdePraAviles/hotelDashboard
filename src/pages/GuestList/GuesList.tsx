@@ -4,7 +4,8 @@ import { Filter } from "../../components/Filter/Filter";
 import { List } from "../../components/List/List";
 import { CloseBtn, Filters, GuestBtn, GuestListWrapper, ModalContainer, ModalTextContainer, Notification } from "./GuestListStyled";
 import { useEffect, useState } from "react";
-import { deleteGuest, fetchGuests } from "../../redux/slices/GuestSlice";
+import { deleteGuest } from "../../redux/slices/GuestSlice";
+import { fetchGuests } from "../../redux/thunks/GuestThunk";
 import { Link, useLocation } from "react-router-dom";
 import { Status } from "../../interfaces/Status";
 
@@ -55,7 +56,8 @@ export const GuestList = () => {
         }
     }, [location]);
 
-    const handleCheckboxChange = (guestId, isChecked) => {
+    const handleCheckboxChange = (guestId?: string, isChecked?: boolean) => {
+        if (!guestId || typeof isChecked !== "boolean") return;
         setSelectedGuests((prevSelected) => {
             if (isChecked) {
                 return [...prevSelected, guestId];
@@ -65,7 +67,7 @@ export const GuestList = () => {
         });
     }
 
-    const handleDelete = (guestId) => {
+    const handleDelete = (guestId: string) => {
         setSelectedGuests((prevSelected) => prevSelected.filter((id) => id !== guestId));
         dispatch(deleteGuest({ id: guestId }));
     }

@@ -4,8 +4,7 @@ import { BookingStatus } from '../../interfaces/BookingStatus';
 import { RoomType } from '../../interfaces/RoomType';
 import { RoomStatus } from '../../interfaces/RoomStatus';
 import { Amenities } from '../../interfaces/Amenities';
-
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+import { fetchGuests } from '../thunks/GuestThunk';
 
 export interface Guest {
     _id?: string,
@@ -38,16 +37,6 @@ const initialState: GuestsState = {
     status: Status.Loading,
     error: ""
 }
-
-export const fetchGuests = createAsyncThunk<Guest[]>(
-    'guests/fetchGuests',
-    async () => {
-        await delay(200);
-        const response = await fetch("../../public/Guests.json");
-        const data = await response.json();
-        return data;
-    }
-);
 
 const guestsSlice = createSlice({
     name: "guests",

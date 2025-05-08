@@ -3,10 +3,11 @@ import { useEffect, useState } from "react"
 import { DateInput, FieldText, Label, EditBookingTitle, EditBookingWrapper, SubmitBtn, ValidationError, FieldWrapper, Fields, FieldLabelContainer } from "./EditBookingStyled";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Booking, updateBooking } from "../../redux/slices/BookingSlice";
+import { Booking } from "../../redux/slices/BookingSlice";
+import { updateBooking } from "../../redux/thunks/BookingThunk";
 import { FieldOption, FieldSelect } from "./NewBookingStyled";
 import { BookingStatus } from "../../interfaces/BookingStatus";
-import { fetchRooms } from "../../redux/slices/RoomSlice";
+import { fetchRooms } from "../../redux/thunks/RoomThunk";
 
 export const EditBooking = () => {
     const dispatch = useAppDispatch();

@@ -10,7 +10,7 @@ import { format, parse } from 'date-fns';
 import { AppDispatch } from "../../redux/store";
 import { useDispatch } from "react-redux";
 import { Status } from "../../interfaces/Status";
-import { fetchRooms } from "../../redux/slices/RoomSlice";
+import { fetchRooms } from "../../redux/thunks/RoomThunk";
 
 export const GuestDetails = () => {
     const { bookingId } = useParams();
@@ -29,7 +29,7 @@ export const GuestDetails = () => {
     }
 
     useEffect(() => {
-        if(roomStatus === Status.Loading){
+        if (roomStatus === Status.Loading) {
             dispatch(fetchRooms());
         }
     }, [dispatch, roomStatus]);

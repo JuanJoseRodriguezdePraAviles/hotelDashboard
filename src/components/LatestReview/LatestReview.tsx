@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import { ReviewUnit } from "../Review/ReviewUnit";
 import { Reviews, ReviewsContainer, Title } from "./LatestReviewStyled";
-import { useEffect } from "react";
 import { fetchReviews } from "../../redux/slices/ReviewSlice";
 import { Status } from "../../interfaces/Status";
 
@@ -14,11 +13,17 @@ export const LatestReview: React.FC = () => {
     const status = useSelector((state: RootState) => state.reviews.status);
     const error = useSelector((state: RootState) => state.reviews.error);
 
+    const [reviewsList, setReviewList] = useState(reviews);
+
     useEffect(() => {
         if (status === Status.Loading) {
             dispatch(fetchReviews());
         }
     }, [dispatch, status]);
+
+    useEffect(() => {
+        setReviewList(reviews);
+    }, [reviews]);
     return (
         <>
             <Reviews>
@@ -26,8 +31,13 @@ export const LatestReview: React.FC = () => {
                     Latest Review by Customers
                 </Title>
                 <ReviewsContainer>
-                    {reviews.map((review) => {
-                        return <ReviewUnit id={review.id} customer_id={review.customer_id} customer_name={review.customer_name} subject={review.subject} comment={review.comment} date={review.date} email='' phone={review.phone} archived={review.archived}/>
+                    {reviewsList.filter((review) => !review.archived)
+                        .slice(0,3).map((review) => {
+                        return <ReviewUnit key={review._id? review._id : ''}
+                        {...review}
+                        onArchive={() => setReviewList((prev) =>
+                            prev.map((r) => r._id === review._id ? { ...r, archived: true} : r))
+                        } />
                     })}
                 </ReviewsContainer>
             </Reviews>

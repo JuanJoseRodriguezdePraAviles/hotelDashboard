@@ -14,8 +14,9 @@ export const Layout = () => {
     useEffect(() => {
       const storedToken = localStorage.getItem("authToken");
       const isLogin = localStorage.getItem("login")==='true';
-      if(isLogin && storedToken && !auth) {
-        login(storedToken);
+      const storedUsername = localStorage.getItem("username");
+      if(isLogin && storedToken && storedUsername && !auth) {
+        login(storedToken, storedUsername);
       } else if (!isLogin && auth) {
         logout();
       }

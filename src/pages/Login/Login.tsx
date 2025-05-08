@@ -19,7 +19,7 @@ export const Login = () => {
             const data = resultAction.payload as { token: string };
             localStorage.setItem("authToken", data.token);
             localStorage.setItem("login", "true");
-            contextLogin(data.token);
+            contextLogin(data.token, username);
         }
     }
     return (

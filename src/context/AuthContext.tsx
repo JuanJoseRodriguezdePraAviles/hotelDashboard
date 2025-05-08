@@ -11,7 +11,7 @@ type AuthAction = { type: "login"; token: string } | { type: "logout" };
 interface AuthContextType {
     auth: boolean;
     token: string | null,
-    login: (token: string) => void;
+    login: (token: string, username: string) => void;
     logout: () => void;
 }
 
@@ -44,9 +44,10 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    const login = (token: string) => {
+    const login = (token: string, username: string) => {
         localStorage.setItem("authToken", token);
         localStorage.setItem("login", "true");
+        localStorage.setItem("username", username)
         dispatch({ type: "login", token });
     }
     const logout = () => {

@@ -9,12 +9,12 @@ import { useAppDispatch } from "../../redux/hooks";
 
 export const Profile = () => {
     const username = useAppSelector((state) => state.auth.username);
-    const email = useAppSelector((state) => state.auth.email);
+    const email = useAppSelector((state) => state.auth.username);
     const [emailInput, setEmailInput] = useState(localStorage.getItem('email') || email);
     const [isEditEmail, setIsEditEmail] = useState(false);
     const dispatch = useAppDispatch();
 
-    const handleEmailChange = (e) => {
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmailInput(e.target.value);
     }
 
@@ -31,7 +31,7 @@ export const Profile = () => {
             <ProfileTitle>User Profile</ProfileTitle>
             <Username>Username: {username ? username : localStorage.username}</Username>
             {!isEditEmail ?
-                <Email>Email: {localStorage.email ? localStorage.email : email} <MdEdit onClick={handleEmail} /></Email>
+                <Email>Email: {localStorage.username ? localStorage.username : email} <MdEdit onClick={handleEmail} /></Email>
                 :
                 <EmailContainer>
                     <EmailInput value={emailInput}

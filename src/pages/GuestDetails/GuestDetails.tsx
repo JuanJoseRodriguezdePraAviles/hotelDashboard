@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UserAvatarSquared } from "../../components/UserAvatarSquared/UserAvatarSquared";
 import { DetailsHeader, CheckDatesContainer, DataContainer, DetailsContainer, FacilitiesContainer, FacilitiesTags, FacilityTag, GuestContainer, GuestDetailsWrapper, LabelField, NameContactContainer, RoomDescription, RoomName, RoomPhoto, RoomPhotoContainer, RoomStatusIcon, GuestName, GuestId, ContactContainer, PhoneBtn, MessageBtn, RoomPriceContainer, FacilitiesTitle, ValueField } from "./GuestDetailsStyled";
 import { LuBedDouble } from "react-icons/lu";
@@ -7,16 +7,32 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 import { format, parse } from 'date-fns';
+import { AppDispatch } from "../../redux/store";
+import { useDispatch } from "react-redux";
+import { Status } from "../../interfaces/Status";
+import { fetchRooms } from "../../redux/slices/RoomSlice";
 
 export const GuestDetails = () => {
     const { bookingId } = useParams();
-    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking.booking_id.toString() === bookingId));
+    const booking = useAppSelector((state) => state.bookings.bookings.find((booking) => booking?._id?.toString() === bookingId));
+    const dispatch = useDispatch<AppDispatch>();
+    const rooms = useAppSelector((state) => state.rooms.rooms);
+    const roomStatus = useAppSelector((state) => state.rooms.status);
+    const room = useAppSelector((state) =>
+        state.rooms.rooms.find((room) => room?._id?.toString() === booking?.room_id?.toString())
+    );
 
     const formatDate = (rawDate: string) => {
         const parsed = parse(rawDate, 'M/d/yyyy', new Date());
 
         return format(parsed, "MMM do yyyy hh:mmaa");
     }
+
+    useEffect(() => {
+        if(roomStatus === Status.Loading){
+            dispatch(fetchRooms());
+        }
+    }, [dispatch, roomStatus]);
 
     return (
         <GuestDetailsWrapper>
@@ -47,18 +63,18 @@ export const GuestDetails = () => {
                     <RoomPriceContainer>
                         <DataContainer>
                             <LabelField>Room Info</LabelField>
-                            <ValueField>{booking?.room_name}</ValueField>
+                            <ValueField>{room?.room_name}</ValueField>
                         </DataContainer>
                         <DataContainer>
                             <LabelField>Price</LabelField>
-                            <ValueField>{booking?.room_price}$ /night</ValueField>
+                            <ValueField>{room?.price}$ /night</ValueField>
                         </DataContainer>
                     </RoomPriceContainer>
-                    <RoomDescription>{booking?.room_description}</RoomDescription>
+                    <RoomDescription>{room?.description}</RoomDescription>
                     <FacilitiesContainer>
                         <FacilitiesTitle>Facilities</FacilitiesTitle>
                         <FacilitiesTags>
-                            {booking?.room_amenities?.map((amenity, index) => {
+                            {room?.room_amenities?.map((amenity, index) => {
                                 if (index < 3) {
                                     return <FacilityTag><LuBedDouble size="1.5rem" />{amenity}</FacilityTag>
                                 } else {

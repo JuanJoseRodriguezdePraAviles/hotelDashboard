@@ -7,8 +7,8 @@ import { loginThunk } from '../../redux/thunks/LoginThunk';
 export const Login = () => {
     const dispatch = useAppDispatch();
     const { login: contextLogin } = useAuth();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("test@example.com");
+    const [password, setPassword] = useState("test1234");
     const [error, setError] = useState("");
 
     const handleLogin = async () => {

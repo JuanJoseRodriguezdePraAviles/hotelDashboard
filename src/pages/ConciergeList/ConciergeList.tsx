@@ -99,22 +99,6 @@ export const ConciergeList = () => {
                             />
                         ))}
                     </Filters>
-                    <Link to="/NewEmployee">
-                        <EmployeeBtn>New Employee</EmployeeBtn>
-                    </Link>
-                    {isSingleSelection ?
-                        <>
-                            <Link to={`/EditEmployee/${selectedEmployees[0]}`}>
-                                <EmployeeBtn>Edit Employee</EmployeeBtn>
-                            </Link>
-                            <EmployeeBtn onClick={() => handleDelete(selectedEmployees[0])}>Delete Employee</EmployeeBtn>
-                        </>
-                        :
-                        <>
-                            <EmployeeBtn disabled>Edit Employee</EmployeeBtn>
-                            <EmployeeBtn disabled>Delete Employee</EmployeeBtn>
-                        </>
-                    }
                     <List type="employee" list={filteredEmployees} fieldsName={["Name", "Email", "Job Desk", "Contact", "Status"]}
                         onCheckboxChange={handleCheckboxChange} selected={selectedEmployees} />
                 </ConciergeListWrapper>

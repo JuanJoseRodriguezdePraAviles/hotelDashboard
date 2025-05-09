@@ -110,26 +110,6 @@ export const Bookings = () => {
                             ))}
                         </Filters>
 
-                        <Link to="/NewBooking">
-                            <BookingBtn>New Booking</BookingBtn>
-                        </Link>
-                        {isSingleSelection ?
-                            <>
-                                <Link to={`/EditBooking/${selectedBookings[0]}`}>
-                                    <BookingBtn>Edit Booking</BookingBtn>
-                                </Link>
-                                <BookingBtn onClick={() => handleDelete(selectedBookings[0])}>Delete Booking</BookingBtn>
-                                <Link to={`/GuestDetails/${selectedBookings[0]}`}>
-                                    <BookingBtn>Booking Details</BookingBtn>
-                                </Link>
-                            </>
-                            :
-                            <>
-                                <BookingBtn disabled>Edit Booking</BookingBtn>
-                                <BookingBtn disabled>Delete Booking</BookingBtn>
-                                <BookingBtn disabled>Booking Details</BookingBtn>
-                            </>
-                        }
                         <List type="guest" list={bookings} fieldsName={["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"]}
                             onCheckboxChange={handleCheckboxChange} selected={selectedBookings} onShowNotes={handleShowNotes} />
                     </BookingsWrapper>

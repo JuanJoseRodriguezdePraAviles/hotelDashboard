@@ -11,6 +11,11 @@ import { Employee } from "../../redux/slices/EmployeeSlice";
 import { Room } from "../../redux/slices/RoomSlice";
 import { Booking } from "../../redux/slices/BookingSlice";
 import { DropdownMenu } from "../DropDownMenu/DropdownMenu";
+import { Link, useNavigate } from "react-router-dom";
+import { deleteBooking } from "../../redux/thunks/BookingThunk";
+import { useAppDispatch } from "../../redux/hooks";
+import { deleteEmployee } from "../../redux/thunks/EmployeeThunk";
+import { deleteRoom } from "../../redux/thunks/RoomThunk";
 
 type Item = Guest | Employee | Room | Booking;
 
@@ -37,6 +42,9 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
 
         return format(parsed, "MMM do yyyy hh:mmaa");
     }
+
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const renderRowFields = (item: Item) => {
         switch (type) {
@@ -174,9 +182,6 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
         <Table>
             <Header>
                 <tr>
-                    <th>
-                        <Checkbox />
-                    </th>
                     {fieldsName.map((fieldName, i) => {
                         return (
                             <th key={i}>
@@ -197,24 +202,34 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                     list.map((item) => {
                         const itemId = getItemId(item, type);
                         if (!itemId) return null;
+
+                        const handleEdit = () => {
+                            if(type==='guest') navigate(`/EditBooking/${itemId}`);
+                            else if (type === 'employee') navigate(`/EditEmployee/${itemId}`);
+                            else if (type === 'room') navigate(`/EditRoom/${itemId}`);
+                        };
+
+                        const handleDetails = () => {
+                            if(type==='guest') navigate(`/GuestDetails/${itemId}`);
+                        };
+
+                        const handleDelete = () => {
+                            if(type==='guest') dispatch(deleteBooking(itemId));
+                            else if(type === 'employee') dispatch(deleteEmployee(itemId));
+                            else if(type === 'room') dispatch(deleteRoom(itemId));
+                        };
+
                         return (
                             <tr key={itemId}>
-                                <FieldValue>
-                                    <Checkbox
-                                        onChange={(e) => onCheckboxChange?.(itemId, e.target.checked)}
-                                        checked={selected.includes(itemId)}
-                                    />
-                                </FieldValue>
                                 {renderRowFields(item)}
                                 <FieldValue>
                                     <HiDotsVertical color="#6E6E6E"
                                         onClick={() => setMenuVisibledId(prev => prev === itemId ? null : itemId)} />
                                     {menuVisibleId === itemId && (
                                         <DropdownMenu
-                                            onCreate={() => console.log("Create", itemId)}
-                                            onEdit={() => console.log("Edit", itemId)}
-                                            onDetails={() => console.log("Details", itemId)}
-                                            onDelete={() => console.log("Delete", itemId)}
+                                            onEdit={handleEdit}
+                                            onDetails={type === 'guest' ? handleDetails : undefined}
+                                            onDelete={handleDelete}
                                             itemName={nameOption}    
                                         />
                                     )}

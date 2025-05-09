@@ -70,22 +70,6 @@ export const RoomList = () => {
                     />
                 ))}
             </Filters>
-            <Link to="/NewRoom">
-                <RoomBtn>New Room</RoomBtn>
-            </Link>
-            {isSingleSelection ?
-                <>
-                    <Link to={`/EditRoom/${selectedRooms[0]}`}>
-                        <RoomBtn>Edit Room</RoomBtn>
-                    </Link>
-                    <RoomBtn onClick={() => handleDelete(selectedRooms[0])}>Delete Room</RoomBtn>
-                </>
-                :
-                <>
-                    <RoomBtn disabled>Edit Room</RoomBtn>
-                    <RoomBtn disabled>Delete Room</RoomBtn>
-                </>
-            }
             <List type="room" list={filteredRooms} fieldsName={["Room Name", "Bed Type", "Room Floor", "Facilities", "Rate", "Status"]} onCheckboxChange={handleCheckboxChange} selected={selectedRooms}/>
         </RoomListWrapper>
     );

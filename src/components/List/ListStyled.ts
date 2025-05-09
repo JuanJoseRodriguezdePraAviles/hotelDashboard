@@ -56,6 +56,7 @@ export const FieldValue = styled.td`
     background: #FFFFFF 0% 0% no-repeat padding-box;
     border-radius: 20px;
     opacity: 1;
+    position:relative;
 `;
 
 export const FieldTextContainer = styled.div`

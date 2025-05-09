@@ -160,6 +160,14 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
         employee: "No employees found",
         room: "No rooms found"
     }
+    let nameOption = "";
+    if(type === "guest") {
+        nameOption = "booking";
+    } else if(type === "employee") {
+        nameOption = "employee";
+    } else if (type === "room") {
+        nameOption = "room";
+    }
 
     return (
     <>
@@ -206,7 +214,8 @@ export const List: React.FC<ListProps> = ({ type, list, fieldsName, onCheckboxCh
                                             onCreate={() => console.log("Create", itemId)}
                                             onEdit={() => console.log("Edit", itemId)}
                                             onDetails={() => console.log("Details", itemId)}
-                                            onDelete={() => console.log("Delete", itemId)}    
+                                            onDelete={() => console.log("Delete", itemId)}
+                                            itemName={nameOption}    
                                         />
                                     )}
                                 </FieldValue>

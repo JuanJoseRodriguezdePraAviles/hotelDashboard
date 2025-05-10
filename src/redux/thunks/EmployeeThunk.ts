@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Employee } from "../slices/EmployeeSlice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchEmployees = createAsyncThunk(
     'employees/fetchEmployees',
     async () => {
         const token = localStorage.getItem("authToken");
 
-        const response = await fetch("http://localhost:3001/api/v1/employees", {
+        const response = await fetch(`${API_URL}/api/v1/employees`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -25,7 +27,7 @@ export const createEmployee = createAsyncThunk<Employee, Partial<Employee>>(
     async (newEmployee, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch("http://localhost:3001/api/v1/employees", {
+            const response = await fetch(`${API_URL}/api/v1/employees`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,7 +57,7 @@ export const updateEmployee = createAsyncThunk<
     async ({ id, updatedEmployee }, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/employees/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/employees/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -81,7 +83,7 @@ export const deleteEmployee = createAsyncThunk<
     async (id, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/employees/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/employees/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Room } from "../slices/RoomSlice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchRooms = createAsyncThunk(
     'rooms/fetchRooms',
     async () => {
         const token = localStorage.getItem("authToken");
 
-        const response = await fetch("http://localhost:3001/api/v1/rooms", {
+        const response = await fetch(`${API_URL}/api/v1/rooms`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -26,7 +28,7 @@ export const createRoom = createAsyncThunk<Room, Partial<Room>>(
     async (newRoom, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch("http://localhost:3001/api/v1/rooms", {
+            const response = await fetch(`${API_URL}/api/v1/rooms`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -56,7 +58,7 @@ export const updateRoom = createAsyncThunk<
     async ({ id, updatedRoom }, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/rooms/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,7 +84,7 @@ export const deleteRoom = createAsyncThunk<
     async (id, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/rooms/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/rooms/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

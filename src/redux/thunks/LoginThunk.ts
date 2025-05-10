@@ -5,11 +5,13 @@ interface AuthData {
     password: string;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const loginThunk = createAsyncThunk(
     'auth/login',
     async ({ username, password}: AuthData, thunkAPI) => {
         try {
-            const response = await fetch('http://localhost:3001/api/v1/login', {
+            const response = await fetch(`${API_URL}/api/v1/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({ username, password }),

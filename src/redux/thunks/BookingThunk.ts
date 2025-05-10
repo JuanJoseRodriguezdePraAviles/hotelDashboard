@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Booking } from "../slices/BookingSlice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchBookings = createAsyncThunk<Booking[]>(
     'bookings/fetchBookings',
     async () => {
         const token = localStorage.getItem("authToken");
 
-        const response = await fetch("http://localhost:3001/api/v1/bookings", {
+        const response = await fetch(`${API_URL}/api/v1/bookings`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +30,7 @@ export const createBooking = createAsyncThunk<Booking, Partial<Booking>>(
     async (newBooking, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch("http://localhost:3001/api/v1/bookings", {
+            const response = await fetch(`${API_URL}/api/v1/bookings`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,7 +60,7 @@ export const updateBooking = createAsyncThunk<
     async ({ id, updatedBooking }, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/bookings/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/bookings/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ export const deleteBooking = createAsyncThunk<
     async (id, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/bookings/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/bookings/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

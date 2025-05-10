@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Review } from "../slices/ReviewSlice";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const fetchReviews = createAsyncThunk<Review[]>(
     'bookings/fetchReviews',
     async () => {
         const token = localStorage.getItem("authToken");
 
-        const response = await fetch("http://localhost:3001/api/v1/reviews", {
+        const response = await fetch(`${API_URL}/api/v1/reviews`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +34,7 @@ export const updateReview = createAsyncThunk<
     async ({ id, updatedReview }, { rejectWithValue }) => {
         const token = localStorage.getItem("authToken");
         try {
-            const response = await fetch(`http://localhost:3001/api/v1/reviews/${id}`, {
+            const response = await fetch(`${API_URL}/api/v1/reviews/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

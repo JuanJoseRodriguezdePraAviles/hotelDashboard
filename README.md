@@ -1,3 +1,5 @@
+# HOTEL DASHBOARD
+
 # ROUTES
 Dashboard
 - List messages

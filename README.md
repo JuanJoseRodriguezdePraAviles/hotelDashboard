@@ -31,4 +31,4 @@ Contact
 
 # DESCRIPTION
 
-Web app aimed to display admin info from Hotel management
+Web app aimed to display admin info from Hotel management.

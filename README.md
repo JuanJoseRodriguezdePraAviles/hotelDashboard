@@ -30,3 +30,5 @@ Contact
 - List messages
 
 # DESCRIPTION
+
+Web app aimed to display admin info from Hotel management
